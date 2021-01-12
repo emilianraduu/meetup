@@ -16,7 +16,6 @@ export const App = () => {
         'After pointing at the man, he shouted whether he was a kami.'];
 
     useEffect(() => {
-        SplashScreen.hide();
         setLoadingText(loadingOptions[Math.floor(Math.random() * loadingOptions.length)]);
         setProgress(progress => progress + 0.1);
         const interval = setInterval(() => {
@@ -29,7 +28,9 @@ export const App = () => {
             clearInterval(interval);
             clearInterval(textInterval);
             setIsLoading(false);
-        }, 6000);
+        }, 1000);
+        SplashScreen.hide();
+
     }, []);
 
     return (
