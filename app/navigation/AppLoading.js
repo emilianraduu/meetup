@@ -16,7 +16,7 @@ export const AppLoading = ({isLoading, progress, text}) => {
                 elevation: 100,
             }}>
                 <LottieView source={require('../assets/animations/running.json')} autoPlay loop
-                            style={{width: '46%', marginTop: 1, marginLeft: -3}}/>
+                            style={{width: '46%', marginTop: 1, marginLeft: -2}}/>
                 <View style={{position: 'absolute', width: '100%', bottom: 100, alignItems: 'center'}}>
                     <Text style={{marginBottom: 10, color: '#fff', textAlign: 'center', padding: 50, paddingBottom: 0}}>
                         {text}

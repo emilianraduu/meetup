@@ -57,3 +57,8 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# react-native-config codegen
+ios/tmp.xcconfig
+
+.env
