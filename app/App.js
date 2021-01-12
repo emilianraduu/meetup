@@ -1,19 +1,22 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import MapView from 'react-native-maps';
-import {Text, View} from 'react-native';
+import {Text, View, StatusBar} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
-
+import {ViroARSceneNavigator,ViroARScene, ViroText, ViroConstants} from 'react-viro';
+import LottieView from 'lottie-react-native';
+import SplashScreen from 'react-native-splash-screen'
 export const App = () => {
+    
+    useEffect(()=>{
+        SplashScreen.hide()
+    },[])
     return (
         <NavigationContainer>
-
-            <Tab.Navigator>
-                <Tab.Screen name="Activities" component={HomeScreen}/>
-                <Tab.Screen name="Leaderboard" component={SettingsScreen}/>
-                <Tab.Screen name="Profile" component={ProfileScreen}/>
-            </Tab.Navigator>
+            <StatusBar barStyle={'light-content'} />
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#141716", zIndex: 100, elevation: 100}}>
+                <LottieView source={require('./assets/animations/running.json')} autoPlay loop style={{width: '46%', marginTop: 1, marginLeft: -3}} />
+            </View>
 
         </NavigationContainer>
     );
@@ -21,18 +24,34 @@ export const App = () => {
 
 
 function ProfileScreen() {
+    const _onInitialized = (state, reason) => {
+        if (state == ViroConstants.TRACKING_NORMAL) {
+            this.setState({
+                text: "Hello World!"
+            });
+        } else if (state == ViroConstants.TRACKING_NONE) {
+            // Handle loss of tracking
+        }
+    }
     return (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'red'}}>
-          
-        </View>
+            <ViroARSceneNavigator initialScene={{scene: AR}} >
+
+            </ViroARSceneNavigator>
     );
 }
 
+function AR() {
+    return(
+        <ViroARScene onTrackingUpdated={this._onInitialized}>
+            <ViroText text={'1234'} scale={[.5, .5, .5]} position={[0, 0, -1]}/>
+        </ViroARScene>
+    )
+}
 
 function HomeScreen() {
     return (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text>Home!</Text>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#141716", zIndex: 100, elevation: 100}}>
+            <LottieView source={require('./assets/animations/running.json')} autoPlay loop style={{width: '50%'}} />
         </View>
     );
 }

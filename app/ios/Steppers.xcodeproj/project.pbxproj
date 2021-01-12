@@ -11,7 +11,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		5B0FE64825ACCD5400DCE8EA /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B0FE64725ACCD5400DCE8EA /* HealthKit.framework */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		5B8E026E25ADC07500C98B18 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B8E026D25ADC07500C98B18 /* Launch Screen.storyboard */; };
 		99BC13A6878B891155C86165 /* libPods-Steppers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A9F6AF0C2EE6A81D78CC5B8 /* libPods-Steppers.a */; };
 /* End PBXBuildFile section */
 
@@ -43,8 +43,8 @@
 		475DCCE3A176712FF1B24BBA /* libPods-Steppers-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Steppers-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B0FE64625ACCD5400DCE8EA /* Steppers.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Steppers.entitlements; path = Steppers/Steppers.entitlements; sourceTree = "<group>"; };
 		5B0FE64725ACCD5400DCE8EA /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		5B8E026D25ADC07500C98B18 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		7D7AE5AF106F9F13F06E9835 /* Pods-Steppers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Steppers.release.xcconfig"; path = "Target Support Files/Pods-Steppers/Pods-Steppers.release.xcconfig"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Steppers/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8A9F6AF0C2EE6A81D78CC5B8 /* libPods-Steppers.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Steppers.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C6D5441C34265A722E67DEA /* Pods-Steppers-SteppersTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Steppers-SteppersTests.debug.xcconfig"; path = "Target Support Files/Pods-Steppers-SteppersTests/Pods-Steppers-SteppersTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C2BE14523405F5D700AF00FA /* libPods-Steppers-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Steppers-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,8 +77,8 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				5B8E026D25ADC07500C98B18 /* Launch Screen.storyboard */,
 			);
 			name = Steppers;
 			sourceTree = "<group>";
@@ -164,6 +164,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				7366B85B4474238B58698F14 /* [CP] Copy Pods Resources */,
 				5B5C3CF525ACFE0100EFB840 /* Embed Frameworks */,
+				78AAC2F4819C0D0334103CB9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -211,7 +212,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				5B8E026E25ADC07500C98B18 /* Launch Screen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -273,6 +274,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Steppers/Pods-Steppers-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		78AAC2F4819C0D0334103CB9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Steppers/Pods-Steppers-frameworks.sh",
+				"${PODS_ROOT}/../../node_modules/react-viro/ios/dist/ViroRenderer/static_lib/ViroKit_static_lib.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ViroKit_static_lib.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Steppers/Pods-Steppers-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {

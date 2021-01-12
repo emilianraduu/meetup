@@ -37,25 +37,29 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Used for AR/VR</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Read and understand health data.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Share workout data with other apps.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Share location when in usage</string>
 	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
+	<string>Launch Screen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Dark</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSHealthShareUsageDescription</key>
-	<string>Read and understand health data.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Used for AR/VR</string>
-	<key>NSHealthUpdateUsageDescription</key>
-	<string>Share workout data with other apps.</string>
 </dict>
 </plist>

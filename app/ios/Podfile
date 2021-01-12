@@ -10,6 +10,10 @@ target 'Steppers' do
   pod 'react-native-google-maps', :path => rn_maps_path
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
+  
+  pod 'ViroReact', :path => '../node_modules/react-viro/ios/'
+  pod 'ViroKit_static_lib', :path => '../node_modules/react-viro/ios/dist/ViroRenderer/static_lib'
+  
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
