@@ -10,7 +10,7 @@ import * as Progress from 'react-native-progress';
 import Modal from 'react-native-modal';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Geolocation from '@react-native-community/geolocation';
-
+import AppleHealthKit, { HealthValue, HealthKitPermissions } from 'react-native-health';
 
 export const App = () => {
     const [progress, setProgress] = useState(0);
@@ -18,7 +18,34 @@ export const App = () => {
 
     useEffect(() => {
         SplashScreen.hide();
+        const permissions = {
+            permissions: {
+                read: [
+                    AppleHealthKit.Constants.Permissions.StepCount,
+                ],
 
+            }
+        }
+
+
+        AppleHealthKit.initHealthKit(permissions, (error: string) => {
+            /* Called after we receive a response from the system */
+
+            if (error) {
+                console.log('[ERROR] Cannot grant permissions!')
+            }
+
+            /* Can now read or write to HealthKit */
+
+            const options = {
+                startDate: (new Date(2020, 1, 1)).toISOString(),
+            }
+
+            AppleHealthKit.getStepCount(options, (callbackError: string, results: HealthValue[]) => {
+                console.log(results)
+                /* Samples are now collected from HealthKit */
+            });
+        });
         const interval = setInterval(() => {
             setProgress(progress => progress + 0.1);
         }, 100);
