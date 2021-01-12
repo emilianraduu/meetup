@@ -61,5 +61,9 @@
 	<string>Dark</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+  <string>Allow location</string>
+  <key>NSLocationAlwaysUsageDescription</key>
+  <string>Allow location</string>
 </dict>
 </plist>

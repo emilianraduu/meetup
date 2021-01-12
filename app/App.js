@@ -9,6 +9,8 @@ import SplashScreen from 'react-native-splash-screen';
 import * as Progress from 'react-native-progress';
 import Modal from 'react-native-modal';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Geolocation from '@react-native-community/geolocation';
+
 
 export const App = () => {
     const [progress, setProgress] = useState(0);
@@ -92,6 +94,27 @@ function AR() {
 }
 
 function HomeScreen() {
+    const [lat, setLat] = useState(0);
+    const [lng, setLng] = useState(0);
+
+    useEffect(() => {
+        Geolocation.watchPosition(
+            ({coords: {latitude, longitude}})=> {
+                setLat(latitude)
+                setLng(longitude)
+            },
+            (e)=>console.log(e),
+            {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 500,
+                distanceFilter: 1,
+            },
+        );
+        return () => {
+            Geolocation.stopObserving();
+        };
+    }, []);
     return (
         <View style={{
             flex: 1,
@@ -120,23 +143,24 @@ function HomeScreen() {
                 zoomEnabled={false}
                 rotateEnabled={false}
                 scrollEnabled={false}
-                initialRegion={{
-                    latitude: 37.78825,
-                    longitude: -122.4324,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                }}
+                region={{
+                    latitude: lat,
+                    longitude: lng,
+                    latitudeDelta: 0.02,
+                    longitudeDelta: 0.02,    }}
+
             >
                 <Marker
-                    coordinate={{latitude: 37.78825, longitude: -122.4324}}
+                    coordinate={{latitude: lat, longitude: lng}}
                     title={'123'}
                 >
-                    <View style={{
-                        width: 300,
-                        alignSelf: 'center',
-                        backgroundColor: 'yellow',
-                        borderRadius: 5,
-                    }}><Text>Sunt smecher</Text></View>
+                    <View style={{ transform: [
+                            { scaleX: 1 }
+                        ]}}>
+
+                    <LottieView source={require('./assets/animations/burger.json')} autoPlay loop
+                                style={{ width: 100, height: 100, }}/>
+                    </View>
                 </Marker>
             </MapView>
 
