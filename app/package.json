@@ -10,7 +10,9 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@invertase/react-native-apple-authentication": "^2.1.0",
     "@react-native-community/geolocation": "^2.0.2",
+    "@react-native-community/google-signin": "^5.0.0",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.2",
     "@react-navigation/native": "^5.8.10",
@@ -21,6 +23,7 @@
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-config": "^1.4.1",
+    "react-native-fbsdk": "^3.0.0",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-health": "^1.2.1",
     "react-native-maps": "^0.27.1",

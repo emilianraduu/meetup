@@ -11,6 +11,8 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		5B0FE64825ACCD5400DCE8EA /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B0FE64725ACCD5400DCE8EA /* HealthKit.framework */; };
+		5B321B1225AF5CA000A96F98 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B321B1125AF5CA000A96F98 /* GoogleService-Info.plist */; };
+		5B321BC225AF7AC700A96F98 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B321BC125AF7AC700A96F98 /* File.swift */; };
 		5B8E026E25ADC07500C98B18 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B8E026D25ADC07500C98B18 /* Launch Screen.storyboard */; };
 		99BC13A6878B891155C86165 /* libPods-Steppers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A9F6AF0C2EE6A81D78CC5B8 /* libPods-Steppers.a */; };
 /* End PBXBuildFile section */
@@ -43,6 +45,8 @@
 		475DCCE3A176712FF1B24BBA /* libPods-Steppers-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Steppers-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B0FE64625ACCD5400DCE8EA /* Steppers.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Steppers.entitlements; path = Steppers/Steppers.entitlements; sourceTree = "<group>"; };
 		5B0FE64725ACCD5400DCE8EA /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		5B321B1125AF5CA000A96F98 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Steppers/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5B321BC125AF7AC700A96F98 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		5B8E026D25ADC07500C98B18 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		5B8E039225AE126400C98B18 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		7D7AE5AF106F9F13F06E9835 /* Pods-Steppers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Steppers.release.xcconfig"; path = "Target Support Files/Pods-Steppers/Pods-Steppers.release.xcconfig"; sourceTree = "<group>"; };
@@ -78,8 +82,10 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				5B321B1125AF5CA000A96F98 /* GoogleService-Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				5B8E026D25ADC07500C98B18 /* Launch Screen.storyboard */,
+				5B321BC125AF7AC700A96F98 /* File.swift */,
 			);
 			name = Steppers;
 			sourceTree = "<group>";
@@ -187,7 +193,7 @@
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = XMR3494594;
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1230;
 					};
 				};
 			};
@@ -216,6 +222,7 @@
 			files = (
 				5B8E026E25ADC07500C98B18 /* Launch Screen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				5B321B1225AF5CA000A96F98 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,7 +272,9 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Steppers/Pods-Steppers-resources.sh",
+				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
@@ -286,7 +295,9 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
@@ -355,6 +366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				5B321BC225AF7AC700A96F98 /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
