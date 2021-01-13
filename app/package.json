@@ -33,6 +33,7 @@
     "react-native-screens": "^2.16.1",
     "react-native-sound": "^0.11.0",
     "react-native-splash-screen": "^3.2.0",
+    "react-native-sticky-parallax-header": "^0.4.0",
     "react-native-vector-icons": "^7.1.0",
     "react-redux": "^7.2.2",
     "react-viro": "^2.17.0",
