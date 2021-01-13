@@ -6,6 +6,7 @@ import {AppLoading} from './navigation/AppLoading';
 import MainNavigator from './navigation/MainNavigator';
 import configureStore from './helpers/store/configureStore';
 import {Provider} from 'react-redux';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 const {store} = configureStore();
 export const App = () => {
@@ -35,11 +36,13 @@ export const App = () => {
 
     return (
         <NavigationContainer>
-            <Provider store={store}>
-                <StatusBar barStyle={'light-content'}/>
-                <AppLoading isLoading={isLoading} progress={progress} text={loadingText}/>
-                <MainNavigator/>
-            </Provider>
+            <SafeAreaProvider>
+                <Provider store={store}>
+                    <StatusBar barStyle={'light-content'}/>
+                    <AppLoading isLoading={isLoading} progress={progress} text={loadingText}/>
+                    <MainNavigator/>
+                </Provider>
+            </SafeAreaProvider>
         </NavigationContainer>
     );
 };

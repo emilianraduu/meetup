@@ -186,7 +186,7 @@
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = VX2LVTYX89;
+						DevelopmentTeam = XMR3494594;
 						LastSwiftMigration = 1120;
 					};
 				};
@@ -370,7 +370,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Steppers/Steppers.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VX2LVTYX89;
+				DEVELOPMENT_TEAM = XMR3494594;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Steppers/Info.plist;
@@ -382,7 +382,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uaic.steppers;
+				PRODUCT_BUNDLE_IDENTIFIER = com.steppers;
 				PRODUCT_NAME = Steppers;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -398,8 +398,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Steppers/Steppers.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VX2LVTYX89;
-				ENABLE_BITCODE = YES;
+				DEVELOPMENT_TEAM = XMR3494594;
+				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Steppers/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -410,7 +410,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.uaic.steppers;
+				PRODUCT_BUNDLE_IDENTIFIER = com.steppers;
 				PRODUCT_NAME = Steppers;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
