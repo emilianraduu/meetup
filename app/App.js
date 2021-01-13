@@ -30,7 +30,7 @@ export const App = () => {
             clearInterval(textInterval);
             setIsLoading(false);
         }, 1000);
-        SplashScreen.hide();
+        setTimeout(()=>SplashScreen.hide(), 100);
 
     }, []);
 

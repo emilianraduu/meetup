@@ -4,7 +4,7 @@ import {Animated, Text, View} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import LottieView from 'lottie-react-native';
 import Modal from 'react-native-modal';
-import {ViroARScene, ViroARSceneNavigator, ViroText} from 'react-viro';
+import {Viro3DObject, ViroAmbientLight, ViroARScene, ViroARSceneNavigator} from 'react-viro';
 import AppleHealthKit from 'react-native-health';
 import Ripple from 'react-native-material-ripple';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -169,7 +169,7 @@ export const BattlefieldScreen = ({navigation}) => {
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <LottieView source={require('../../assets/animations/walk.json')} autoPlay loop
                                     style={{width: 30, alignSelf: 'center'}}/>
-                        <Text>{stepCount} or {Number(kmCount / 1000).toFixed(2)}km</Text>
+                        <Text>{stepCount.toFixed(0)} or {Number(kmCount / 1000).toFixed(2)}km</Text>
                     </View>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <LottieView source={require('../../assets/animations/coin.json')} autoPlay loop
@@ -221,15 +221,39 @@ export const BattlefieldScreen = ({navigation}) => {
             </MapView>
 
 
-            <Modal visible={showAr} style={{margin: 0}}>
+            <Modal isVisible={showAr} style={{margin: 0}}>
                 <ViroARSceneNavigator initialScene={{
-                    scene: () => <ViroARScene onPinch={() => setShowAr(false)}>
-                        <ViroText text={'salut baieti'} style={{fontWeight: 'bold', color: 'red', fontSize: 20}}
-                                  scale={[.5, .5, .5]} position={[0, 0, -0.1]}/>
+                    scene: () => <ViroARScene>
+                        <ViroAmbientLight color="#ffffff"/>
+                        <Viro3DObject
+                            onDrag={(dragToPos, source)=> {
+                                console.log(dragToPos)
+                            }}
+                            source={require('../../assets/models/emoji_angry_anim.vrx')}
+                            resources={[
+                                require('../../assets/models/emoji_angry_diffuse.png'),
+                                require('../../assets/models/emoji_angry_normal.png'),
+                                require('../../assets/models/emoji_angry_specular.png')]}
+                            highAccuracyEvents={true}
+                            position={[0, -.1, -1]}
+                            scale={[0.5, 0.5, 0.5]}
+                            rotation={[45, 0, 0]}
+                            type="VRX"
+                            transformBehaviors={['billboard']}/>
                     </ViroARScene>,
                 }}>
 
                 </ViroARSceneNavigator>
+                <View style={{position: 'absolute', right: 20, top: 48, alignItems: 'center'}}>
+                    <Ripple onPress={() => setShowAr(false)} style={{
+                        backgroundColor: '#fff',
+                        justifyContent: 'center',
+                        alignSelf: 'center',
+                        borderRadius: 40,
+                    }}>
+                        <MaterialIcons name={'close'} size={40}/>
+                    </Ripple>
+                </View>
             </Modal>
         </View>
     );
