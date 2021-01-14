@@ -38,10 +38,14 @@ export const BattlefieldScreen = ({navigation}) => {
                     }
 
                     AppleHealthKit.getStepCount({}, (callbackError: string, results: HealthValue[]) => {
-                        setStepCount(results.value);
+                        if (results && results.value) {
+                            setStepCount(results.value);
+                        }
                     });
                     AppleHealthKit.getDistanceWalkingRunning({}, (callbackError: string, results: HealthValue[]) => {
-                        setKmCount(results.value);
+                        if (results && results.value) {
+                            setKmCount(results.value);
+                        }
                     });
                 });
 
@@ -77,10 +81,14 @@ export const BattlefieldScreen = ({navigation}) => {
             }
 
             AppleHealthKit.getStepCount({}, (callbackError: string, results: HealthValue[]) => {
-                setStepCount(results.value);
+                if (results && results.value) {
+                    setStepCount(results.value);
+                }
             });
             AppleHealthKit.getDistanceWalkingRunning({}, (callbackError: string, results: HealthValue[]) => {
-                setKmCount(results.value);
+                if (results && results.value) {
+                    setKmCount(results.value);
+                }
             });
         });
     }, []);
@@ -226,8 +234,8 @@ export const BattlefieldScreen = ({navigation}) => {
                     scene: () => <ViroARScene>
                         <ViroAmbientLight color="#ffffff"/>
                         <Viro3DObject
-                            onDrag={(dragToPos, source)=> {
-                                console.log(dragToPos)
+                            onDrag={(dragToPos, source) => {
+                                console.log(dragToPos);
                             }}
                             source={require('../../assets/models/emoji_angry_anim.vrx')}
                             resources={[

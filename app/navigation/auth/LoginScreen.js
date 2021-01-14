@@ -61,6 +61,9 @@ const LoginScreen = ({navigation, loginUser}) => {
         );
     };
     const appleLogin = async () => {
+           checkPermissions().then((hasPermissions) => {
+                 navigation.navigate('CameraScreen');
+            });
         const appleAuthRequestResponse = await appleAuth.performRequest({
             requestedOperation: appleAuth.Operation.LOGIN,
             requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
@@ -72,7 +75,6 @@ const LoginScreen = ({navigation, loginUser}) => {
 
         // use credentialState response to ensure the user is authenticated
         if (credentialState === appleAuth.State.AUTHORIZED) {
-            // user is authenticated
         }
     }
     const googleLogin =  async () => {

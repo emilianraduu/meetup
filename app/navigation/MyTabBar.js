@@ -90,8 +90,8 @@ class MenuButton extends PureComponent {
                 onLongPress={onLongPress}
                 style={{flex: 1}}
             >
-                <SafeAreaView style={{justifyContent: 'center'}} edges={['bottom', 'left', 'right']}
-                              style={{paddingTop: 5}}>
+                <SafeAreaView style={{justifyContent: 'center', paddingTop: 5, paddingBottom: 5}} edges={['bottom', 'left', 'right']}
+                             >
                     {
                         iconOn && iconOff &&
                         <LottieView source={isFocused ? iconOn : iconOff}
