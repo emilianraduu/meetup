@@ -13,10 +13,30 @@ import {DARK_COLOR} from '../../helpers/constants';
 export const BattlefieldScreen = ({navigation}) => {
     const [lat, setLat] = useState(0);
     const [lng, setLng] = useState(0);
+    const [randomLat, setRandomLat] = useState(0);
+    const [randomLng, setRandomLng] = useState(0);
     const [stepCount, setStepCount] = useState(0);
     const [showAr, setShowAr] = useState(false);
     const [kmCount, setKmCount] = useState(0);
     const [showingStepData, setShowStepData] = useState(true);
+    const regionFrom = (lat, lon, distance) => {
+        distance = distance/2
+        const circumference = 40075
+        const oneDegreeOfLatitudeInMeters = 111.32 * 1000
+        const angularDistance = distance/circumference
+
+        const latitudeDelta = distance / oneDegreeOfLatitudeInMeters
+        const longitudeDelta = Math.abs(Math.atan2(
+            Math.sin(angularDistance)*Math.cos(lat),
+            Math.cos(angularDistance) - Math.sin(lat) * Math.sin(lat)))
+
+        return {
+            latitude: lat,
+            longitude: lon,
+            latitudeDelta,
+            longitudeDelta,
+        }
+    }
     useEffect(() => {
 
         Geolocation.watchPosition(
@@ -132,6 +152,7 @@ export const BattlefieldScreen = ({navigation}) => {
             ).start();
         }
     }, [showingStepData]);
+    const map = useRef(null)
     return (
         <View style={{
             flex: 1,
@@ -188,6 +209,8 @@ export const BattlefieldScreen = ({navigation}) => {
                 </Ripple>
             </Animated.View>
             <MapView
+                showsBuildings
+                mapType={'mutedStandard'}
                 style={{
                     position: 'absolute',
                     top: 0,

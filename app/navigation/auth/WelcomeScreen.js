@@ -5,6 +5,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
 import Ripple from 'react-native-material-ripple';
 import Icon from 'react-native-vector-icons/Foundation';
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 export const WelcomeScreen = ({navigation}) => {
     return (
@@ -18,7 +19,6 @@ export const WelcomeScreen = ({navigation}) => {
                 flex: 1,
                 borderTopRightRadius: 60,
                 padding: 20,
-
             }}>
                 {/*<Text style={{fontWeight: '600'}}> Lorem Ipsum is simply dummy text of the printing and typesetting*/}
                 {/*    industry. Lorem Ipsum has been*/}
@@ -28,10 +28,17 @@ export const WelcomeScreen = ({navigation}) => {
                 {/*    the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently*/}
                 {/*    with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>*/}
                 <LottieView source={require('../../assets/animations/welcome.json')} autoPlay loop
-                            style={{width: 300, alignSelf: 'center'}}/>
+                            style={{width: 300, alignSelf: 'center', flex: 1}}/>
             </View>
                 <SafeAreaView style={{backgroundColor: GREEN_COLOR, flex: 1, justifyContent: 'center'}}>
-                    <Ripple rippleColor={'#fff'} onPress={() => navigation.navigate('LoginScreen')} style={{
+                    <Ripple rippleColor={'#fff'} onPress={() => {
+                        const options = {
+                            enableVibrateFallback: true,
+                            ignoreAndroidSystemSettings: false
+                        };
+                        ReactNativeHapticFeedback.trigger("impactLight", options);
+                        navigation.navigate('LoginScreen');
+                    }} style={{
                         backgroundColor: DARK_COLOR,
                         borderRadius: 5,
                         width: 250,

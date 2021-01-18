@@ -1,9 +1,10 @@
-import React, {PureComponent} from 'react';
-import {Text, View} from 'react-native';
+import React, {PureComponent, useEffect, useRef} from 'react';
+import {Animated, Text, View} from 'react-native';
 import {DARK_COLOR, GREEN_COLOR, GREY_COLOR} from '../helpers/constants';
 import Ripple from 'react-native-material-ripple';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 export const MyTabBar = ({state, descriptors, navigation}) => {
     return (
@@ -54,7 +55,11 @@ class MenuButton extends PureComponent {
 
     onPress = () => {
         const {route, isFocused, navigation} = this.props;
-
+        const options = {
+            enableVibrateFallback: true,
+            ignoreAndroidSystemSettings: false,
+        };
+        ReactNativeHapticFeedback.trigger('impactLight', options);
         if (this.ref) {
             this.ref.play();
         }
@@ -90,8 +95,9 @@ class MenuButton extends PureComponent {
                 onLongPress={onLongPress}
                 style={{flex: 1}}
             >
-                <SafeAreaView style={{justifyContent: 'center', paddingTop: 5, paddingBottom: 5}} edges={['bottom', 'left', 'right']}
-                             >
+                <SafeAreaView style={{justifyContent: 'center', paddingTop: 5, paddingBottom: 5}}
+                              edges={['bottom', 'left', 'right']}
+                >
                     {
                         iconOn && iconOff &&
                         <LottieView source={isFocused ? iconOn : iconOff}

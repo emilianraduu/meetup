@@ -1,4 +1,5 @@
 import {check, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import messaging from '@react-native-firebase/messaging';
 
 
 const checkPermission = (result) => {
@@ -23,7 +24,7 @@ const checkPermission = (result) => {
 };
 export const checkPermissions = async () => {
     const alwaysLocation = await check(PERMISSIONS.IOS.LOCATION_ALWAYS);
-
+    console.log(await messaging().hasPermission())
 
     const iosCamera = await check(PERMISSIONS.IOS.CAMERA);
 

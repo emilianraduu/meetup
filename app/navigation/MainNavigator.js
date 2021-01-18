@@ -6,6 +6,7 @@ import ProfileScreen from './profile/ProfileScreen';
 import {BattlefieldScreen} from './battlefield/BattlefieldScreen';
 import {MyTabBar} from './MyTabBar';
 import {LeaderBoardScreen} from './leaderboard/LeaderBoardScreen';
+import {ProfileStack} from './profile/ProfileStack';
 
 
 const MainNavigator = ({isLoggedIn}) => {
@@ -37,7 +38,7 @@ const MainNavigator = ({isLoggedIn}) => {
                                 iconOff: require('../assets/animations/leaderboard-off.json'),
                                 iconOn: require('../assets/animations/leaderboard-on.json'),
                             }}/>
-                <Tab.Screen name={'Profile'} component={ProfileScreen}
+                <Tab.Screen name={'Profile'} component={ProfileStack}
                             options={{
                                 iconOff: require('../assets/animations/profile-off.json'),
                                 iconOn: require('../assets/animations/profile-on.json'),
