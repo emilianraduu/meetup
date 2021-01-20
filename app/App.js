@@ -9,7 +9,6 @@ import {Provider} from 'react-redux';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import crashlytics from '@react-native-firebase/crashlytics';
 import analytics from '@react-native-firebase/analytics';
-import {checkPermissions} from './helpers/permissions';
 
 const {store} = configureStore();
 export const App = () => {
@@ -22,9 +21,7 @@ export const App = () => {
         'After pointing at the man, he shouted whether he was a kami.'];
 
     useEffect(() => {
-
         crashlytics().log('App mounted.');
-        checkPermissions()
         setLoadingText(loadingOptions[Math.floor(Math.random() * loadingOptions.length)]);
         setProgress(progress => progress + 0.1);
         const interval = setInterval(() => {

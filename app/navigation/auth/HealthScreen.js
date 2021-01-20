@@ -11,15 +11,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AppleHealthKit from 'react-native-health';
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Modal from 'react-native-modal';
+import {lightVibration} from '../../helpers/vibrations';
 
 const HealthScreen = ({loginUser, navigation}) => {
     const [showModal, setShowModal] = useState(false);
     const onPress = async () => {
-        const options = {
-            enableVibrateFallback: true,
-            ignoreAndroidSystemSettings: false
-        };
-        ReactNativeHapticFeedback.trigger("impactLight", options);
+        lightVibration()
         const permissions = {
             permissions: {
                 read: [
@@ -43,11 +40,7 @@ const HealthScreen = ({loginUser, navigation}) => {
         <View style={{backgroundColor: DARK_COLOR, flex: 1}}>
             <SafeAreaView style={{padding: 20, paddingBottom: 0, flexDirection: 'row'}}>
                 <Ripple style={{alignSelf: 'center', marginRight: 10}} onPress={() => {
-                    const options = {
-                        enableVibrateFallback: true,
-                        ignoreAndroidSystemSettings: false
-                    };
-                    ReactNativeHapticFeedback.trigger("impactLight", options);
+                    lightVibration()
                     navigation.goBack();
                 }}>
                     <Icon name={'arrow-back'} color={GREEN_COLOR} size={30}/>

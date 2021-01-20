@@ -1,6 +1,7 @@
 import {check, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import messaging from '@react-native-firebase/messaging';
 
+export const PERMISSION_ARRAY = 'PERMISSION_ARRAY';
 
 const checkPermission = (result) => {
     switch (result) {
@@ -20,20 +21,26 @@ const checkPermission = (result) => {
             // console.log('The permission is denied and not requestable anymore');
             return false;
     }
-    return true
+    return true;
 };
-export const checkPermissions = async () => {
+export const checkPermissions = () => async (dispatch) => {
     const alwaysLocation = await check(PERMISSIONS.IOS.LOCATION_ALWAYS);
-    console.log(await messaging().hasPermission())
-
+    const notificationPermission = await messaging().hasPermission();
     const iosCamera = await check(PERMISSIONS.IOS.CAMERA);
-
-
-    const locationInUse = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
-    return checkPermission(locationInUse) && checkPermission(iosCamera) && checkPermission(alwaysLocation);
+    const locationInUse = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+    dispatch(
+        {
+            type: PERMISSION_ARRAY,
+            payload: {
+                LocationScreen: !checkPermission(locationInUse),
+                CameraScreen: !checkPermission(iosCamera),
+                LocationScreenAlways: !checkPermission(alwaysLocation),
+                NotificationsScreen: !notificationPermission,
+            },
+        },
+    );
 
 
 };
 
 
-export const get = () =>{ }

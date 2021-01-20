@@ -4,70 +4,54 @@ import {Animated, Text, View} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import LottieView from 'lottie-react-native';
 import Modal from 'react-native-modal';
-import {Viro3DObject, ViroAmbientLight, ViroARScene, ViroARSceneNavigator} from 'react-viro';
-import AppleHealthKit from 'react-native-health';
 import Ripple from 'react-native-material-ripple';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {DARK_COLOR} from '../../helpers/constants';
+import {DARK_COLOR, GREEN_COLOR} from '../../helpers/constants';
+import randomLocation from 'random-location';
+import {Viro3DObject, ViroAmbientLight, ViroARScene, ViroARSceneNavigator} from 'react-viro';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import * as Progress from 'react-native-progress';
 
 export const BattlefieldScreen = ({navigation}) => {
     const [lat, setLat] = useState(0);
     const [lng, setLng] = useState(0);
-    const [randomLat, setRandomLat] = useState(0);
-    const [randomLng, setRandomLng] = useState(0);
     const [stepCount, setStepCount] = useState(0);
-    const [showAr, setShowAr] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const [kmCount, setKmCount] = useState(0);
     const [showingStepData, setShowStepData] = useState(true);
-    const regionFrom = (lat, lon, distance) => {
-        distance = distance/2
-        const circumference = 40075
-        const oneDegreeOfLatitudeInMeters = 111.32 * 1000
-        const angularDistance = distance/circumference
+    const [content, setContent] = useState(<></>);
 
-        const latitudeDelta = distance / oneDegreeOfLatitudeInMeters
-        const longitudeDelta = Math.abs(Math.atan2(
-            Math.sin(angularDistance)*Math.cos(lat),
-            Math.cos(angularDistance) - Math.sin(lat) * Math.sin(lat)))
-
-        return {
-            latitude: lat,
-            longitude: lon,
-            latitudeDelta,
-            longitudeDelta,
-        }
-    }
     useEffect(() => {
 
         Geolocation.watchPosition(
             ({coords: {latitude, longitude}}) => {
                 setLat(latitude);
                 setLng(longitude);
-                const permissions = {
-                    permissions: {
-                        read: [
-                            AppleHealthKit.Constants.Permissions.StepCount,
-                            AppleHealthKit.Constants.Permissions.DistanceWalkingRunning,
-                        ],
-                    },
-                };
+                // const permissions = {
+                //     permissions: {
+                //         read: [
+                //             AppleHealthKit.Constants.Permissions.StepCount,
+                //             AppleHealthKit.Constants.Permissions.DistanceWalkingRunning,
+                //         ],
+                //     },
+                // };
 
-                AppleHealthKit.initHealthKit(permissions, (error: string) => {
-                    if (error) {
-                        console.log('[ERROR] Cannot grant permissions!');
-                    }
-
-                    AppleHealthKit.getStepCount({}, (callbackError: string, results: HealthValue[]) => {
-                        if (results && results.value) {
-                            setStepCount(results.value);
-                        }
-                    });
-                    AppleHealthKit.getDistanceWalkingRunning({}, (callbackError: string, results: HealthValue[]) => {
-                        if (results && results.value) {
-                            setKmCount(results.value);
-                        }
-                    });
-                });
+                // AppleHealthKit.initHealthKit(permissions, (error: string) => {
+                //     if (error) {
+                //         console.log('[ERROR] Cannot grant permissions!');
+                //     }
+                //
+                //     AppleHealthKit.getStepCount({}, (callbackError: string, results: HealthValue[]) => {
+                //         if (results && results.value) {
+                //             setStepCount(results.value);
+                //         }
+                //     });
+                //     AppleHealthKit.getDistanceWalkingRunning({}, (callbackError: string, results: HealthValue[]) => {
+                //         if (results && results.value) {
+                //             setKmCount(results.value);
+                //         }
+                //     });
+                // });
 
             },
             (e) => console.log(e),
@@ -75,42 +59,49 @@ export const BattlefieldScreen = ({navigation}) => {
                 enableHighAccuracy: true,
                 timeout: 5000,
                 maximumAge: 500,
-                distanceFilter: 1,
+                distanceFilter: 10,
             },
         );
 
 
     });
     useEffect(() => {
-        Geolocation.getCurrentPosition(({coords: {latitude, longitude}}) => {
-            setLat(latitude);
-            setLng(longitude);
-        });
-        const permissions = {
-            permissions: {
-                read: [
-                    AppleHealthKit.Constants.Permissions.StepCount,
-                    AppleHealthKit.Constants.Permissions.DistanceWalkingRunning,
-                ],
-            },
-        };
-
-        AppleHealthKit.initHealthKit(permissions, (error: string) => {
-            if (error) {
-                console.log('[ERROR] Cannot grant permissions!');
-            }
-
-            AppleHealthKit.getStepCount({}, (callbackError: string, results: HealthValue[]) => {
-                if (results && results.value) {
-                    setStepCount(results.value);
-                }
-            });
-            AppleHealthKit.getDistanceWalkingRunning({}, (callbackError: string, results: HealthValue[]) => {
-                if (results && results.value) {
-                    setKmCount(results.value);
-                }
-            });
-        });
+        // Geolocation.getCurrentPosition(({coords: {latitude, longitude}}) => {
+        //     setLat(latitude);
+        //     setLng(longitude);
+        //     // for (let i = 0; i < 5; i++) {
+        //     //     const obj = randomLocation.randomCirclePoint({latitude: latitude, longitude: longitude}, 300);
+        //     //     if(!locations.includes(obj)) {
+        //     //         console.log(obj)
+        //     //         setLocations([...locations, obj]);
+        //     //     }
+        //     // }
+        // });
+        // const permissions = {
+        //     permissions: {
+        //         read: [
+        //             AppleHealthKit.Constants.Permissions.StepCount,
+        //             AppleHealthKit.Constants.Permissions.DistanceWalkingRunning,
+        //         ],
+        //     },
+        // };
+        //
+        // AppleHealthKit.initHealthKit(permissions, (error: string) => {
+        //     if (error) {
+        //         console.log('[ERROR] Cannot grant permissions!');
+        //     }
+        //
+        //     AppleHealthKit.getStepCount({}, (callbackError: string, results: HealthValue[]) => {
+        //         if (results && results.value) {
+        //             setStepCount(results.value);
+        //         }
+        //     });
+        //     AppleHealthKit.getDistanceWalkingRunning({}, (callbackError: string, results: HealthValue[]) => {
+        //         if (results && results.value) {
+        //             setKmCount(results.value);
+        //         }
+        //     });
+        // });
     }, []);
     const moveAnim = useRef(new Animated.Value(20)).current;
     const flipAnim = useRef(new Animated.Value(1)).current;
@@ -152,7 +143,18 @@ export const BattlefieldScreen = ({navigation}) => {
             ).start();
         }
     }, [showingStepData]);
-    const map = useRef(null)
+    const [locations, setLocations] = useState([]);
+    useEffect(() => {
+        if (lat && lng) {
+            if (locations.length < 5) {
+                const obj = randomLocation.randomCirclePoint({latitude: lat, longitude: lng}, 300);
+
+                if (!locations.includes(obj)) {
+                    setLocations([...locations, obj]);
+                }
+            }
+        }
+    }, [lat, lng]);
     return (
         <View style={{
             flex: 1,
@@ -232,11 +234,117 @@ export const BattlefieldScreen = ({navigation}) => {
                 }}
 
             >
+                {locations && locations.map((loc, index) => <Marker key={index}
+
+                                                                    coordinate={{
+                                                                        latitude: loc.latitude,
+                                                                        longitude: loc.longitude,
+                                                                    }}
+                                                                    onPress={() => {
+                                                                        setContent(<View style={{
+                                                                            backgroundColor: '#fff',
+                                                                            margin: 20,
+                                                                            borderRadius: 40,
+                                                                            padding: 20,
+                                                                        }}><Ripple onPress={() => {
+                                                                            setContent(<><ViroARSceneNavigator
+                                                                                initialScene={{
+                                                                                    scene: () => <ViroARScene>
+                                                                                        <ViroAmbientLight
+                                                                                            color="#ffffff"/>
+                                                                                        <Viro3DObject
+                                                                                            onDrag={(dragToPos, source) => {
+                                                                                                console.log(dragToPos);
+                                                                                            }}
+                                                                                            source={require('../../assets/models/emoji_angry_anim.vrx')}
+                                                                                            resources={[
+                                                                                                require('../../assets/models/emoji_angry_diffuse.png'),
+                                                                                                require('../../assets/models/emoji_angry_normal.png'),
+                                                                                                require('../../assets/models/emoji_angry_specular.png')]}
+                                                                                            highAccuracyEvents={true}
+                                                                                            position={[0, -.1, -1]}
+                                                                                            scale={[0.5, 0.5, 0.5]}
+                                                                                            rotation={[45, 0, 0]}
+                                                                                            type="VRX"
+                                                                                            transformBehaviors={['billboard']}/>
+                                                                                    </ViroARScene>,
+                                                                                }}>
+
+                                                                            </ViroARSceneNavigator>
+                                                                                <View style={{
+                                                                                    position: 'absolute',
+                                                                                    right: 20,
+                                                                                    top: 48,
+                                                                                    alignItems: 'center',
+                                                                                }}>
+                                                                                    <Ripple onPress={() => {
+                                                                                        setShowModal(false);
+                                                                                        setTimeout(() => setContent(<></>), 500);
+                                                                                    }} style={{
+                                                                                        backgroundColor: '#fff',
+                                                                                        justifyContent: 'center',
+                                                                                        alignSelf: 'center',
+                                                                                        borderRadius: 40,
+                                                                                    }}>
+                                                                                        <MaterialIcons name={'close'}
+                                                                                                       size={40}/>
+                                                                                    </Ripple>
+                                                                                </View></>);
+                                                                        }
+                                                                        }><Text>Fight</Text></Ripple></View>);
+                                                                        setShowModal(true);
+
+                                                                    }}
+                >
+                    <View style={{
+                        transform: [
+                            // {scaleX: -1},
+                        ],
+                    }}>
+                        {/*<Text style={{textAlign: 'center', color: '#fff'}}>Level 5</Text>*/}
+                        <LottieView source={require('../../assets/animations/panda.json')} autoPlay loop
+                                    style={{width: 100, height: 100}}/>
+                    </View>
+                </Marker>)}
+
                 <Marker
 
                     coordinate={{latitude: lat, longitude: lng}}
                     onPress={() => {
-                        setShowAr(true);
+                        setShowModal(true);
+
+                        setContent(<View
+                            style={{backgroundColor: '#fff', margin: 20, borderRadius: 40, padding: 20}}><View style={{
+                            backgroundColor: DARK_COLOR,
+                            borderBottomRightRadius: 40,
+                            borderBottomLeftRadius: 40,
+                        }}>
+                            <SafeAreaView style={{padding: 20, flexDirection: 'row'}}>
+                                <Ripple onPress={() => {
+                                    // LottieRef.current.play();
+                                }} style={{width: 100, height: 100, backgroundColor: GREEN_COLOR, borderRadius: 500}}>
+                                    <LottieView  source={require('../../assets/animations/burger.json')}
+                                                style={{width: '100%', height: '100%'}} loop={false}
+                                                progress={undefined}/>
+                                </Ripple>
+                                <View style={{alignSelf: 'center', marginLeft: 10, flex: 1}}>
+                                    <Text style={{color: '#fff', fontSize: 20, fontWeight: '700'}}>Radu Emilian</Text>
+                                    <Text style={{color: '#fff', fontSize: 10, fontWeight: '200'}}>Burger - Level
+                                        5</Text>
+                                    <View style={{width: '100%'}}>
+                                        <Progress.Bar width={null} animated={true} progress={0.5}
+                                                      color={'rgba(122,216,185,100)'}
+                                                      style={{marginTop: 5, marginBottom: 2}}/>
+                                    </View>
+                                    <View
+                                        style={{width: '100%', justifyContent: 'space-between', flexDirection: 'row'}}>
+                                        <Text style={{color: '#fff', fontSize: 10, fontWeight: '200'}}>0</Text>
+                                        <Text style={{color: '#fff', fontSize: 10, fontWeight: '200'}}>500</Text>
+                                    </View>
+
+                                </View>
+                            </SafeAreaView>
+                        </View></View>);
                     }}
                 >
                     <View style={{
@@ -252,40 +360,15 @@ export const BattlefieldScreen = ({navigation}) => {
             </MapView>
 
 
-            <Modal isVisible={showAr} style={{margin: 0}}>
-                <ViroARSceneNavigator initialScene={{
-                    scene: () => <ViroARScene>
-                        <ViroAmbientLight color="#ffffff"/>
-                        <Viro3DObject
-                            onDrag={(dragToPos, source) => {
-                                console.log(dragToPos);
-                            }}
-                            source={require('../../assets/models/emoji_angry_anim.vrx')}
-                            resources={[
-                                require('../../assets/models/emoji_angry_diffuse.png'),
-                                require('../../assets/models/emoji_angry_normal.png'),
-                                require('../../assets/models/emoji_angry_specular.png')]}
-                            highAccuracyEvents={true}
-                            position={[0, -.1, -1]}
-                            scale={[0.5, 0.5, 0.5]}
-                            rotation={[45, 0, 0]}
-                            type="VRX"
-                            transformBehaviors={['billboard']}/>
-                    </ViroARScene>,
-                }}>
-
-                </ViroARSceneNavigator>
-                <View style={{position: 'absolute', right: 20, top: 48, alignItems: 'center'}}>
-                    <Ripple onPress={() => setShowAr(false)} style={{
-                        backgroundColor: '#fff',
-                        justifyContent: 'center',
-                        alignSelf: 'center',
-                        borderRadius: 40,
-                    }}>
-                        <MaterialIcons name={'close'} size={40}/>
-                    </Ripple>
-                </View>
+            <Modal animationOutTiming={400} animationOut={'slideOutDown'} isVisible={showModal} style={{margin: 0}}
+                   onBackdropPress={() => {
+                       setShowModal(false);
+                       setTimeout(() => setContent(<></>), 400);
+                   }}>
+                {content}
             </Modal>
+
+
         </View>
     );
 };

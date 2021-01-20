@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import LottieView from 'lottie-react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
+import {lightVibration} from '../../helpers/vibrations';
 
 export const NotificationsPermissions = ({navigation}) => {
     const [showModal, setShowModal] = useState(false);
@@ -28,11 +29,7 @@ export const NotificationsPermissions = ({navigation}) => {
         <View style={{backgroundColor: DARK_COLOR, flex: 1}}>
             <SafeAreaView style={{padding: 20, paddingBottom: 0, flexDirection: 'row'}}>
                 <Ripple style={{alignSelf: 'center', marginRight: 10}} onPress={() => {
-                    const options = {
-                        enableVibrateFallback: true,
-                        ignoreAndroidSystemSettings: false,
-                    };
-                    ReactNativeHapticFeedback.trigger('impactLight', options);
+                    lightVibration()
                     navigation.goBack();
                 }}>
                     <Icon name={'arrow-back'} color={GREEN_COLOR} size={30}/>

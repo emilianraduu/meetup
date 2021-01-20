@@ -9,15 +9,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import Modal from 'react-native-modal';
+import {lightVibration} from '../../helpers/vibrations';
 
 export const LocationScreen = ({navigation}) => {
     const [showModal, setShowModal] = useState(false);
     const onPress = async () => {
-        const options = {
-            enableVibrateFallback: true,
-            ignoreAndroidSystemSettings: false
-        };
-        ReactNativeHapticFeedback.trigger("impactLight", options);
+        lightVibration()
         const locationWhenInUse = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
         if (locationWhenInUse === RESULTS.GRANTED) {
             navigation.navigate('NotificationsPermissions');
@@ -29,11 +26,7 @@ export const LocationScreen = ({navigation}) => {
         <View style={{backgroundColor: DARK_COLOR, flex: 1}}>
             <SafeAreaView style={{padding: 20, paddingBottom: 0, flexDirection: 'row'}}>
                 <Ripple style={{alignSelf: 'center', marginRight: 10}} onPress={() => {
-                    const options = {
-                        enableVibrateFallback: true,
-                        ignoreAndroidSystemSettings: false
-                    };
-                    ReactNativeHapticFeedback.trigger("impactLight", options);
+                    lightVibration()
                     navigation.goBack();
                 }}>
                     <Icon name={'arrow-back'} color={GREEN_COLOR} size={30}/>

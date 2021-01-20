@@ -6,15 +6,15 @@ import LottieView from 'lottie-react-native';
 import Ripple from 'react-native-material-ripple';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {checkPermissions} from '../../helpers/permissions';
 import {connect} from 'react-redux';
 import {loginUser} from '../../helpers/actions/UserActions';
 import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
 import {AccessToken, GraphRequest, LoginManager} from 'react-native-fbsdk';
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+import {lightVibration} from '../../helpers/vibrations';
 
-const LoginScreen = ({navigation, loginUser}) => {
+const LoginScreen = ({navigation, loginUser, permissionArray}) => {
+    console.log(permissionArray)
     const initUser = (token) => {
         fetch('https://graph.facebook.com/v2.5/me?fields=email,first_name,last_name,friends&access_token=' + token)
             .then((response) => {
@@ -27,11 +27,7 @@ const LoginScreen = ({navigation, loginUser}) => {
             });
     };
     const fbLogin = () => {
-        const options = {
-            enableVibrateFallback: true,
-            ignoreAndroidSystemSettings: false
-        };
-        ReactNativeHapticFeedback.trigger("impactLight", options);
+        lightVibration()
         LoginManager.logInWithPermissions(['public_profile', 'email']).then(
             function (result) {
                 if (result.isCancelled) {
@@ -51,10 +47,7 @@ const LoginScreen = ({navigation, loginUser}) => {
                     });
                     console.log(req);
                     AccessToken.getCurrentAccessToken().then((accessToken) => initUser(accessToken.accessToken));
-                    checkPermissions().then((hasPermissions) => {
-                        navigation.navigate('CameraScreen');
-                    });
-
+                    navigation.navigate('CameraScreen');
                 }
             },
             function (error) {
@@ -63,56 +56,34 @@ const LoginScreen = ({navigation, loginUser}) => {
         );
     };
     const appleLogin = async () => {
-        const options = {
-            enableVibrateFallback: true,
-            ignoreAndroidSystemSettings: false
-        };
-        ReactNativeHapticFeedback.trigger("impactLight", options);
-        checkPermissions().then((hasPermissions) => {
-            navigation.navigate('CameraScreen');
-        });
+        lightVibration()
+        navigation.navigate('CameraScreen');
         const appleAuthRequestResponse = await appleAuth.performRequest({
             requestedOperation: appleAuth.Operation.LOGIN,
             requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
         });
 
-        // get current authentication state for user
-        // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
         const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
-
-        // use credentialState response to ensure the user is authenticated
         if (credentialState === appleAuth.State.AUTHORIZED) {
         }
     };
     const googleLogin = async () => {
-        const options = {
-            enableVibrateFallback: true,
-            ignoreAndroidSystemSettings: false
-        };
-        ReactNativeHapticFeedback.trigger("impactLight", options);
+        lightVibration()
         try {
             GoogleSignin.configure();
             try {
                 await GoogleSignin.hasPlayServices();
                 const userInfo = await GoogleSignin.signIn();
-                // this.setState({ userInfo });
                 console.log(userInfo);
-                checkPermissions().then((hasPermissions) => {
-                    navigation.navigate('CameraScreen');
-                });
+                navigation.navigate('CameraScreen');
             } catch (error) {
                 if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-                    // user cancelled the login flow
                 } else if (error.code === statusCodes.IN_PROGRESS) {
-                    // operation (e.g. sign in) is in progress already
                 } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-                    // play services not available or outdated
                 } else {
-                    // some other error happened
                 }
             }
         } catch (error) {
-            // this.errorPopUp()
             console.log(error);
         }
     };
@@ -120,11 +91,7 @@ const LoginScreen = ({navigation, loginUser}) => {
         <View style={{backgroundColor: DARK_COLOR, flex: 1}}>
             <SafeAreaView style={{padding: 20, paddingBottom: 0, flexDirection: 'row'}}>
                 <Ripple style={{alignSelf: 'center', marginRight: 10}} onPress={() => {
-                    const options = {
-                        enableVibrateFallback: true,
-                        ignoreAndroidSystemSettings: false
-                    };
-                    ReactNativeHapticFeedback.trigger("impactLight", options);
+                    lightVibration()
                     navigation.goBack();
                 }}>
                     <Icon name={'arrow-back'} color={GREEN_COLOR} size={30}/>
@@ -191,5 +158,5 @@ const LoginScreen = ({navigation, loginUser}) => {
         </View>
     );
 };
-export default connect((state) => ({}), {loginUser})(LoginScreen);
+export default connect((state) => ({permissionArray: state.permissions.permissionArray}), {loginUser})(LoginScreen);
 

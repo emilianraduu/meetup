@@ -1,15 +1,23 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {AuthStack} from './auth/AuthStack';
 import {connect} from 'react-redux';
-import ProfileScreen from './profile/ProfileScreen';
 import {BattlefieldScreen} from './battlefield/BattlefieldScreen';
 import {MyTabBar} from './MyTabBar';
 import {LeaderBoardScreen} from './leaderboard/LeaderBoardScreen';
 import {ProfileStack} from './profile/ProfileStack';
+import {checkPermissions} from '../helpers/actions/PermissionsActions';
 
 
-const MainNavigator = ({isLoggedIn}) => {
+const MainNavigator = ({isLoggedIn, checkPermissions}) => {
+    useEffect(()=>{
+        checkPermissions()
+    }, [])
+    useEffect(()=>{
+        if(isLoggedIn){
+
+        }
+    }, [isLoggedIn])
     return (
         isLoggedIn ?
             <Tab.Navigator tabBar={props => <MyTabBar {...props}/>}
@@ -52,4 +60,4 @@ const MainNavigator = ({isLoggedIn}) => {
 const Tab = createBottomTabNavigator();
 
 
-export default connect((state) => ({isLoggedIn: state.user.isLoggedIn}), {})(MainNavigator);
+export default connect((state) => ({isLoggedIn: state.user.isLoggedIn}), {checkPermissions})(MainNavigator);

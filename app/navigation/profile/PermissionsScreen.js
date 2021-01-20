@@ -7,6 +7,7 @@ import Ripple from 'react-native-material-ripple';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ToggleSwitch from 'toggle-switch-react-native';
+import {lightVibration} from '../../helpers/vibrations';
 
 export const PermissionsScreen = ({navigation}) => {
 
@@ -28,11 +29,7 @@ export const PermissionsScreen = ({navigation}) => {
             <View style={{backgroundColor: DARK_COLOR, borderBottomLeftRadius: 40, borderBottomRightRadius: 40}}>
                 <SafeAreaView style={{padding: 20, paddingBottom: 0, flexDirection: 'row'}}>
                     <Ripple style={{alignSelf: 'center', marginRight: 10}} onPress={() => {
-                        const options = {
-                            enableVibrateFallback: true,
-                            ignoreAndroidSystemSettings: false,
-                        };
-                        ReactNativeHapticFeedback.trigger('impactLight', options);
+                        lightVibration()
                         navigation.goBack();
                     }}>
                         <Icon name={'arrow-back'} color={GREEN_COLOR} size={30}/>

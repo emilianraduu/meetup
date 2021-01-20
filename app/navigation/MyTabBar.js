@@ -5,6 +5,7 @@ import Ripple from 'react-native-material-ripple';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+import {lightVibration} from '../helpers/vibrations';
 
 export const MyTabBar = ({state, descriptors, navigation}) => {
     return (
@@ -55,11 +56,7 @@ class MenuButton extends PureComponent {
 
     onPress = () => {
         const {route, isFocused, navigation} = this.props;
-        const options = {
-            enableVibrateFallback: true,
-            ignoreAndroidSystemSettings: false,
-        };
-        ReactNativeHapticFeedback.trigger('impactLight', options);
+        lightVibration()
         if (this.ref) {
             this.ref.play();
         }
