@@ -25,8 +25,8 @@ export const WelcomeScreen = ({navigation}) => {
                 borderTopRightRadius: 60,
                 padding: 20,
             }}>
-                <LottieView source={require('../../assets/animations/welcome.json')} autoPlay loop
-                            style={{width: 300, alignSelf: 'center', flex: 1}}/>
+                <LottieView source={require('../../assets/animations/panda.json')} autoPlay loop
+                            style={{width: 500, alignSelf: 'center', flex: 1}}/>
             </View>
             <SafeAreaView style={{backgroundColor: GREEN_COLOR, flex: 1, justifyContent: 'center'}}>
                 <Ripple rippleColor={'#fff'} onPress={onPress} style={{

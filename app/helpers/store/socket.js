@@ -1,11 +1,8 @@
 import openSocket from 'socket.io-client/dist/socket.io'
 import {Config} from "react-native-config";
-import { changeUserDetails } from '../../navigation/authNavigation/LoginActions'
-import { updateStage, createStage, updateEvent } from '../../navigation/mainNavigation/tabNavigator/currentStage/Controllers/StagesActions'
 import { AsyncStorage } from 'react-native'
-import { GET_PREDICTOR_SETTING } from '../../navigation/mainNavigation/profile/ProfileActions'
-import {updateStages} from "../../navigation/mainNavigation/tabNavigator/currentStage/Controllers/PredictorActions";
 import crashlytics from '@react-native-firebase/crashlytics';
+import {API_URL} from '../constants';
 
 export default class Socket {
     static instance = Socket.instance || new Socket()
@@ -14,18 +11,18 @@ export default class Socket {
 
     connect() {
         if (!Socket.connection) {
-            Socket.connection = openSocket(Config.PREDICTOR_API_URL, {cookie: false, transports: ['websocket']})
+            Socket.connection = openSocket(API_URL, {cookie: false, transports: ['websocket']})
             crashlytics().log("Connected to socket")
         } else {
             crashlytics().log("Error: Socket already is connected")
         }
     }
 
-    subscribe({cookie, dispatch}) {
+    subscribe({token, dispatch}) {
         if (Socket.connection) {
             if (!Socket.isSubscribed) {
                 Socket.isSubscribed = true
-                Socket.connection.emit('subscribe', {cookie})
+                Socket.connection.emit('subscribe', {token})
                 this.setupListeners(dispatch)
             } else {
                 crashlytics().log("Error: Already subscribed to socket")
@@ -36,41 +33,12 @@ export default class Socket {
     }
 
     async setupListeners(dispatch) {
-        const cookie = await AsyncStorage.getItem('cookie')
-
-        Socket.connection.on('user_update', async (data) => {
-            data = JSON.parse(data)
-            crashlytics().log("Received user data change event from Socket connection, changing user details on front-end")
-            changeUserDetails(data)(dispatch)
-        })
-        Socket.connection.on('update_super12_settings', async (data) => {
+        const token = await AsyncStorage.getItem('token')
+        Socket.connection.on('salut', async (data) => {
             if (data) {
-                crashlytics().log("Received app settings change event from Socket connection, changing predictor settings")
-                dispatch({
-                    type: GET_PREDICTOR_SETTING,
-                    payload: {
-                        predictorSettings: data
-                    }
-                })
-            }
-        })
-        Socket.connection.on('update_etapa', async (data) => {
-            if (data) {
-                crashlytics().log("Received app settings change event from Socket connection, changing predictor settings")
-                updateStage(data)(dispatch)
-                updateStages(data)(dispatch)
-            }
-        })
-        Socket.connection.on('create_etapa', async (data) => {
-            if (data) {
-                crashlytics().log("Received event to create new Stage from Socket connection, creating new Stage on front-end")
-                createStage(data)(dispatch)
-            }
-        })
-        Socket.connection.on('update_eveniment', async (data) => {
-            if (data) {
+                alert('data')
                 crashlytics().log("Received event to trigger update for an event from Socket connection, updating event on front-end")
-                updateEvent(data)(dispatch)
+                // updateEvent(data)(dispatch)
             }
         })
 

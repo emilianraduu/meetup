@@ -1,7 +1,7 @@
-import {ScrollView, Text, View} from 'react-native';
+import {ScrollView, Text, View, AsyncStorage} from 'react-native';
 import React, {useRef, useState} from 'react';
 import Ripple from 'react-native-material-ripple';
-import {DARK_COLOR, GREEN_COLOR} from '../../helpers/constants';
+import {API_URL, DARK_COLOR, GREEN_COLOR} from '../../helpers/constants';
 import {connect} from 'react-redux';
 import {logoutUser} from '../../helpers/actions/UserActions';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -12,39 +12,31 @@ import Ionicon from 'react-native-vector-icons/Ionicons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import branch from 'react-native-branch';
 import Modal from 'react-native-modal';
+import {Loader} from '../Loader';
 
-const ProfileScreen = ({logoutUser, navigation}) => {
+const ProfileScreen = ({logoutUser, navigation, user}) => {
     const [showLogout, setShowLogout] = useState(false);
-    const shareLink = async () => {
-        let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
-            locallyIndex: true,
-            title: 'Cool Content!',
-            contentDescription: 'Cool Content Description',
-            contentMetadata: {
-                ratingAverage: 4.2,
-                customMetadata: {
-                    prop1: 'test',
-                    prop2: 'abc',
-                },
-            },
-        });
-        let linkProperties = {
-            feature: 'share',
-        };
+    const [loading, setLoading] = useState(false);
 
-        let controlParams = {
-            $desktop_url: 'http://desktop-url.com/monster/12345',
-        };
-        let {url} = branchUniversalObject.generateShortUrl(linkProperties, controlParams);
-        let shareOptions = {messageHeader: 'Check this out', messageBody: 'No really, check this out!'};
-        let {
-            channel,
-            completed,
-            error,
-        } = await branchUniversalObject.showShareSheet(shareOptions, linkProperties, controlParams);
-    };
-    const logout = () => {
+    const logout = async () => {
         setShowLogout(false);
+        await AsyncStorage.removeItem('token')
+        try {
+            setLoading(true);
+            const response = await fetch(`${API_URL}api/logout`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + user.token,
+                },
+                method: 'POST',
+            });
+            const body = await response.json();
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setLoading(false);
+        }
         logoutUser();
     };
     const goToNotif = () => {
@@ -59,6 +51,8 @@ const ProfileScreen = ({logoutUser, navigation}) => {
     const LottieRef = useRef(null);
     return (
         <View style={{backgroundColor: '#fff', flex: 1}}>
+            <Loader loading={loading}/>
+
             <View style={{backgroundColor: DARK_COLOR, borderBottomRightRadius: 40, borderBottomLeftRadius: 40}}>
                 <SafeAreaView style={{padding: 20, flexDirection: 'row'}}>
                     <Ripple onPress={() => {
@@ -68,7 +62,7 @@ const ProfileScreen = ({logoutUser, navigation}) => {
                                     style={{width: '100%', height: '100%'}} loop={false} progress={undefined}/>
                     </Ripple>
                     <View style={{alignSelf: 'center', marginLeft: 10, flex: 1}}>
-                        <Text style={{color: '#fff', fontSize: 20, fontWeight: '700'}}>Radu Emilian</Text>
+                        <Text style={{color: '#fff', fontSize: 20, fontWeight: '700'}}>{user.family_name} {user.given_name}</Text>
                         <Text style={{color: '#fff', fontSize: 10, fontWeight: '200'}}>Burger - Level 5</Text>
                         <View style={{width: '100%'}}>
                             <Progress.Bar width={null} animated={true} progress={0.5} color={'rgba(122,216,185,100)'}
@@ -161,7 +155,13 @@ const ProfileScreen = ({logoutUser, navigation}) => {
                        style={{flex: 1, margin: 0}} onBackdropPress={() => {
                     setShowLogout(false);
                 }}>
-                    <View style={{backgroundColor: '#fff', margin: 40, borderRadius: 20, alignItems: 'center', padding: 20}}>
+                    <View style={{
+                        backgroundColor: '#fff',
+                        margin: 40,
+                        borderRadius: 20,
+                        alignItems: 'center',
+                        padding: 20,
+                    }}>
                         <LottieView source={require('../../assets/animations/logout.json')} style={{width: 300}}
                                     autoPlay loop={false}/>
 
@@ -187,4 +187,6 @@ const ProfileScreen = ({logoutUser, navigation}) => {
         </View>
     );
 };
-export default connect((state) => ({}), {logoutUser})(ProfileScreen);
+export default connect((state) => ({
+    user: state.user.user,
+}), {logoutUser})(ProfileScreen);

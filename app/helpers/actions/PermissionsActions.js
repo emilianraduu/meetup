@@ -23,6 +23,8 @@ const checkPermission = (result) => {
     }
     return true;
 };
+
+export const PERMISSION_ARRAY_START = 'PERMISSION_ARRAY_START';
 export const checkPermissions = () => async (dispatch) => {
     const alwaysLocation = await check(PERMISSIONS.IOS.LOCATION_ALWAYS);
     const notificationPermission = await messaging().hasPermission();

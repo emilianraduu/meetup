@@ -9,55 +9,39 @@ import {Provider} from 'react-redux';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import crashlytics from '@react-native-firebase/crashlytics';
 import analytics from '@react-native-firebase/analytics';
+import Socket from './helpers/store/socket';
 
 const {store} = configureStore();
 export const App = () => {
-    const [progress, setProgress] = useState(0);
-    const [loadingText, setLoadingText] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
+
     const routeNameRef = React.useRef();
     const navigationRef = React.useRef();
-    const loadingOptions = ['The other lad was eventually hit by a train.', 'One of the men told the other that he wants to do that as well',
-        'After pointing at the man, he shouted whether he was a kami.'];
+
 
     useEffect(() => {
+        Socket.instance.connect()
         crashlytics().log('App mounted.');
-        setLoadingText(loadingOptions[Math.floor(Math.random() * loadingOptions.length)]);
-        setProgress(progress => progress + 0.1);
-        const interval = setInterval(() => {
-            setProgress(progress => progress + 0.02);
-        }, 100);
-        const textInterval = setInterval(() => {
-            setLoadingText(loadingOptions[Math.floor(Math.random() * loadingOptions.length)]);
-        }, 3000);
-        setTimeout(() => {
-            clearInterval(interval);
-            clearInterval(textInterval);
-            setIsLoading(false);
-        }, 1000);
         setTimeout(() => SplashScreen.hide(), 100);
 
     }, []);
 
     return (
-        <NavigationContainer ref={navigationRef}
-                             // onReady={() => routeNameRef.current = navigationRef.current.getCurrentRoute().name}
-                             onStateChange={() => {
-                                 const previousRouteName = routeNameRef.current;
-                                 const currentRouteName = navigationRef.current.getCurrentRoute().name;
-                                 if (previousRouteName !== currentRouteName) {
-                                     analytics().logScreenView({
-                                         screen_name: currentRouteName,
-                                         screen_class: currentRouteName,
-                                     });
-                                 }
-                                 routeNameRef.current = currentRouteName;
-                             }}
-        >
+        <NavigationContainer
+            ref={navigationRef}
+            onStateChange={() => {
+                const previousRouteName = routeNameRef.current;
+                const currentRouteName = navigationRef.current.getCurrentRoute().name;
+                if (previousRouteName !== currentRouteName) {
+                    analytics().logScreenView({
+                        screen_name: currentRouteName,
+                        screen_class: currentRouteName,
+                    });
+                }
+                routeNameRef.current = currentRouteName;
+            }}>
             <SafeAreaProvider>
                 <Provider store={store}>
                     <StatusBar barStyle={'light-content'}/>
-                    <AppLoading isLoading={isLoading} progress={progress} text={loadingText}/>
                     <MainNavigator/>
                 </Provider>
             </SafeAreaProvider>

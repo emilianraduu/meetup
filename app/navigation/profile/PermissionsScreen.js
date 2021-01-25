@@ -8,6 +8,7 @@ import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ToggleSwitch from 'toggle-switch-react-native';
 import {lightVibration} from '../../helpers/vibrations';
+import branch from 'react-native-branch';
 
 export const PermissionsScreen = ({navigation}) => {
 
@@ -108,7 +109,35 @@ export const PermissionsScreen = ({navigation}) => {
                     <Text>Health</Text>
                     <ToggleSwitch isOn={true}
                                   size="medium"
-                                  onToggle={isOn => console.log('changed to : ', isOn)}/>
+                                  onToggle={isOn => {
+
+                                      const shareLink = async () => {
+                                          let branchUniversalObject = await branch.createBranchUniversalObject('canonicalIdentifier', {
+                                              locallyIndex: true,
+                                              title: 'Cool Content!',
+                                              contentDescription: 'Cool Content Description',
+                                              contentMetadata: {
+                                                  ratingAverage: 4.2,
+                                                  customMetadata: {
+                                                      prop1: 'test',
+                                                      prop2: 'abc',
+                                                  },
+                                              },
+                                          });
+                                          let linkProperties = {
+                                              feature: 'share',
+                                          };
+
+                                          let {url} = branchUniversalObject.generateShortUrl(linkProperties, controlParams);
+                                          let shareOptions = {messageHeader: 'Get into your stepping mood!', messageBody: 'No really, check this out!'};
+                                          let {
+                                              channel,
+                                              completed,
+                                              error,
+                                          } = await branchUniversalObject.showShareSheet(shareOptions, linkProperties, controlParams);
+                                      };
+                                      shareLink()
+                                  }}/>
                 </View>
             </ScrollView>
 
