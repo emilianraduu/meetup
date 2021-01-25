@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import {TOKEN_SECRET} from "../config";
+import {JWT_EXPIRE_TIME, TOKEN_SECRET} from "../config";
 import APIError from "../helpers/apiError";
 import httpStatus from "http-status";
 
@@ -16,10 +16,11 @@ export const isAuthenticated = async (req, res, next) => {
         if (err) {
             return new APIError('FORBIDDEN', httpStatus.FORBIDDEN)
         }
+        req.user = user
     })
     next()
 }
 
-export const  generateAccessToken = (username) => {
-    return jwt.sign(username, TOKEN_SECRET, { expiresIn: '188888800s' });
+export const  generateAccessToken = (user) => {
+    return jwt.sign(user, TOKEN_SECRET, { expiresIn: JWT_EXPIRE_TIME });
 }

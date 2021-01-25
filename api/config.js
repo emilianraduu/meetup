@@ -17,3 +17,5 @@ export const TOKEN_SECRET = '6a147d8e7a39d2311c1bbd29558adc588a887db671e13323754
 
 export const GOOGLE_CLIENT_ID = '483075451002-md3ne9919spb5666i171kniu167mdpgl.apps.googleusercontent.com'
 export const GOOGLE_CLIENT_SECRET = 'FOR8aI2dau6ncE4B_yICkA1Z'
+export const IOS_CLIENT_ID = '373085034119-qk52t36490hemmls6pjs34t8p9hlr4j1.apps.googleusercontent.com'
+export const JWT_EXPIRE_TIME = '50000000s'

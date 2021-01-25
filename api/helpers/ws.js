@@ -7,11 +7,16 @@ export const configureWs = (server) => {
     const pubClient = redisClient
     const subClient = pubClient.duplicate()
     let adapter = socketioRedisAdapter({ pubClient, subClient })
-    // adapter.pubClient.on('error', function(){});
-    // adapter.subClient.on('error', function(){});
+    adapter.pubClient.on('error', function(){});
+    adapter.subClient.on('error', function(){});
     io.adapter(adapter)
-    io.on('connect', onConnect)
+    io.on('connection', function(client) {
+        client.emit('salut', 'salut')
+        console.log('Client connected...');
+    });
+    // io.on('error',(e)=>console.log(e))x
 }
 
 function onConnect (socket) {
+    console.log('connect')
 }

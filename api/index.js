@@ -17,7 +17,7 @@ import morgan from 'morgan'
 let app = express()
 app.use(compression())
 app.server = http.createServer(app)
-configureWs(app.server)
+app.io=configureWs(app.server)
 // logger
 
 app.use(morgan('combined'));
