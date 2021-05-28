@@ -1,0 +1,24 @@
+stages:
+  - build
+
+image: mingc/android-build-box
+
+build:
+  stage: build
+  only:
+    refs:
+      - master
+  tags:
+    - general
+  script:
+    - gem install bundler:2.2.15
+    - rm -rf node_modules
+    - yarn
+    - npx jetify
+    - cd android
+    - rm -rf app/src/main/res/raw
+    - ./gradlew clean
+    - fastlane install_plugins
+    - fastlane build id:$ANDROID_APP_ID token:$TOKEN
+
+

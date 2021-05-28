@@ -3,16 +3,13 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 $FirebaseSDKVersion = '7.0.0'
-target 'Steppers' do
+target 'meetup' do
 
   # React Native Maps dependencies
   rn_maps_path = '../node_modules/react-native-maps'
   pod 'react-native-google-maps', :path => rn_maps_path
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
-  
-  pod 'ViroReact', :path => '../node_modules/react-viro/ios/'
-  pod 'ViroKit_static_lib', :path => '../node_modules/react-viro/ios/dist/ViroRenderer/static_lib'
   
   config = use_native_modules!
 
@@ -22,7 +19,8 @@ target 'Steppers' do
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable these next few lines.
-  use_flipper!
+  #  use_flipper!
+
   post_install do |installer|
     flipper_post_install(installer)
   end
@@ -56,3 +54,4 @@ end
 pre_install do |installer|
 Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
 end
+

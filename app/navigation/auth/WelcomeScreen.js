@@ -1,49 +1,93 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import {DARK_COLOR, GREEN_COLOR} from '../../helpers/constants';
+import {StatusBar, StyleSheet, Text, View} from 'react-native';
+import {BIG_FONT_SIZE, theme} from '../../helpers/constants';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import LottieView from 'lottie-react-native';
 import Ripple from 'react-native-material-ripple';
-import Icon from 'react-native-vector-icons/Foundation';
-import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import {lightVibration} from '../../helpers/vibrations';
+import LottieView from 'lottie-react-native';
+import {EnterpriseLoginRoute, LoginRoute} from '../../helpers/routes';
+import {graphql, withApollo} from 'react-apollo';
+import {LOGIN_MUTATION} from '../../graphql/mutations/User';
 
-export const WelcomeScreen = ({navigation}) => {
-    const onPress = () => {
-        lightVibration()
-        navigation.navigate('LoginScreen');
-    }
-    return (
-        <View style={{backgroundColor: DARK_COLOR, flex: 1}}>
+const image = require('../../assets/animations/welcome-new.json');
 
-            <SafeAreaView style={{padding: 20, paddingBottom: 0}}>
-                <Text style={{fontSize: 60, color: GREEN_COLOR, fontWeight: 'bold'}}>Welcome</Text>
-            </SafeAreaView>
-            <View style={{
-                backgroundColor: GREEN_COLOR,
-                flex: 1,
-                borderTopRightRadius: 60,
-                padding: 20,
-            }}>
-                <LottieView source={require('../../assets/animations/panda.json')} autoPlay loop
-                            style={{width: 500, alignSelf: 'center', flex: 1}}/>
-            </View>
-            <SafeAreaView style={{backgroundColor: GREEN_COLOR, flex: 1, justifyContent: 'center'}}>
-                <Ripple rippleColor={'#fff'} onPress={onPress} style={{
-                    backgroundColor: DARK_COLOR,
-                    borderRadius: 5,
-                    width: 250,
-                    height: 50,
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    overflow: 'hidden',
-                    alignSelf: 'center',
-                }}><Icon name={'foot'} color={'#fff'} size={20}/>
-                    <Text style={{color: '#fff', marginLeft: 10}}>Let's take a few steps together</Text>
-                </Ripple>
-
-            </SafeAreaView>
-        </View>
-    );
+const WelcomeScreen = ({navigation}) => {
+  const onPress = () => {
+    lightVibration();
+    navigation.navigate(LoginRoute);
+  };
+  // const onPressSecond = () => {
+  //   lightVibration();
+  //   navigation.navigate(EnterpriseLoginRoute);
+  // };
+  return (
+    <View style={style.container}>
+      <StatusBar barStyle={'dark-content'} />
+      <SafeAreaView style={style.wrapper}>
+        <Text style={style.title}>Welcome</Text>
+      </SafeAreaView>
+      <View style={style.imageWrapper}>
+        <LottieView
+          source={image}
+          autoPlay
+          loop
+          style={{width: 500, alignSelf: 'center', flex: 1}}
+        />
+      </View>
+      <SafeAreaView style={style.buttonWrapper}>
+        <Ripple rippleColor={'#fff'} onPress={onPress} style={style.button}>
+          <Text style={style.buttonText}>Start now</Text>
+        </Ripple>
+        {/*<TouchableOpacity*/}
+        {/*  onPress={onPressSecond}*/}
+        {/*  style={style.secondButtonWrapper}>*/}
+        {/*  <Text style={style.secondButtonText}>or login as enterprise</Text>*/}
+        {/*</TouchableOpacity>*/}
+      </SafeAreaView>
+    </View>
+  );
 };
+
+const style = StyleSheet.create({
+  container: {backgroundColor: theme.white, flex: 1},
+  wrapper: {padding: 20, paddingBottom: 0},
+  title: {
+    fontSize: BIG_FONT_SIZE,
+    color: theme.dark,
+    fontWeight: 'bold',
+  },
+  imageWrapper: {
+    backgroundColor: theme.dark,
+    flex: 1,
+    borderTopRightRadius: 60,
+    justifyContent: 'center',
+    padding: 20,
+  },
+  buttonWrapper: {
+    backgroundColor: theme.dark,
+    flex: 1,
+    justifyContent: 'center',
+  },
+  button: {
+    backgroundColor: theme.red,
+    borderRadius: 10,
+    width: 250,
+    height: 50,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    alignSelf: 'center',
+  },
+  buttonText: {color: '#fff', marginLeft: 10},
+  secondButtonWrapper: {
+    marginTop: 30,
+    alignSelf: 'center',
+  },
+  secondButtonText: {
+    fontSize: 12,
+    color: theme.grey,
+  },
+});
+
+export default WelcomeScreen;
