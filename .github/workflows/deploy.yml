@@ -5,10 +5,13 @@ on:
 
 jobs:
   build:
+    defaults:
+      run:
+        working-directory: ./app
     runs-on: ubuntu-18.04
 #    container: mingc/android-build-box:latest
     steps:
-      - run :  "echo Work dir: $(ls)"
+      - run :  "echo Work dir: $(pwd)"
 #      - run: "gem install bundler:2.2.15"
 #      - run: "rm -rf node_modules"
 #        working-directory: app
