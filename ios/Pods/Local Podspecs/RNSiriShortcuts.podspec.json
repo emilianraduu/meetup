@@ -1,0 +1,29 @@
+{
+  "name": "RNSiriShortcuts",
+  "version": "2.0.0",
+  "summary": "A React Native library that enables you to use iOS 12+ Siri Shortcuts.",
+  "license": "GPLv3",
+  "authors": {
+    "name": "Gustavo Parreira",
+    "email": "gustavotcparreira@gmail.com"
+  },
+  "homepage": "https://github.com/Gustash/react-native-siri-shortcut",
+  "platforms": {
+    "ios": "9.0"
+  },
+  "swift_versions": "5.2",
+  "pod_target_xcconfig": {
+    "DEFINES_MODULE": "YES"
+  },
+  "source": {
+    "git": "https://github.com/Gustash/react-native-siri-shortcut.git",
+    "tag": "v2.0.0"
+  },
+  "source_files": "ios/**/*.{h,m,swift}",
+  "dependencies": {
+    "React": [
+
+    ]
+  },
+  "swift_version": "5.2"
+}
