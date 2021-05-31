@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-18.04
 #    container: mingc/android-build-box:latest
     steps:
-      - run: "echo $ANDROID_APP_ID"
+      - run: "echo ${{secrets.ANDROID_APP_ID}}"
 #      - run: "gem install bundler:2.2.15"
 #      - run: "rm -rf node_modules"
 #      - run: "yarn"
