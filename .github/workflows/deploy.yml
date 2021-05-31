@@ -9,19 +9,13 @@ jobs:
       run:
         working-directory: ./app
     runs-on: ubuntu-18.04
-#    container: mingc/android-build-box:latest
+    container: mingc/android-build-box:latest
     steps:
 #      - run: "gem install bundler:2.2.15"
 #      - run: "rm -rf node_modules"
-#        working-directory: app
       - run: "yarn"
-#        working-directory: app
 #      - run: "npx jetify"
-#        working-directory: app
 #      - run: "./gradlew clean"
-#        working-directory: app/android
 #      - run: "fastlane install_plugins"
-#        working-directory: app/android
 #      - run: "fastlane build id:${{ secrets.ANDROID_APP_ID }} token:${{ secrets.TOKEN }}"
-#        working-directory: app/android
 
