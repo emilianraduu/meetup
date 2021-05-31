@@ -1,0 +1,9 @@
+﻿{
+  "agentId": 2,
+  "agentName": "runner",
+  "poolId": 1,
+  "poolName": "Default",
+  "serverUrl": "https://pipelines.actions.githubusercontent.com/fmUE3LYSs809YfBzQRKo41IsvVmAB373DFlngoUyxliPqTfzWH",
+  "gitHubUrl": "https://github.com/emiradu98/meetup",
+  "workFolder": "_work"
+}

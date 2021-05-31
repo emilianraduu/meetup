@@ -1,0 +1,207 @@
+[2021-05-31 18:40:20Z INFO HostContext] No proxy settings were found based on environmental variables (http_proxy/https_proxy/HTTP_PROXY/HTTPS_PROXY)
+[2021-05-31 18:40:20Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 18:40:20Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 18:40:20Z INFO HostContext] Well known config file 'Credentials': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials'
+[2021-05-31 18:40:20Z INFO Listener] Runner is built for OSX (X64) - osx-x64.
+[2021-05-31 18:40:20Z INFO Listener] RuntimeInformation: Darwin 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT 2021; root:xnu-7195.121.3~9/RELEASE_X86_64.
+[2021-05-31 18:40:20Z INFO Listener] Version: 2.278.0
+[2021-05-31 18:40:20Z INFO Listener] Commit: 62d926efce35d3ea16d7624a25aaa5b300737def
+[2021-05-31 18:40:20Z INFO Listener] Culture: 
+[2021-05-31 18:40:20Z INFO Listener] UI Culture: 
+[2021-05-31 18:40:20Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 18:40:20Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 18:40:20Z INFO Listener] Validating directory permissions for: '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 18:40:20Z INFO CommandLineParser] Parse
+[2021-05-31 18:40:20Z INFO CommandLineParser] Parsing 5 args
+[2021-05-31 18:40:20Z INFO CommandLineParser] parsing argument
+[2021-05-31 18:40:20Z INFO CommandLineParser] HasArgs: False
+[2021-05-31 18:40:20Z INFO CommandLineParser] Adding Command: configure
+[2021-05-31 18:40:20Z INFO CommandLineParser] parsing argument
+[2021-05-31 18:40:20Z INFO CommandLineParser] HasArgs: True
+[2021-05-31 18:40:20Z INFO CommandLineParser] arg: url
+[2021-05-31 18:40:20Z INFO CommandLineParser] parsing argument
+[2021-05-31 18:40:20Z INFO CommandLineParser] HasArgs: True
+[2021-05-31 18:40:20Z INFO CommandLineParser] Adding option 'url': 'https://github.com/emiradu98/meetup'
+[2021-05-31 18:40:20Z INFO CommandLineParser] parsing argument
+[2021-05-31 18:40:20Z INFO CommandLineParser] HasArgs: True
+[2021-05-31 18:40:20Z INFO CommandLineParser] arg: token
+[2021-05-31 18:40:20Z INFO CommandLineParser] parsing argument
+[2021-05-31 18:40:20Z INFO CommandLineParser] HasArgs: True
+[2021-05-31 18:40:20Z INFO CommandLineParser] Adding option 'token': '***'
+[2021-05-31 18:40:20Z INFO Listener] Arguments parsed
+[2021-05-31 18:40:20Z INFO Runner] ExecuteCommand
+[2021-05-31 18:40:20Z INFO ConfigurationStore] currentAssemblyLocation: /Users/emilian.radu/Developer/personal/meetup/actions-runner/bin/Runner.Listener.dll
+[2021-05-31 18:40:20Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 18:40:20Z INFO ConfigurationStore] binPath: /Users/emilian.radu/Developer/personal/meetup/actions-runner/bin
+[2021-05-31 18:40:20Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 18:40:20Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 18:40:20Z INFO ConfigurationStore] RootFolder: /Users/emilian.radu/Developer/personal/meetup/actions-runner
+[2021-05-31 18:40:20Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 18:40:20Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 18:40:20Z INFO HostContext] Well known config file 'Runner': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/.runner'
+[2021-05-31 18:40:20Z INFO ConfigurationStore] ConfigFilePath: /Users/emilian.radu/Developer/personal/meetup/actions-runner/.runner
+[2021-05-31 18:40:20Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 18:40:20Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 18:40:20Z INFO HostContext] Well known config file 'Credentials': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials'
+[2021-05-31 18:40:20Z INFO ConfigurationStore] CredFilePath: /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials
+[2021-05-31 18:40:20Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 18:40:20Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 18:40:20Z INFO HostContext] Well known config file 'MigratedCredentials': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_migrated'
+[2021-05-31 18:40:20Z INFO ConfigurationStore] MigratedCredFilePath: /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_migrated
+[2021-05-31 18:40:20Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 18:40:20Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 18:40:20Z INFO HostContext] Well known config file 'Service': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/.service'
+[2021-05-31 18:40:20Z INFO ConfigurationStore] ServiceConfigFilePath: /Users/emilian.radu/Developer/personal/meetup/actions-runner/.service
+[2021-05-31 18:40:20Z INFO CommandSettings] Flag 'help': 'False'
+[2021-05-31 18:40:20Z INFO CommandSettings] Flag 'version': 'False'
+[2021-05-31 18:40:20Z INFO CommandSettings] Flag 'commit': 'False'
+[2021-05-31 18:40:20Z INFO CommandSettings] Flag 'check': 'False'
+[2021-05-31 18:40:20Z INFO CommandSettings] Command 'configure': 'True'
+[2021-05-31 18:40:20Z INFO Terminal] WRITE LINE: 
+[2021-05-31 18:40:20Z INFO Terminal] WRITE LINE: --------------------------------------------------------------------------------
+[2021-05-31 18:40:20Z INFO Terminal] WRITE LINE: |        ____ _ _   _   _       _          _        _   _                      |
+[2021-05-31 18:40:20Z INFO Terminal] WRITE LINE: |       / ___(_) |_| | | |_   _| |__      / \   ___| |_(_) ___  _ __  ___      |
+[2021-05-31 18:40:20Z INFO Terminal] WRITE LINE: |      | |  _| | __| |_| | | | | '_ \    / _ \ / __| __| |/ _ \| '_ \/ __|     |
+[2021-05-31 18:40:20Z INFO Terminal] WRITE LINE: |      | |_| | | |_|  _  | |_| | |_) |  / ___ \ (__| |_| | (_) | | | \__ \     |
+[2021-05-31 18:40:20Z INFO Terminal] WRITE LINE: |       \____|_|\__|_| |_|\__,_|_.__/  /_/   \_\___|\__|_|\___/|_| |_|___/     |
+[2021-05-31 18:40:20Z INFO Terminal] WRITE LINE: |                                                                              |
+[2021-05-31 18:40:20Z INFO Terminal] WRITE: |                       
+[2021-05-31 18:40:20Z INFO Terminal] WRITE: Self-hosted runner registration
+[2021-05-31 18:40:20Z INFO Terminal] WRITE LINE:                         |
+[2021-05-31 18:40:20Z INFO Terminal] WRITE LINE: |                                                                              |
+[2021-05-31 18:40:20Z INFO Terminal] WRITE LINE: --------------------------------------------------------------------------------
+[2021-05-31 18:40:20Z INFO ConfigurationManager] ConfigureAsync
+[2021-05-31 18:40:20Z INFO ConfigurationStore] IsConfigured()
+[2021-05-31 18:40:20Z INFO ConfigurationStore] IsConfigured: False
+[2021-05-31 18:40:20Z INFO ConfigurationManager] Is configured: False
+[2021-05-31 18:40:20Z INFO CommandSettings] Arg 'url': 'https://github.com/emiradu98/meetup'
+[2021-05-31 18:40:20Z INFO CommandSettings] Remove url from Arg dictionary.
+[2021-05-31 18:40:20Z INFO CommandSettings] Arg 'token': '***'
+[2021-05-31 18:40:20Z INFO CommandSettings] Remove token from Arg dictionary.
+[2021-05-31 18:40:22Z INFO ConfigurationManager] Http response code: OK from 'POST https://api.github.com/actions/runner-registration'
+[2021-05-31 18:40:23Z INFO ConfigurationManager] cred retrieved via GitHub auth
+[2021-05-31 18:40:23Z INFO RunnerServer] Establish connection with 100 seconds timeout.
+[2021-05-31 18:40:23Z INFO GitHubActionsService] Starting operation Location.GetConnectionData
+[2021-05-31 18:40:23Z INFO RunnerServer] Establish connection with 60 seconds timeout.
+[2021-05-31 18:40:23Z INFO GitHubActionsService] Starting operation Location.GetConnectionData
+[2021-05-31 18:40:23Z INFO RunnerServer] Establish connection with 60 seconds timeout.
+[2021-05-31 18:40:23Z INFO GitHubActionsService] Starting operation Location.GetConnectionData
+[2021-05-31 18:40:25Z INFO GitHubActionsService] Finished operation Location.GetConnectionData
+[2021-05-31 18:40:25Z INFO GitHubActionsService] Finished operation Location.GetConnectionData
+[2021-05-31 18:40:25Z INFO GitHubActionsService] Finished operation Location.GetConnectionData
+[2021-05-31 18:40:25Z INFO Terminal] WRITE LINE: 
+[2021-05-31 18:40:25Z INFO ConfigurationManager] Test Connection complete.
+[2021-05-31 18:40:25Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 18:40:25Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 18:40:25Z INFO HostContext] Well known config file 'RSACredentials': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_rsaparams'
+[2021-05-31 18:40:25Z INFO RSAFileKeyManager] Creating new RSA key using 2048-bit key length
+[2021-05-31 18:40:26Z INFO RSAFileKeyManager] Successfully saved RSA key parameters to file /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_rsaparams
+[2021-05-31 18:40:26Z INFO RSAFileKeyManager] Which: 'chmod'
+[2021-05-31 18:40:26Z INFO RSAFileKeyManager] Location: '/bin/chmod'
+[2021-05-31 18:40:26Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 18:40:26Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 18:40:26Z INFO ProcessInvokerWrapper] Starting process:
+[2021-05-31 18:40:26Z INFO ProcessInvokerWrapper]   File name: '/bin/chmod'
+[2021-05-31 18:40:26Z INFO ProcessInvokerWrapper]   Arguments: '600 /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_rsaparams'
+[2021-05-31 18:40:26Z INFO ProcessInvokerWrapper]   Working directory: '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 18:40:26Z INFO ProcessInvokerWrapper]   Require exit code zero: 'False'
+[2021-05-31 18:40:26Z INFO ProcessInvokerWrapper]   Encoding web name:  ; code page: ''
+[2021-05-31 18:40:26Z INFO ProcessInvokerWrapper]   Force kill process on cancellation: 'False'
+[2021-05-31 18:40:26Z INFO ProcessInvokerWrapper]   Redirected STDIN: 'False'
+[2021-05-31 18:40:26Z INFO ProcessInvokerWrapper]   Persist current code page: 'False'
+[2021-05-31 18:40:26Z INFO ProcessInvokerWrapper]   Keep redirected STDIN open: 'False'
+[2021-05-31 18:40:26Z INFO ProcessInvokerWrapper]   High priority process: 'False'
+[2021-05-31 18:40:26Z INFO ProcessInvokerWrapper] Process started with process id 45802, waiting for process exit.
+[2021-05-31 18:40:26Z INFO ProcessInvokerWrapper] STDOUT/STDERR stream read finished.
+[2021-05-31 18:40:26Z INFO ProcessInvokerWrapper] STDOUT/STDERR stream read finished.
+[2021-05-31 18:40:26Z INFO ProcessInvokerWrapper] Finished process 45802 with exit code 0, and elapsed time 00:00:00.0185860.
+[2021-05-31 18:40:26Z INFO RSAFileKeyManager] Successfully set permissions for RSA key parameters file /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_rsaparams
+[2021-05-31 18:40:27Z INFO ConfigurationManager] Found a self-hosted runner group with id {1} and name {2} 1, Default
+[2021-05-31 18:40:27Z INFO CommandSettings] Arg 'name': ''
+[2021-05-31 18:40:27Z INFO CommandSettings] Flag 'unattended': 'False'
+[2021-05-31 18:40:27Z INFO PromptManager] ReadValue
+[2021-05-31 18:40:27Z INFO Terminal] WRITE: Enter the name of runner: 
+[2021-05-31 18:40:27Z INFO Terminal] WRITE: [press Enter for SVROLP02630] 
+[2021-05-31 18:40:27Z INFO Terminal] READ LINE
+[2021-05-31 18:40:34Z INFO Terminal] Read value: 'runner'
+[2021-05-31 18:40:34Z INFO Terminal] WRITE LINE: 
+[2021-05-31 18:40:34Z INFO CommandSettings] Arg 'labels': ''
+[2021-05-31 18:40:34Z INFO CommandSettings] Flag 'unattended': 'False'
+[2021-05-31 18:40:34Z INFO PromptManager] ReadValue
+[2021-05-31 18:40:34Z INFO Terminal] WRITE: This runner will have the following labels: 'self-hosted', 'macOS', 'X64' 
+Enter any additional labels (ex. label-1,label-2): 
+[2021-05-31 18:40:34Z INFO Terminal] WRITE: [press Enter to skip] 
+[2021-05-31 18:40:34Z INFO Terminal] READ LINE
+[2021-05-31 18:40:35Z INFO Terminal] Read value: ''
+[2021-05-31 18:40:35Z INFO Terminal] WRITE LINE: 
+[2021-05-31 18:40:36Z INFO ConfigurationStore] Saving OAuth credential @ /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials
+[2021-05-31 18:40:36Z INFO ConfigurationStore] Credentials Saved.
+[2021-05-31 18:40:36Z INFO ConfigurationStore] HasCredentials()
+[2021-05-31 18:40:36Z INFO ConfigurationStore] stored True
+[2021-05-31 18:40:36Z INFO CredentialManager] GetCredentialProvider
+[2021-05-31 18:40:36Z INFO CredentialManager] Creating type OAuth
+[2021-05-31 18:40:36Z INFO CredentialManager] Creating credential type: OAuth
+[2021-05-31 18:40:36Z INFO RSAFileKeyManager] Loading RSA key parameters from file /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_rsaparams
+[2021-05-31 18:40:36Z INFO RunnerServer] Establish connection with 100 seconds timeout.
+[2021-05-31 18:40:36Z INFO GitHubActionsService] Starting operation Location.GetConnectionData
+[2021-05-31 18:40:36Z INFO RunnerServer] Establish connection with 60 seconds timeout.
+[2021-05-31 18:40:36Z INFO GitHubActionsService] Starting operation Location.GetConnectionData
+[2021-05-31 18:40:36Z INFO RunnerServer] Establish connection with 60 seconds timeout.
+[2021-05-31 18:40:36Z INFO GitHubActionsService] Starting operation Location.GetConnectionData
+[2021-05-31 18:40:37Z INFO GitHubActionsService] Finished operation Location.GetConnectionData
+[2021-05-31 18:40:37Z INFO GitHubActionsService] Finished operation Location.GetConnectionData
+[2021-05-31 18:40:37Z INFO GitHubActionsService] Finished operation Location.GetConnectionData
+[2021-05-31 18:40:38Z WARN GitHubActionsService] Authentication failed with status code 401.
+WWW-Authenticate: Bearer
+Strict-Transport-Security: max-age=2592000
+X-TFS-ProcessId: b33b2a92-d905-40b8-8f81-e93a571467f4
+ActivityId: 04441052-dd37-40a2-9191-458688cd1dd6
+X-TFS-Session: b1afb361-dafe-41b2-b7ce-e44b7dd64621
+X-VSS-E2EID: 8a703abe-8e38-46c3-ade0-bf536122524f
+X-VSS-SenderDeploymentId: ac98198d-4d34-0364-420d-bafa6e51dce2
+X-TFS-ServiceError: The+user+%27System%3aPublicAccess%3baaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa%27+is+not+authorized+to+access+this+resource.
+X-VSS-S2STargetService: 0000005A-0000-8888-8000-000000000000/visualstudio.com
+X-Cache: CONFIG_NOCACHE
+X-MSEdge-Ref: Ref A: D4E105185C8841979FC58F6C6DE32975 Ref B: BUH01EDGE0408 Ref C: 2021-05-31T18:40:38Z
+Date: Mon, 31 May 2021 18:40:37 GMT
+
+[2021-05-31 18:40:38Z INFO RSAFileKeyManager] Loading RSA key parameters from file /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_rsaparams
+[2021-05-31 18:40:38Z INFO RSAFileKeyManager] Loading RSA key parameters from file /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_rsaparams
+[2021-05-31 18:40:38Z INFO GitHubActionsService] AAD Correlation ID for this token request: Unknown
+[2021-05-31 18:40:39Z INFO CommandSettings] Arg 'work': ''
+[2021-05-31 18:40:39Z INFO CommandSettings] Flag 'unattended': 'False'
+[2021-05-31 18:40:39Z INFO PromptManager] ReadValue
+[2021-05-31 18:40:39Z INFO Terminal] WRITE: Enter name of work folder: 
+[2021-05-31 18:40:39Z INFO Terminal] WRITE: [press Enter for _work] 
+[2021-05-31 18:40:39Z INFO Terminal] READ LINE
+[2021-05-31 18:40:41Z INFO Terminal] Read value: ''
+[2021-05-31 18:40:41Z INFO PromptManager] Falling back to the default: '_work'
+[2021-05-31 18:40:41Z INFO ConfigurationStore] Saving runner settings.
+[2021-05-31 18:40:41Z INFO ConfigurationStore] Settings Saved.
+[2021-05-31 18:40:41Z INFO Terminal] WRITE LINE: 
+[2021-05-31 18:40:41Z INFO Terminal] WRITE LINE: 
+[2021-05-31 18:40:41Z INFO OsxServiceControlManager] Service name 'actions.runner.emiradu98-meetup.runner' display name 'GitHub Actions Runner (emiradu98-meetup.runner)' will be used for service configuration.
+[2021-05-31 18:40:41Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 18:40:41Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 18:40:41Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 18:40:41Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 18:40:41Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 18:40:41Z INFO UnixUtil] Which: 'chmod'
+[2021-05-31 18:40:41Z INFO UnixUtil] Location: '/bin/chmod'
+[2021-05-31 18:40:41Z INFO UnixUtil] Running /bin/chmod 755 "/Users/emilian.radu/Developer/personal/meetup/actions-runner/svc.sh"
+[2021-05-31 18:40:41Z INFO ProcessInvokerWrapper] Starting process:
+[2021-05-31 18:40:41Z INFO ProcessInvokerWrapper]   File name: '/bin/chmod'
+[2021-05-31 18:40:41Z INFO ProcessInvokerWrapper]   Arguments: '755 "/Users/emilian.radu/Developer/personal/meetup/actions-runner/svc.sh"'
+[2021-05-31 18:40:41Z INFO ProcessInvokerWrapper]   Working directory: '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 18:40:41Z INFO ProcessInvokerWrapper]   Require exit code zero: 'True'
+[2021-05-31 18:40:41Z INFO ProcessInvokerWrapper]   Encoding web name:  ; code page: ''
+[2021-05-31 18:40:41Z INFO ProcessInvokerWrapper]   Force kill process on cancellation: 'False'
+[2021-05-31 18:40:41Z INFO ProcessInvokerWrapper]   Redirected STDIN: 'False'
+[2021-05-31 18:40:41Z INFO ProcessInvokerWrapper]   Persist current code page: 'False'
+[2021-05-31 18:40:41Z INFO ProcessInvokerWrapper]   Keep redirected STDIN open: 'False'
+[2021-05-31 18:40:41Z INFO ProcessInvokerWrapper]   High priority process: 'False'
+[2021-05-31 18:40:41Z INFO ProcessInvokerWrapper] Process started with process id 45967, waiting for process exit.
+[2021-05-31 18:40:41Z INFO ProcessInvokerWrapper] STDOUT/STDERR stream read finished.
+[2021-05-31 18:40:41Z INFO ProcessInvokerWrapper] STDOUT/STDERR stream read finished.
+[2021-05-31 18:40:41Z INFO ProcessInvokerWrapper] Finished process 45967 with exit code 0, and elapsed time 00:00:00.0077432.
+[2021-05-31 18:40:41Z INFO Listener] Runner execution has finished with return code 0
