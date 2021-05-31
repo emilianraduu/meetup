@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-18.04
 #    container: mingc/android-build-box:latest
     steps:
-      - run :  "echo Work dir: $(pwd)"
+      - run :  "echo Work dir: $(ls)"
 #      - run: "gem install bundler:2.2.15"
 #      - run: "rm -rf node_modules"
 #        working-directory: app
