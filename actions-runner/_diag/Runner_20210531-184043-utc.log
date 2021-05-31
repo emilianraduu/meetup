@@ -122,3 +122,19 @@ Date: Mon, 31 May 2021 18:40:46 GMT
 [2021-05-31 18:40:46Z INFO Terminal] WRITE LINE: 2021-05-31 18:40:46Z: Listening for Jobs
 [2021-05-31 18:40:46Z INFO JobDispatcher] Set runner/worker IPC timeout to 30 seconds.
 [2021-05-31 19:10:54Z INFO MessageListener] No message retrieved from session 'b7cc15ec-2f9f-468f-aa5e-2ed73ea43fe1' within last 30 minutes.
+[2021-05-31 19:36:01Z WARN GitHubActionsService] Authentication failed with status code 401.
+WWW-Authenticate: Bearer
+Strict-Transport-Security: max-age=2592000
+X-TFS-ProcessId: 94384122-e7c3-44ef-a047-53edb5e352ea
+ActivityId: 83435f23-8141-4028-9aa9-5df8b2b045ad
+X-TFS-Session: bc8a4ea7-dcf7-4038-956a-b8b55296d7bf
+X-VSS-E2EID: 5cbbfb76-ceb8-4917-8a90-5ac2bbe9cfed
+X-VSS-SenderDeploymentId: ac98198d-4d34-0364-420d-bafa6e51dce2
+X-TFS-ServiceError: The+user+%27System%3aPublicAccess%3baaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa%27+is+not+authorized+to+access+this+resource.
+X-VSS-S2STargetService: 0000005A-0000-8888-8000-000000000000/visualstudio.com
+X-Cache: CONFIG_NOCACHE
+X-MSEdge-Ref: Ref A: 94F153DD62C848BFB5C847DFB2472142 Ref B: BUH01EDGE0717 Ref C: 2021-05-31T19:36:01Z
+Date: Mon, 31 May 2021 19:36:00 GMT
+
+[2021-05-31 19:36:01Z INFO RSAFileKeyManager] Loading RSA key parameters from file /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_rsaparams
+[2021-05-31 19:36:02Z INFO GitHubActionsService] AAD Correlation ID for this token request: Unknown
