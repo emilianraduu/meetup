@@ -1,0 +1,14 @@
+default_platform(:android)
+
+platform :android do
+  desc "Deploy to Firebase AppDistribution"
+  lane :build do |options|
+    gradle(task: "clean assembleRelease")
+    firebase_app_distribution(
+      app: options[:id],
+      firebase_cli_token: options[:token],
+      groups: "QA"
+      # release_notes: options[:notes]
+  )
+  end
+end
