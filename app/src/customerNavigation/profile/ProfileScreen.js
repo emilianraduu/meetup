@@ -11,7 +11,6 @@ import Ripple from 'react-native-material-ripple';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Ionicon from 'react-native-vector-icons/Ionicons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
 import {Loader} from '../Loader';
@@ -63,10 +62,23 @@ const ProfileScreen = ({navigation}) => {
             Profile
           </Text>
           <View style={{flexDirection: 'row', marginTop: 20}}>
-            <FastImage
-              source={{uri: usr?.photo}}
-              style={{width: 50, height: 50, borderRadius: 50}}
-            />
+            {usr?.photo ? (
+              <FastImage
+                source={{uri: usr.photo}}
+                style={{width: 50, height: 50, borderRadius: 50}}
+              />
+            ) : (
+              <View
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderRadius: 50,
+                  overflow: 'hidden',
+                  backgroundColor: theme.red,
+                }}>
+                <Ionicons name={'person'} size={50} color={theme.white} />
+              </View>
+            )}
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate(PersonalRoute);
@@ -92,11 +104,11 @@ const ProfileScreen = ({navigation}) => {
           <View>
             <Ripple onPress={goToPers} style={style.nav}>
               <Text>Personal information</Text>
-              <Ionicon name={'person-outline'} color={theme.dark} size={20} />
+              <Ionicons name={'person-outline'} color={theme.dark} size={20} />
             </Ripple>
             <Ripple onPress={goToNotif} style={style.nav}>
               <Text>Notifications</Text>
-              <Ionicon
+              <Ionicons
                 name={'notifications-outline'}
                 color={theme.dark}
                 size={20}
@@ -104,7 +116,11 @@ const ProfileScreen = ({navigation}) => {
             </Ripple>
             <Ripple onPress={goToPerm} style={style.nav}>
               <Text>Permissions</Text>
-              <Ionicon name={'location-outline'} color={theme.dark} size={20} />
+              <Ionicons
+                name={'location-outline'}
+                color={theme.dark}
+                size={20}
+              />
             </Ripple>
           </View>
         </View>
@@ -117,15 +133,15 @@ const ProfileScreen = ({navigation}) => {
           <View>
             <Ripple onPress={goToPers} style={style.nav}>
               <Text>Siri settings</Text>
-              <Ionicon name={'ios-search'} color={theme.dark} size={20} />
+              <Ionicons name={'ios-search'} color={theme.dark} size={20} />
             </Ripple>
             <Ripple onPress={goToNotif} style={style.nav}>
               <Text>How meetup works</Text>
-              <Ionicon name={'git-network'} color={theme.dark} size={20} />
+              <Ionicons name={'git-network'} color={theme.dark} size={20} />
             </Ripple>
             <Ripple onPress={goToPerm} style={style.nav}>
               <Text>Get help</Text>
-              <Ionicon name={'help-circle'} color={theme.dark} size={20} />
+              <Ionicons name={'help-circle'} color={theme.dark} size={20} />
             </Ripple>
           </View>
         </View>

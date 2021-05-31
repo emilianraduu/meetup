@@ -19,53 +19,22 @@ import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 import {LoginManager, AccessToken, GraphRequest} from 'react-native-fbsdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Loader} from '../customerNavigation/Loader';
+import { PasswordRoute } from '../helpers/routes';
 
 const LoginScreen = ({navigation}) => {
-  const [loading, setLoading] = useState(false);
   const [values, setValues] = useState({});
-  const [error, setError] = useState(false);
-  const [login, {data}] = useMutation(LOGIN_MUTATION);
-  const [register, {registerData}] = useMutation(REGISTER_MUTATION);
-
-  useEffect(() => {
-    if (registerData) {
-      isLoggedIn(true);
-      user(registerData?.login.user);
-      AsyncStorage.setItem('accessToken', registerData.login.accessToken);
-    } else {
-      setError(true);
-      setLoading(false);
-    }
-  }, [registerData]);
-
-  useEffect(() => {
-    if (data?.login?.accessToken) {
-      isLoggedIn(true);
-      user(data?.login.user);
-      AsyncStorage.setItem('accessToken', data.login.accessToken);
-    } else {
-      setError(true);
-      setLoading(false);
-    }
-  }, [data]);
-
-  const handleRegister = async () => {
-    setLoading(true);
-    try {
-      await register({
-        variables: {
-          email: values.email,
-          password: values.password,
-        },
-      });
-
-      setLoading(false);
-    } catch (e) {
-      setError(true);
-      alert(e);
-      setLoading(false);
-    }
+  const handleLogin = () => {
+    navigation.navigate(PasswordRoute, {values} )
+  }
+  const goBack = () => {
+    lightVibration();
+    navigation.goBack();
   };
+  const disabled = !values.email && !values.password;
+  const onInputChange = ({key, value}) => {
+    setValues({...values, [key]: value});
+  };
+
   const initUser = (token) => {
     fetch(
       'https://graph.facebook.com/v2.5/me?fields=email,first_name,last_name,friends&access_token=' +
@@ -144,39 +113,9 @@ const LoginScreen = ({navigation}) => {
       console.log(error);
     }
   };
-  const handleLogin = async () => {
-    setLoading(true);
-    try {
-      // await login({
-      //   variables: {
-      //     email: values.email,
-      //     password: values.password,
-      //   },
-      // });
-      isLoggedIn(true);
-      setLoading(false);
-    } catch (e) {
-      setError(true);
-      console.log(e);
-      handleRegister();
-      setLoading(false);
-    }
-  };
-  // const onDismiss = () => {
-  //   setError(false);
-  // };
-  const goBack = () => {
-    lightVibration();
-    navigation.goBack();
-  };
-  const disabled = !values.email && !values.password;
-  const onInputChange = ({key, value}) => {
-    setValues({...values, [key]: value});
-  };
 
   return (
     <ScrollView contentContainerStyle={style.scrollview}>
-      <Loader loading={loading} />
       <SafeAreaView style={style.page}>
         <Ripple style={style.back} onPress={goBack}>
           <Icon name={'arrow-back'} color={theme.dark} size={30} />
@@ -193,16 +132,6 @@ const LoginScreen = ({navigation}) => {
           autoCorrect={false}
           onChange={(e) =>
             onInputChange({key: 'email', value: e.nativeEvent.text})
-          }
-        />
-        <Text style={style.label}>Password</Text>
-        <TextInput
-          placeholder={'examplepass12'}
-          placeholderTextColor={theme.grey}
-          style={style.input}
-          secureTextEntry={true}
-          onChange={(e) =>
-            onInputChange({key: 'password', value: e.nativeEvent.text})
           }
         />
       </View>

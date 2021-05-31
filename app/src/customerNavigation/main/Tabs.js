@@ -10,6 +10,7 @@ import {TableScreen} from './TableScreen';
 import ProfileScreen from '../profile/ProfileScreen';
 import {ReviewScreen} from '../reviews/ReviewScreen';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {theme} from '../../helpers/constants';
 
 const Tabby = ({isFocused, options, onPress, label, onLongPress}) => {
   const ref = useRef();
@@ -30,9 +31,11 @@ const Tabby = ({isFocused, options, onPress, label, onLongPress}) => {
           paddingBottom: 5,
           borderColor: 'transparent',
         },
-        isFocused && {borderBottomColor: '#d10808'},
+        isFocused && {borderBottomColor: theme.red},
       ]}>
-      <Text style={{fontSize: 16}}>{label}</Text>
+      <Text style={{fontSize: 16, fontWeight: isFocused ? 'bold' : 'normal'}}>
+        {label}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -45,8 +48,14 @@ function PubTabBar({state, descriptors, navigation, position}) {
       horizontal={true}
       showsHorizontalScrollIndicator={false}
       scrollEventThrottle={96}
-      style={{flexGrow: 0, backgroundColor: '#fff'}}
-      contentContainerStyle={{flexDirection: 'row', backgroundColor: '#fff'}}
+      style={{
+        flexGrow: 0,
+        backgroundColor: theme.white,
+      }}
+      contentContainerStyle={{
+        flexDirection: 'row',
+        backgroundColor: theme.white,
+      }}
       ref={ref}
       onScroll={(event) => {
         setScrollPos(event.nativeEvent);
@@ -124,4 +133,5 @@ function PubTabs() {
     </Tab.Navigator>
   );
 }
+
 export default PubTabs;

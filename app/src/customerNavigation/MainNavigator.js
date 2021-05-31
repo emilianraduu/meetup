@@ -55,7 +55,6 @@ const MainNavigator = () => {
       user(data.me);
     }
   }, [data, error]);
-  console.log(permissions);
   return (
     <>
       <AppLoading isLoading={loading} progress={progress} />

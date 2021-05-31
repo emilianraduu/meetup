@@ -35,7 +35,7 @@ const Sheet = ({children, pub}) => {
   );
 
   const handleSheetChanges = useCallback(
-    (i: number) => {
+    (i) => {
       setIndex(i);
       animate(i);
     },

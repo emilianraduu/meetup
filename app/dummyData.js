@@ -95,7 +95,7 @@ export const pubs = [
           {
             id: 123,
             capacity: 6,
-            blocked: false,
+            blocked: true,
             occupied: false,
             xPos: 1,
             yPos: 1,

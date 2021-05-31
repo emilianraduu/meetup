@@ -5,6 +5,7 @@ export const ManagerRoute = 'ManagerRoute';
 export const LocationRoute = 'LocationScreen';
 export const CameraRoute = 'CameraScreen';
 export const LoginRoute = 'LoginScreen';
+export const PasswordRoute = 'Password';
 export const EnterpriseLoginRoute = 'EnterpriseLoginScreen';
 export const ProfileRoute = 'Profile';
 export const PermissionsRoute = 'PermissionsScreen';
