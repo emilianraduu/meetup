@@ -8,14 +8,14 @@ jobs:
     runs-on: ubuntu-18.04
     container: mingc/android-build-box:latest
     steps:
-      - run: "cd app"
-      - run: "gem install bundler:2.2.15"
-      - run: "rm -rf node_modules"
-      - run: "yarn"
-      - run: "npx jetify"
-      - run: "cd android"
-      - run: "./gradlew clean"
-      - run: "fastlane install_plugins"
-      - run: "fastlane build id:$ANDROID_APP_ID token:$TOKEN"
+      - run: "echo ${{ secrets.ANDROID_APP_ID }}"
+#      - run: "gem install bundler:2.2.15"
+#      - run: "rm -rf node_modules"
+#      - run: "yarn"
+#      - run: "npx jetify"
+#      - run: "cd android"
+#      - run: "./gradlew clean"
+#      - run: "fastlane install_plugins"
+#      - run: "fastlane build id:${{ secrets.ANDROID_APP_ID }} token:${{ secrets.TOKEN }}"
 
 
