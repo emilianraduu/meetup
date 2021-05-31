@@ -6,18 +6,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-#    container: mingc/android-build-box:latest
+    container: mingc/android-build-box:latest
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-#      - run: "gem install bundler:2.2.15"
-#      - run: "rm -rf node_modules"
-      - run: "npm i"
-#      - run: "npx jetify"
-#      - run: "./gradlew clean"
-#      - run: "fastlane install_plugins"
-#      - run: "fastlane build id:${{ secrets.ANDROID_APP_ID }} token:${{ secrets.TOKEN }}"
+      - run: "gem install bundler:2.2.15"
+      - run: "rm -rf node_modules"
+      - run: "yarn"
+      - run: "npx jetify"
+      - run: "./gradlew clean"
+      - run: "fastlane install_plugins"
+      - run: "fastlane build id:${{ secrets.ANDROID_APP_ID }} token:${{ secrets.TOKEN }}"
 
