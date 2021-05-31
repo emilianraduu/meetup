@@ -9,7 +9,7 @@ jobs:
     container: mingc/android-build-box:latest
     defaults:
       run:
-        working-directory: "./app"
+        working-directory: "app"
 
     steps:
       - run: "gem install bundler:2.2.15"
