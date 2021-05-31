@@ -2,16 +2,17 @@ import React, {useEffect, useRef, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {AsyncStorage, StatusBar} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
-import MainNavigator from './navigation/MainNavigator';
+import MainNavigator from './src/customerNavigation/MainNavigator';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import crashlytics from '@react-native-firebase/crashlytics';
 import analytics from '@react-native-firebase/analytics';
-import Socket from './helpers/socket';
+import Socket from './src/helpers/socket';
 import {AppearanceProvider} from 'react-native-appearance';
 import {ApolloProvider} from 'react-apollo';
-import {client} from './graphql';
-import {token} from './helpers/variables';
-
+import {client} from './src/graphql';
+import {token} from './src/helpers/variables';
+import {LogBox} from 'react-native';
+LogBox.ignoreAllLogs();
 export const App = () => {
   const routeNameRef = useRef();
   const navigationRef = useRef();
@@ -38,8 +39,8 @@ export const App = () => {
         <NavigationContainer
           ref={navigationRef}
           onStateChange={() => {
-            const previousRouteName = routeNameRef.current;
-            const currentRouteName = navigationRef.current.getCurrentRoute()
+            const previousRouteName = routeNameRef?.current;
+            const currentRouteName = navigationRef?.current?.getCurrentRoute?.()
               .name;
             if (previousRouteName !== currentRouteName) {
               analytics().logScreenView({
