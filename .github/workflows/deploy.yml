@@ -5,7 +5,8 @@ on:
 
 jobs:
   build:
-    runs-on: mingc/android-build-box
+    runs-on: ubuntu-18.04
+    container: mingc/android-build-box:latest
     steps:
       - run: "gem install bundler:2.2.15"
       - run: "rm -rf node_modules"
