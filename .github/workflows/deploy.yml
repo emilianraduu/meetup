@@ -12,7 +12,6 @@ jobs:
         working-directory: "./app"
 
     steps:
-      - run:  "cd app"
       - run: "gem install bundler:2.2.15"
       - run: "rm -rf node_modules"
       - run: "yarn"
