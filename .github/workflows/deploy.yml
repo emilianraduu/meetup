@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-18.04
-    container: mingc/android-build-box:latest
+#    container: mingc/android-build-box:latest
     steps:
       - run: "echo ${{ secrets.ANDROID_APP_ID }}"
 #      - run: "gem install bundler:2.2.15"
