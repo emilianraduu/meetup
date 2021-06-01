@@ -4,10 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a69651eb-a5e0-4c56-8548-b9b77391b1d0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.github/workflows/deploy.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../.github/workflows/deploy.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../actions-runner/_diag/Runner_20210531-184043-utc.log" beforeDir="false" afterPath="$PROJECT_DIR$/../actions-runner/_diag/Runner_20210531-184043-utc.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="33e3479a-477f-4991-b415-f82aaa59210d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/deploy.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/deploy.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions-runner/_diag/Runner_20210531-210737-utc.log" beforeDir="false" afterPath="$PROJECT_DIR$/actions-runner/_diag/Runner_20210531-210737-utc.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/auth/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/auth/LoginScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphql/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphql/queries/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/queries/User.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/socket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp/backend/prisma/migrations/20210505143556_setup/migration.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp/backend/prisma/migrations/20210601145819_1/migration.sql" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,7 +23,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -25,8 +33,7 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="ProjectId" id="1tJOGaJKeIkVmu9inwDNtS4oXwj" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="1tJV3lTmWSwMZ00iocOzhvf6iOK" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -41,23 +48,41 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.import" />
+    <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/customerNavigation/main/table" />
+      <recent name="$PROJECT_DIR$/src/assets/animations" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="a69651eb-a5e0-4c56-8548-b9b77391b1d0" name="Default Changelist" comment="" />
-      <created>1622483631825</created>
+      <changelist id="33e3479a-477f-4991-b415-f82aaa59210d" name="Default Changelist" comment="" />
+      <created>1622486981903</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1622483631825</updated>
-      <workItem from="1622483633702" duration="3933000" />
+      <updated>1622486981903</updated>
+      <workItem from="1622486985459" duration="16706000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -1,1 +1,0 @@
-../../../Target Support Files/RNSiriShortcuts/RNSiriShortcuts-umbrella.h

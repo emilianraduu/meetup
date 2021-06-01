@@ -1,1 +1,0 @@
-../../../../../node_modules/react-native-siri-shortcut/ios/RNSiriShortcuts-Bridging-Header.h

@@ -1,6 +1,0 @@
-module RNSiriShortcuts {
-  umbrella header "RNSiriShortcuts-umbrella.h"
-
-  export *
-  module * { export * }
-}
