@@ -13,6 +13,7 @@ import {useSafeArea} from 'react-native-safe-area-context';
 import BottomSheet from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {theme} from '../../helpers/constants';
+import {PubDetails} from './PubCard';
 
 const Sheet = ({children, pub}) => {
   const [index, setIndex] = useState(0);
@@ -45,14 +46,15 @@ const Sheet = ({children, pub}) => {
     <BottomSheet
       handleComponent={null}
       ref={bottomSheetRef}
+      animateOnMount={true}
       index={0}
       onChange={handleSheetChanges}
-      snapPoints={['68%', '100%']}>
+      snapPoints={['70%', '100%']}>
       <Animated.View
         style={{
           flex: 1,
           transform: [{translateY: animation}],
-          paddingTop: 33,
+          paddingTop: 20,
         }}>
         <TopBar index={index} onClose={onClose} pub={pub} />
         {children}
@@ -96,6 +98,7 @@ const TopBar = ({onClose, pub, index}) => {
           flexDirection: 'row',
           flex: 1,
           alignItems: 'center',
+          justifyContent: 'center',
         }}>
         {expanded && (
           <View style={{flexGrow: expanded ? 1 : 0}}>
@@ -106,23 +109,10 @@ const TopBar = ({onClose, pub, index}) => {
             </TouchableOpacity>
           </View>
         )}
-        <Text
-          style={{
-            fontWeight: '500',
-            fontSize: 20,
-            color: theme.black,
-            flexGrow: expanded ? 1 : 0,
-          }}>
-          {pub.name}
-        </Text>
-        <Text
-          style={{
-            fontSize: 14,
-            color: theme.black,
-            marginLeft: expanded ? 0 : 26,
-          }}>
-          Reset
-        </Text>
+        <PubDetails
+          pub={pub}
+          wrapperStyle={{padding: 0, flex: expanded ? undefined : 1}}
+        />
       </Animated.View>
     </View>
   );

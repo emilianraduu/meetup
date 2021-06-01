@@ -1,10 +1,11 @@
 import React, {useContext, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {theme} from '../../helpers/constants';
-import {PubsContext} from '../../contexts/pubContext';
+import {theme} from '../../../helpers/constants';
+import {PubsContext} from '../../../contexts/pubContext';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import TableTab from './TableTab';
+import ReservationModal from './ReservationModal';
 
 export const TableScreen = () => {
   const {selectedPub: pub, onSelectLocation, selectedLocation} = useContext(
@@ -70,6 +71,10 @@ export const TableScreen = () => {
           }}>
           <Text style={text}>Reserve table</Text>
         </TouchableOpacity>
+        <ReservationModal
+          visible={showReservationModal}
+          onClose={() => setShowReservationModal(false)}
+        />
         <Text style={smallText}>or</Text>
         <TouchableOpacity
           onPress={() => {

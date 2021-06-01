@@ -6,7 +6,7 @@ import {
   ReviewsRoute,
   TableRoute,
 } from '../../helpers/routes';
-import {TableScreen} from './TableScreen';
+import {TableScreen} from './table/TableScreen';
 import ProfileScreen from '../profile/ProfileScreen';
 import {ReviewScreen} from '../reviews/ReviewScreen';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';

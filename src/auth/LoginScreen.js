@@ -1,31 +1,21 @@
-import React, {useEffect, useState} from 'react';
-import {
-  AsyncStorage,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import React, {useState} from 'react';
+import {ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import {BIG_FONT_SIZE, GREEN_COLOR, theme} from '../helpers/constants';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Ripple from 'react-native-material-ripple';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {lightVibration} from '../helpers/vibrations';
-import {LOGIN_MUTATION, REGISTER_MUTATION} from '../graphql/mutations/User';
-import {isLoggedIn, user} from '../helpers/variables';
-import {useMutation} from 'react-apollo';
+import {useQuery} from 'react-apollo';
 import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 import {LoginManager, AccessToken, GraphRequest} from 'react-native-fbsdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {Loader} from '../customerNavigation/Loader';
-import { PasswordRoute } from '../helpers/routes';
+import {PasswordRoute} from '../helpers/routes';
 
 const LoginScreen = ({navigation}) => {
   const [values, setValues] = useState({});
   const handleLogin = () => {
-    navigation.navigate(PasswordRoute, {values} )
-  }
+    navigation.navigate(PasswordRoute, {values});
+  };
   const goBack = () => {
     lightVibration();
     navigation.goBack();
@@ -75,9 +65,6 @@ const LoginScreen = ({navigation}) => {
           AccessToken.getCurrentAccessToken().then((accessToken) =>
             initUser(accessToken.accessToken),
           );
-          checkPermissions().then((hasPermissions) => {
-            navigation.navigate('CameraScreen');
-          });
         }
       },
       function (error) {

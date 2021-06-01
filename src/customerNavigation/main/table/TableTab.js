@@ -1,6 +1,6 @@
-import {PubsContext} from '../../contexts/pubContext';
+import {PubsContext} from '../../../contexts/pubContext';
 import {Dimensions, Text, TouchableOpacity, View} from 'react-native';
-import {theme} from '../../helpers/constants';
+import {theme} from '../../../helpers/constants';
 import Icon from 'react-native-vector-icons/Entypo';
 import React, {useContext} from 'react';
 

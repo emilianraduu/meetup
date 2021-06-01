@@ -59,7 +59,7 @@ const PubScreen = ({navigation, route}) => {
   const {top} = useSafeAreaInsets();
   const {selectedPub: pub} = useContext(PubsContext);
   return (
-    <View style={{flex: 1, backgroundColor: theme.black}}>
+    <View style={{flex: 1, backgroundColor: theme.white}}>
       <StatusBar barStyle="light-content" />
       <View>
         <TouchableOpacity
