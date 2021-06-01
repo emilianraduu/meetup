@@ -68,16 +68,7 @@ const ProfileScreen = ({navigation}) => {
                 style={{width: 50, height: 50, borderRadius: 50}}
               />
             ) : (
-              <View
-                style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 50,
-                  overflow: 'hidden',
-                  backgroundColor: theme.red,
-                }}>
-                <Ionicons name={'person'} size={50} color={theme.white} />
-              </View>
+              <Ionicons name={'person-circle'} size={70} color={theme.red} />
             )}
             <TouchableOpacity
               onPress={() => {

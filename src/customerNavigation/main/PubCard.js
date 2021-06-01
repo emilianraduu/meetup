@@ -21,12 +21,12 @@ const PubCard = ({index, pub, navigation, onSelectPub}) => {
           containerStyle={{
             height: 200,
           }}>
-          {pub.photos.map((photo, i) => (
+          {pub?.photos?.map((photo, i) => (
             <TouchableOpacity
               key={i}
               onPress={() => {
                 navigation.navigate(PubRoute);
-                onSelectPub(pub.id);
+                onSelectPub(pub?.id);
               }}>
               <FastImage
                 style={{height: 200, width: '100%'}}
@@ -38,13 +38,13 @@ const PubCard = ({index, pub, navigation, onSelectPub}) => {
         <TouchableOpacity
           onPress={() => {
             navigation.navigate(PubRoute);
-            onSelectPub(pub.id);
+            onSelectPub(pub?.id);
           }}
           style={style.processable}>
           <View style={style.space}>
             <View style={style.left}>
-              <Text style={style.title}>{pub.name}</Text>
-              <Text style={style.address}>{pub.address}</Text>
+              <Text style={style.title}>{pub?.name}</Text>
+              <Text style={style.address}>{pub?.address}</Text>
               <View style={style.section}>
                 <Text style={style.distance}>15 min</Text>
                 <Icon
@@ -58,14 +58,14 @@ const PubCard = ({index, pub, navigation, onSelectPub}) => {
             <View style={style.right}>
               <View style={style.section}>
                 <Text style={style.tables}>
-                  {pub.totalEmptyTables} free tables
+                  {pub?.totalEmptyTables} free tables
                 </Text>
               </View>
               <View style={style.section}>
                 {[1, 2, 3].map((i) => (
                   <DollarIcon
                     key={i}
-                    color={pub.price >= i ? theme.red : theme.grey}
+                    color={pub?.price >= i ? theme.red : theme.grey}
                     size={15}
                     name={'dollar'}
                     style={{marginRight: 5}}
@@ -79,7 +79,7 @@ const PubCard = ({index, pub, navigation, onSelectPub}) => {
                   emptyStarColor={theme.red}
                   halfStarColor={theme.red}
                   maxStars={5}
-                  rating={pub.stars}
+                  rating={pub?.stars}
                   starSize={16}
                   activeOpacity={1}
                   starStyle={style.star}
