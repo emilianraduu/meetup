@@ -1,0 +1,285 @@
+[2021-05-31 21:07:37Z INFO HostContext] No proxy settings were found based on environmental variables (http_proxy/https_proxy/HTTP_PROXY/HTTPS_PROXY)
+[2021-05-31 21:07:37Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 21:07:37Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 21:07:37Z INFO HostContext] Well known config file 'Credentials': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials'
+[2021-05-31 21:07:37Z INFO Listener] Runner is built for OSX (X64) - osx-x64.
+[2021-05-31 21:07:37Z INFO Listener] RuntimeInformation: Darwin 20.5.0 Darwin Kernel Version 20.5.0: Sat May  8 05:10:33 PDT 2021; root:xnu-7195.121.3~9/RELEASE_X86_64.
+[2021-05-31 21:07:37Z INFO Listener] Version: 2.278.0
+[2021-05-31 21:07:37Z INFO Listener] Commit: 62d926efce35d3ea16d7624a25aaa5b300737def
+[2021-05-31 21:07:37Z INFO Listener] Culture: 
+[2021-05-31 21:07:37Z INFO Listener] UI Culture: 
+[2021-05-31 21:07:37Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 21:07:37Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 21:07:37Z INFO Listener] Validating directory permissions for: '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 21:07:37Z INFO CommandLineParser] Parse
+[2021-05-31 21:07:37Z INFO CommandLineParser] Parsing 1 args
+[2021-05-31 21:07:37Z INFO CommandLineParser] parsing argument
+[2021-05-31 21:07:37Z INFO CommandLineParser] HasArgs: False
+[2021-05-31 21:07:37Z INFO CommandLineParser] Adding Command: run
+[2021-05-31 21:07:37Z INFO Listener] Arguments parsed
+[2021-05-31 21:07:37Z INFO Runner] ExecuteCommand
+[2021-05-31 21:07:37Z INFO ConfigurationStore] currentAssemblyLocation: /Users/emilian.radu/Developer/personal/meetup/actions-runner/bin/Runner.Listener.dll
+[2021-05-31 21:07:37Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 21:07:37Z INFO ConfigurationStore] binPath: /Users/emilian.radu/Developer/personal/meetup/actions-runner/bin
+[2021-05-31 21:07:37Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 21:07:37Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 21:07:37Z INFO ConfigurationStore] RootFolder: /Users/emilian.radu/Developer/personal/meetup/actions-runner
+[2021-05-31 21:07:37Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 21:07:37Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 21:07:37Z INFO HostContext] Well known config file 'Runner': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/.runner'
+[2021-05-31 21:07:37Z INFO ConfigurationStore] ConfigFilePath: /Users/emilian.radu/Developer/personal/meetup/actions-runner/.runner
+[2021-05-31 21:07:37Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 21:07:37Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 21:07:37Z INFO HostContext] Well known config file 'Credentials': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials'
+[2021-05-31 21:07:37Z INFO ConfigurationStore] CredFilePath: /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials
+[2021-05-31 21:07:37Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 21:07:37Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 21:07:37Z INFO HostContext] Well known config file 'MigratedCredentials': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_migrated'
+[2021-05-31 21:07:37Z INFO ConfigurationStore] MigratedCredFilePath: /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_migrated
+[2021-05-31 21:07:37Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 21:07:37Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 21:07:37Z INFO HostContext] Well known config file 'Service': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/.service'
+[2021-05-31 21:07:37Z INFO ConfigurationStore] ServiceConfigFilePath: /Users/emilian.radu/Developer/personal/meetup/actions-runner/.service
+[2021-05-31 21:07:37Z INFO CommandSettings] Flag 'help': 'False'
+[2021-05-31 21:07:37Z INFO CommandSettings] Flag 'version': 'False'
+[2021-05-31 21:07:37Z INFO CommandSettings] Flag 'commit': 'False'
+[2021-05-31 21:07:37Z INFO CommandSettings] Flag 'check': 'False'
+[2021-05-31 21:07:37Z INFO CommandSettings] Command 'configure': 'False'
+[2021-05-31 21:07:37Z INFO CommandSettings] Command 'remove': 'False'
+[2021-05-31 21:07:37Z INFO CommandSettings] Command 'warmup': 'False'
+[2021-05-31 21:07:37Z INFO ConfigurationManager] LoadSettings
+[2021-05-31 21:07:37Z INFO ConfigurationStore] IsConfigured()
+[2021-05-31 21:07:37Z INFO ConfigurationStore] IsConfigured: True
+[2021-05-31 21:07:37Z INFO ConfigurationManager] Is configured: True
+[2021-05-31 21:07:37Z INFO ConfigurationStore] Read setting file: 279 chars
+[2021-05-31 21:07:37Z INFO ConfigurationManager] Settings Loaded
+[2021-05-31 21:07:37Z INFO ConfigurationStore] IsServiceConfigured()
+[2021-05-31 21:07:37Z INFO ConfigurationStore] IsServiceConfigured: False
+[2021-05-31 21:07:37Z INFO CommandSettings] Command 'run': 'True'
+[2021-05-31 21:07:37Z INFO ConfigurationStore] IsConfigured()
+[2021-05-31 21:07:37Z INFO ConfigurationStore] IsConfigured: True
+[2021-05-31 21:07:37Z INFO ConfigurationManager] Is configured: True
+[2021-05-31 21:07:37Z INFO Runner] Could not parse the argument value '' for StartupType. Defaulting to Manual
+[2021-05-31 21:07:37Z INFO Runner] Set runner startup type - Manual
+[2021-05-31 21:07:37Z INFO CommandSettings] Flag 'once': 'False'
+[2021-05-31 21:07:37Z INFO Runner] RunAsync
+[2021-05-31 21:07:37Z INFO ConfigurationManager] LoadSettings
+[2021-05-31 21:07:37Z INFO ConfigurationStore] IsConfigured()
+[2021-05-31 21:07:37Z INFO ConfigurationStore] IsConfigured: True
+[2021-05-31 21:07:37Z INFO ConfigurationManager] Is configured: True
+[2021-05-31 21:07:37Z INFO ConfigurationManager] Settings Loaded
+[2021-05-31 21:07:37Z INFO MessageListener] {
+  "AgentId": 2,
+  "AgentName": "runner",
+  "PoolId": 1,
+  "PoolName": "Default",
+  "ServerUrl": "https://pipelines.actions.githubusercontent.com/fmUE3LYSs809YfBzQRKo41IsvVmAB373DFlngoUyxliPqTfzWH",
+  "GitHubUrl": "https://github.com/emiradu98/meetup",
+  "WorkFolder": "_work"
+}
+[2021-05-31 21:07:37Z INFO MessageListener] Loading Credentials
+[2021-05-31 21:07:37Z INFO ConfigurationStore] HasCredentials()
+[2021-05-31 21:07:37Z INFO ConfigurationStore] stored True
+[2021-05-31 21:07:37Z INFO CredentialManager] GetCredentialProvider
+[2021-05-31 21:07:37Z INFO CredentialManager] Creating type OAuth
+[2021-05-31 21:07:37Z INFO CredentialManager] Creating credential type: OAuth
+[2021-05-31 21:07:37Z INFO HostContext] Well known directory 'Bin': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/bin'
+[2021-05-31 21:07:37Z INFO HostContext] Well known directory 'Root': '/Users/emilian.radu/Developer/personal/meetup/actions-runner'
+[2021-05-31 21:07:37Z INFO HostContext] Well known config file 'RSACredentials': '/Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_rsaparams'
+[2021-05-31 21:07:37Z INFO RSAFileKeyManager] Loading RSA key parameters from file /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_rsaparams
+[2021-05-31 21:07:37Z INFO MessageListener] Attempt to create session.
+[2021-05-31 21:07:37Z INFO MessageListener] Connecting to the Runner Server...
+[2021-05-31 21:07:37Z INFO RunnerServer] Establish connection with 100 seconds timeout.
+[2021-05-31 21:07:37Z INFO GitHubActionsService] Starting operation Location.GetConnectionData
+[2021-05-31 21:07:37Z INFO RunnerServer] Establish connection with 60 seconds timeout.
+[2021-05-31 21:07:37Z INFO GitHubActionsService] Starting operation Location.GetConnectionData
+[2021-05-31 21:07:37Z INFO RunnerServer] Establish connection with 60 seconds timeout.
+[2021-05-31 21:07:37Z INFO GitHubActionsService] Starting operation Location.GetConnectionData
+[2021-05-31 21:07:38Z INFO GitHubActionsService] Finished operation Location.GetConnectionData
+[2021-05-31 21:07:38Z INFO GitHubActionsService] Finished operation Location.GetConnectionData
+[2021-05-31 21:07:38Z INFO GitHubActionsService] Finished operation Location.GetConnectionData
+[2021-05-31 21:07:39Z INFO MessageListener] VssConnection created
+[2021-05-31 21:07:39Z INFO Terminal] WRITE LINE: 
+[2021-05-31 21:07:39Z INFO Terminal] WRITE LINE: 
+[2021-05-31 21:07:39Z WARN GitHubActionsService] Authentication failed with status code 401.
+Transfer-Encoding: chunked
+WWW-Authenticate: Bearer
+Strict-Transport-Security: max-age=2592000
+X-TFS-ProcessId: 6f9b16a8-5178-4704-836e-90330c146c78
+ActivityId: 4a07eb6a-cdad-4471-99a9-3ef1d68771ef
+X-TFS-Session: 6e6d41bb-9297-41df-a82e-505052fb8e7f
+X-VSS-E2EID: b92a02d4-73b4-4c82-87d3-a52c5c11cb88
+X-VSS-SenderDeploymentId: ac98198d-4d34-0364-420d-bafa6e51dce2
+X-TFS-ServiceError: The+user+%27System%3aPublicAccess%3baaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa%27+is+not+authorized+to+access+this+resource.
+X-VSS-S2STargetService: 0000005A-0000-8888-8000-000000000000/visualstudio.com
+X-Cache: CONFIG_NOCACHE
+X-MSEdge-Ref: Ref A: 08335A2A29734F8397EFF74E672D75C2 Ref B: BUH01EDGE0415 Ref C: 2021-05-31T21:07:39Z
+Date: Mon, 31 May 2021 21:07:39 GMT
+
+[2021-05-31 21:07:39Z INFO RSAFileKeyManager] Loading RSA key parameters from file /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_rsaparams
+[2021-05-31 21:07:39Z INFO RSAFileKeyManager] Loading RSA key parameters from file /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_rsaparams
+[2021-05-31 21:07:39Z INFO GitHubActionsService] AAD Correlation ID for this token request: Unknown
+[2021-05-31 21:07:40Z INFO MessageListener] Session created.
+[2021-05-31 21:07:40Z INFO Terminal] WRITE LINE: 2021-05-31 21:07:40Z: Listening for Jobs
+[2021-05-31 21:07:40Z INFO JobDispatcher] Set runner/worker IPC timeout to 30 seconds.
+[2021-06-01 05:58:19Z WARN GitHubActionsService] GET request to https://pipelines.actions.githubusercontent.com/fmUE3LYSs809YfBzQRKo41IsvVmAB373DFlngoUyxliPqTfzWH/_apis/distributedtask/pools/1/messages?sessionId=958fb62c-4697-4b7b-acf0-952a7bb6d15b timed out after 60 seconds.
+[2021-06-01 05:58:19Z ERR  MessageListener] Catch exception during get next message.
+[2021-06-01 05:58:20Z ERR  MessageListener] System.TimeoutException: The HTTP request timed out after 00:01:00.
+ ---> System.Threading.Tasks.TaskCanceledException: The operation was canceled.
+ ---> System.IO.IOException: Unable to read data from the transport connection: Operation canceled.
+ ---> System.Net.Sockets.SocketException (89): Operation canceled
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.GetResult(Int16 token)
+   at System.Net.Security.SslStream.<FillBufferAsync>g__InternalFillBufferAsync|215_0[TReadAdapter](TReadAdapter adap, ValueTask`1 task, Int32 min, Int32 initial)
+   at System.Net.Security.SslStream.ReadAsyncInternal[TReadAdapter](TReadAdapter adapter, Memory`1 buffer)
+   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, CancellationToken cancellationToken)
+   at System.Net.Http.AuthenticationHelper.SendWithNtAuthAsync(HttpRequestMessage request, Uri authUri, ICredentials credentials, Boolean isProxyAuth, HttpConnection connection, HttpConnectionPool connectionPool, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithNtConnectionAuthAsync(HttpConnection connection, HttpRequestMessage request, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithRetryAsync(HttpRequestMessage request, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.AuthenticationHelper.SendWithAuthAsync(HttpRequestMessage request, Uri authUri, ICredentials credentials, Boolean preAuthenticate, Boolean isProxyAuth, Boolean doRequestAuth, HttpConnectionPool pool, CancellationToken cancellationToken)
+   at System.Net.Http.DecompressionHandler.SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at GitHub.Services.Common.VssHttpMessageHandler.SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at GitHub.Services.Common.VssHttpMessageHandler.SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at GitHub.Services.Common.VssHttpRetryMessageHandler.SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.FinishSendAsyncBuffered(Task`1 sendTask, HttpRequestMessage request, CancellationTokenSource cts, Boolean disposeCts)
+   at GitHub.Services.WebApi.VssHttpClientBase.SendAsync(HttpRequestMessage message, HttpCompletionOption completionOption, Object userState, CancellationToken cancellationToken)
+   at GitHub.Services.WebApi.VssHttpClientBase.SendAsync[T](HttpRequestMessage message, Object userState, CancellationToken cancellationToken)
+   at GitHub.Services.WebApi.VssHttpClientBase.SendAsync[T](HttpMethod method, IEnumerable`1 additionalHeaders, Guid locationId, Object routeValues, ApiResourceVersion version, HttpContent content, IEnumerable`1 queryParameters, Object userState, CancellationToken cancellationToken)
+   at GitHub.Runner.Listener.MessageListener.GetNextMessageAsync(CancellationToken token)
+[2021-06-01 05:58:20Z ERR  MessageListener] #####################################################
+[2021-06-01 05:58:20Z ERR  MessageListener] System.Threading.Tasks.TaskCanceledException: The operation was canceled.
+ ---> System.IO.IOException: Unable to read data from the transport connection: Operation canceled.
+ ---> System.Net.Sockets.SocketException (89): Operation canceled
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.GetResult(Int16 token)
+   at System.Net.Security.SslStream.<FillBufferAsync>g__InternalFillBufferAsync|215_0[TReadAdapter](TReadAdapter adap, ValueTask`1 task, Int32 min, Int32 initial)
+   at System.Net.Security.SslStream.ReadAsyncInternal[TReadAdapter](TReadAdapter adapter, Memory`1 buffer)
+   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, CancellationToken cancellationToken)
+   at System.Net.Http.AuthenticationHelper.SendWithNtAuthAsync(HttpRequestMessage request, Uri authUri, ICredentials credentials, Boolean isProxyAuth, HttpConnection connection, HttpConnectionPool connectionPool, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithNtConnectionAuthAsync(HttpConnection connection, HttpRequestMessage request, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithRetryAsync(HttpRequestMessage request, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.AuthenticationHelper.SendWithAuthAsync(HttpRequestMessage request, Uri authUri, ICredentials credentials, Boolean preAuthenticate, Boolean isProxyAuth, Boolean doRequestAuth, HttpConnectionPool pool, CancellationToken cancellationToken)
+   at System.Net.Http.DecompressionHandler.SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at GitHub.Services.Common.VssHttpMessageHandler.SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+[2021-06-01 05:58:20Z ERR  MessageListener] #####################################################
+[2021-06-01 05:58:20Z ERR  MessageListener] System.IO.IOException: Unable to read data from the transport connection: Operation canceled.
+ ---> System.Net.Sockets.SocketException (89): Operation canceled
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.GetResult(Int16 token)
+   at System.Net.Security.SslStream.<FillBufferAsync>g__InternalFillBufferAsync|215_0[TReadAdapter](TReadAdapter adap, ValueTask`1 task, Int32 min, Int32 initial)
+   at System.Net.Security.SslStream.ReadAsyncInternal[TReadAdapter](TReadAdapter adapter, Memory`1 buffer)
+   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, CancellationToken cancellationToken)
+[2021-06-01 05:58:20Z ERR  MessageListener] #####################################################
+[2021-06-01 05:58:20Z ERR  MessageListener] System.Net.Sockets.SocketException (89): Operation canceled
+[2021-06-01 05:58:20Z INFO MessageListener] Retriable exception: The HTTP request timed out after 00:01:00.
+[2021-06-01 05:58:20Z ERR  Terminal] WRITE ERROR: 2021-06-01 05:58:20Z: Runner connect error: The HTTP request timed out after 00:01:00.. Retrying until reconnected.
+[2021-06-01 05:58:20Z INFO RunnerServer] Refresh MessageQueue VssConnection to get on a different AFD node.
+[2021-06-01 05:58:20Z INFO RunnerServer] Establish connection with 60 seconds timeout.
+[2021-06-01 05:58:20Z INFO GitHubActionsService] Starting operation Location.GetConnectionData
+[2021-06-01 05:58:21Z INFO GitHubActionsService] Finished operation Location.GetConnectionData
+[2021-06-01 05:58:21Z INFO MessageListener] Sleeping for 25.893 seconds before retrying.
+[2021-06-01 06:06:39Z WARN GitHubActionsService] Authentication failed with status code 401.
+WWW-Authenticate: Bearer
+Strict-Transport-Security: max-age=2592000
+X-TFS-ProcessId: 94384122-e7c3-44ef-a047-53edb5e352ea
+ActivityId: 84bcb413-8141-4028-9aa9-5df8b2b045ad
+X-TFS-Session: 6e6d41bb-9297-41df-a82e-505052fb8e7f
+X-VSS-E2EID: e57d0099-50c0-451d-be9b-b12ebbd60e44
+X-VSS-SenderDeploymentId: ac98198d-4d34-0364-420d-bafa6e51dce2
+X-TFS-ServiceError: The+user+%27System%3aPublicAccess%3baaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa%27+is+not+authorized+to+access+this+resource.
+X-VSS-S2STargetService: 0000005A-0000-8888-8000-000000000000/visualstudio.com
+X-Cache: CONFIG_NOCACHE
+X-MSEdge-Ref: Ref A: 83803613A3E84184A70DA651B4E635E2 Ref B: BUH01EDGE0410 Ref C: 2021-06-01T06:06:39Z
+Date: Tue, 01 Jun 2021 06:06:39 GMT
+
+[2021-06-01 06:06:39Z INFO RSAFileKeyManager] Loading RSA key parameters from file /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_rsaparams
+[2021-06-01 06:06:40Z INFO GitHubActionsService] AAD Correlation ID for this token request: Unknown
+[2021-06-01 06:25:28Z WARN GitHubActionsService] GET request to https://pipelines.actions.githubusercontent.com/fmUE3LYSs809YfBzQRKo41IsvVmAB373DFlngoUyxliPqTfzWH/_apis/distributedtask/pools/1/messages?sessionId=958fb62c-4697-4b7b-acf0-952a7bb6d15b timed out after 60 seconds.
+[2021-06-01 06:25:28Z ERR  MessageListener] Catch exception during get next message.
+[2021-06-01 06:25:28Z ERR  MessageListener] System.TimeoutException: The HTTP request timed out after 00:01:00.
+ ---> System.Threading.Tasks.TaskCanceledException: The operation was canceled.
+ ---> System.IO.IOException: Unable to read data from the transport connection: Operation canceled.
+ ---> System.Net.Sockets.SocketException (89): Operation canceled
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.GetResult(Int16 token)
+   at System.Net.Security.SslStream.<FillBufferAsync>g__InternalFillBufferAsync|215_0[TReadAdapter](TReadAdapter adap, ValueTask`1 task, Int32 min, Int32 initial)
+   at System.Net.Security.SslStream.ReadAsyncInternal[TReadAdapter](TReadAdapter adapter, Memory`1 buffer)
+   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, CancellationToken cancellationToken)
+   at System.Net.Http.AuthenticationHelper.SendWithNtAuthAsync(HttpRequestMessage request, Uri authUri, ICredentials credentials, Boolean isProxyAuth, HttpConnection connection, HttpConnectionPool connectionPool, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithNtConnectionAuthAsync(HttpConnection connection, HttpRequestMessage request, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithRetryAsync(HttpRequestMessage request, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.AuthenticationHelper.SendWithAuthAsync(HttpRequestMessage request, Uri authUri, ICredentials credentials, Boolean preAuthenticate, Boolean isProxyAuth, Boolean doRequestAuth, HttpConnectionPool pool, CancellationToken cancellationToken)
+   at System.Net.Http.DecompressionHandler.SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at GitHub.Services.Common.VssHttpMessageHandler.SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at GitHub.Services.Common.VssHttpMessageHandler.SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at GitHub.Services.Common.VssHttpRetryMessageHandler.SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.FinishSendAsyncBuffered(Task`1 sendTask, HttpRequestMessage request, CancellationTokenSource cts, Boolean disposeCts)
+   at GitHub.Services.WebApi.VssHttpClientBase.SendAsync(HttpRequestMessage message, HttpCompletionOption completionOption, Object userState, CancellationToken cancellationToken)
+   at GitHub.Services.WebApi.VssHttpClientBase.SendAsync[T](HttpRequestMessage message, Object userState, CancellationToken cancellationToken)
+   at GitHub.Services.WebApi.VssHttpClientBase.SendAsync[T](HttpMethod method, IEnumerable`1 additionalHeaders, Guid locationId, Object routeValues, ApiResourceVersion version, HttpContent content, IEnumerable`1 queryParameters, Object userState, CancellationToken cancellationToken)
+   at GitHub.Runner.Listener.MessageListener.GetNextMessageAsync(CancellationToken token)
+[2021-06-01 06:25:28Z ERR  MessageListener] #####################################################
+[2021-06-01 06:25:28Z ERR  MessageListener] System.Threading.Tasks.TaskCanceledException: The operation was canceled.
+ ---> System.IO.IOException: Unable to read data from the transport connection: Operation canceled.
+ ---> System.Net.Sockets.SocketException (89): Operation canceled
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.GetResult(Int16 token)
+   at System.Net.Security.SslStream.<FillBufferAsync>g__InternalFillBufferAsync|215_0[TReadAdapter](TReadAdapter adap, ValueTask`1 task, Int32 min, Int32 initial)
+   at System.Net.Security.SslStream.ReadAsyncInternal[TReadAdapter](TReadAdapter adapter, Memory`1 buffer)
+   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, CancellationToken cancellationToken)
+   at System.Net.Http.AuthenticationHelper.SendWithNtAuthAsync(HttpRequestMessage request, Uri authUri, ICredentials credentials, Boolean isProxyAuth, HttpConnection connection, HttpConnectionPool connectionPool, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithNtConnectionAuthAsync(HttpConnection connection, HttpRequestMessage request, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithRetryAsync(HttpRequestMessage request, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.AuthenticationHelper.SendWithAuthAsync(HttpRequestMessage request, Uri authUri, ICredentials credentials, Boolean preAuthenticate, Boolean isProxyAuth, Boolean doRequestAuth, HttpConnectionPool pool, CancellationToken cancellationToken)
+   at System.Net.Http.DecompressionHandler.SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   at GitHub.Services.Common.VssHttpMessageHandler.SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+[2021-06-01 06:25:28Z ERR  MessageListener] #####################################################
+[2021-06-01 06:25:28Z ERR  MessageListener] System.IO.IOException: Unable to read data from the transport connection: Operation canceled.
+ ---> System.Net.Sockets.SocketException (89): Operation canceled
+   --- End of inner exception stack trace ---
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.GetResult(Int16 token)
+   at System.Net.Security.SslStream.<FillBufferAsync>g__InternalFillBufferAsync|215_0[TReadAdapter](TReadAdapter adap, ValueTask`1 task, Int32 min, Int32 initial)
+   at System.Net.Security.SslStream.ReadAsyncInternal[TReadAdapter](TReadAdapter adapter, Memory`1 buffer)
+   at System.Net.Http.HttpConnection.SendAsyncCore(HttpRequestMessage request, CancellationToken cancellationToken)
+[2021-06-01 06:25:28Z ERR  MessageListener] #####################################################
+[2021-06-01 06:25:28Z ERR  MessageListener] System.Net.Sockets.SocketException (89): Operation canceled
+[2021-06-01 06:25:28Z INFO MessageListener] Retriable exception: The HTTP request timed out after 00:01:00.
+[2021-06-01 06:25:28Z INFO RunnerServer] Refresh MessageQueue VssConnection to get on a different AFD node.
+[2021-06-01 06:25:28Z INFO RunnerServer] Establish connection with 60 seconds timeout.
+[2021-06-01 06:25:28Z INFO GitHubActionsService] Starting operation Location.GetConnectionData
+[2021-06-01 06:25:29Z INFO GitHubActionsService] Finished operation Location.GetConnectionData
+[2021-06-01 06:25:30Z INFO MessageListener] Sleeping for 28.273 seconds before retrying.
+[2021-06-01 06:26:48Z INFO Terminal] WRITE LINE: 2021-06-01 06:26:48Z: Runner reconnected.
+[2021-06-01 06:51:46Z INFO MessageListener] No message retrieved from session '958fb62c-4697-4b7b-acf0-952a7bb6d15b' within last 30 minutes.
+[2021-06-01 07:02:13Z WARN GitHubActionsService] Authentication failed with status code 401.
+WWW-Authenticate: Bearer
+Strict-Transport-Security: max-age=2592000
+X-TFS-ProcessId: dbc12065-4208-4f96-99de-ac4828c9b9dc
+ActivityId: ab652264-eddc-470b-9215-7feddd2670f3
+X-TFS-Session: 6e6d41bb-9297-41df-a82e-505052fb8e7f
+X-VSS-E2EID: 1d70a590-3480-41b5-9d6e-16436a416dad
+X-VSS-SenderDeploymentId: ac98198d-4d34-0364-420d-bafa6e51dce2
+X-TFS-ServiceError: The+user+%27System%3aPublicAccess%3baaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa%27+is+not+authorized+to+access+this+resource.
+X-VSS-S2STargetService: 0000005A-0000-8888-8000-000000000000/visualstudio.com
+X-Cache: CONFIG_NOCACHE
+X-MSEdge-Ref: Ref A: 9F6AB3D7F4DB4915B293B54F1CE55A47 Ref B: BUH01EDGE0419 Ref C: 2021-06-01T07:02:13Z
+Date: Tue, 01 Jun 2021 07:02:13 GMT
+
+[2021-06-01 07:02:13Z INFO RSAFileKeyManager] Loading RSA key parameters from file /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_rsaparams
+[2021-06-01 07:02:14Z INFO GitHubActionsService] AAD Correlation ID for this token request: Unknown

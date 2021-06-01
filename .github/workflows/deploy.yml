@@ -17,8 +17,8 @@ jobs:
       - run: "rm -rf node_modules"
       - run: "yarn"
       - run: "npx jetify"
-      - run: "./gradlew clean"
-        working-directory: android/
+#      - run: "./gradlew clean"
+#        working-directory: android/
       - run: "fastlane install_plugins"
         working-directory: android/
       - run: "fastlane build id:${{ secrets.ANDROID_APP_ID }} token:${{ secrets.TOKEN }}"

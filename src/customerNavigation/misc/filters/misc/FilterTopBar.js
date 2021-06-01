@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  UIManager,
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -62,7 +63,7 @@ const style = ({expanded}) =>
     icon: {alignItems: 'flex-end'},
     button: {
       fontSize: 14,
-      color: theme.grey,
+      color: theme.black,
       marginLeft: expanded ? 0 : 26,
     },
     content: {
@@ -79,7 +80,7 @@ const style = ({expanded}) =>
     title: {
       fontWeight: '700',
       fontSize: 20,
-      color: theme.grey,
+      color: theme.black,
       flexGrow: expanded ? 1 : 0,
     },
   });

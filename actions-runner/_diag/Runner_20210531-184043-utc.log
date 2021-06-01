@@ -156,3 +156,12 @@ Date: Mon, 31 May 2021 20:31:14 GMT
 
 [2021-05-31 20:31:15Z INFO RSAFileKeyManager] Loading RSA key parameters from file /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_rsaparams
 [2021-05-31 20:31:15Z INFO GitHubActionsService] AAD Correlation ID for this token request: Unknown
+[2021-05-31 20:41:18Z INFO MessageListener] No message retrieved from session 'b7cc15ec-2f9f-468f-aa5e-2ed73ea43fe1' within last 30 minutes.
+[2021-05-31 21:07:34Z INFO Terminal] WRITE LINE: Exiting...
+[2021-05-31 21:07:34Z INFO ConfigurationStore] IsServiceConfigured()
+[2021-05-31 21:07:34Z INFO ConfigurationStore] IsServiceConfigured: False
+[2021-05-31 21:07:34Z INFO HostContext] Runner will be shutdown for UserCancelled
+[2021-05-31 21:07:34Z WARN GitHubActionsService] GET request to https://pipelines.actions.githubusercontent.com/fmUE3LYSs809YfBzQRKo41IsvVmAB373DFlngoUyxliPqTfzWH/_apis/distributedtask/pools/1/messages?sessionId=b7cc15ec-2f9f-468f-aa5e-2ed73ea43fe1 has been cancelled.
+[2021-05-31 21:07:34Z INFO MessageListener] Get next message has been cancelled.
+[2021-05-31 21:07:34Z INFO JobDispatcher] Shutting down JobDispatcher. Make sure all WorkerDispatcher has finished.
+[2021-05-31 21:07:35Z INFO Listener] Runner execution been cancelled.
