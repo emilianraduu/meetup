@@ -75,6 +75,9 @@ const PubCard = ({index, pub, navigation, onSelectPub}) => {
               <View style={style.section}>
                 <StarRating
                   disabled={false}
+                  fullStarColor={theme.red}
+                  emptyStarColor={theme.red}
+                  halfStarColor={theme.red}
                   maxStars={5}
                   rating={pub.stars}
                   starSize={16}
@@ -91,9 +94,6 @@ const PubCard = ({index, pub, navigation, onSelectPub}) => {
 };
 
 const style = StyleSheet.create({
-  star: {
-    color: theme.red,
-  },
   section: {
     flexDirection: 'row',
     marginBottom: 5,

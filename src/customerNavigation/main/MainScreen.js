@@ -8,6 +8,7 @@ import {theme} from '../../helpers/constants';
 import {PubsContext} from '../../contexts/pubContext';
 import Filters from '../misc/filters/Filters';
 import PubCard from './PubCard';
+import Map from '../misc/map/Map';
 
 export const MainScreen = ({navigation}) => {
   const [lat, setLat] = useState(0);
@@ -69,10 +70,14 @@ export const MainScreen = ({navigation}) => {
             justifyContent: 'space-between',
           }}>
           <Text style={{fontSize: 34, fontWeight: 'bold'}}>Explore</Text>
-          <Filters />
+          <View style={{flexDirection: 'row'}}>
+            <Map />
+            <Filters />
+          </View>
         </View>
         {pubs.map((pub, index) => (
           <PubCard
+            key={index}
             navigation={navigation}
             index={index}
             pub={pub}

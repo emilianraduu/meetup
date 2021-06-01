@@ -79,8 +79,33 @@ export const TableScreen = () => {
             borderRadius: 8,
             alignSelf: 'center',
           }}>
-          <Text style={{color: '#fff', fontSize: 16, zIndex: 200}}>
+          <Text style={{color: theme.white, fontSize: 16, zIndex: 200}}>
             Reserve table
+          </Text>
+        </TouchableOpacity>
+        <Text
+          style={{
+            alignSelf: 'center',
+            fontSize: 12,
+            margin: 12,
+            fontWeight: '300',
+            color: theme.grey,
+          }}>
+          or
+        </Text>
+        <TouchableOpacity
+          style={{
+            borderRadius: 8,
+            alignSelf: 'center',
+          }}>
+          <Text
+            style={{
+              color: theme.red,
+              fontSize: 14,
+              zIndex: 200,
+              fontWeight: 'bold',
+            }}>
+            Request custom table
           </Text>
         </TouchableOpacity>
       </BottomSheetScrollView>
@@ -90,6 +115,29 @@ export const TableScreen = () => {
 
 const TableTab = ({location}) => {
   const {selectedLocation} = useContext(PubsContext);
+  const createArrayFromCapacity = (capacity) => {
+    return [...Array(capacity).keys()];
+  };
+  const getTablePosition = (index, capacity) => {
+    if (capacity % 2 === 0) {
+      switch (index) {
+        case 0:
+          return {
+            top: 0,
+            alignSelf: 'center',
+          };
+        case 1:
+          return {right: 0, alignSelf: 'center'};
+        case 2:
+          return {bottom: 0, alignSelf: 'center'};
+        case 3:
+          return {left: 0, alignSelf: 'center'};
+        case 4:
+          return {alignSelf: 'flex-end'};
+      }
+    }
+    return {};
+  };
   const [selected, setSelected] = useState(undefined);
   return (
     location.id === selectedLocation.id && (
@@ -106,29 +154,48 @@ const TableTab = ({location}) => {
           <TouchableOpacity
             key={table.id}
             disabled={table.blocked}
-            onPress={() => setSelected(table.id)}
-            style={{
-              width: 100,
-              opacity: table.blocked ? 0.5 : 1,
-              height: 100,
-              borderRadius: 8,
-              backgroundColor: selected === table.id ? theme.black : theme.grey,
-              margin: 5,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            {table.blocked ? (
-              <Icon name={'block'} size={40} color={theme.red} />
-            ) : (
-              <>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text style={{color: theme.white, fontWeight: 'bold'}}>
-                    {table.capacity}
-                  </Text>
-                  <Icon name={'user'} color={theme.white} />
-                </View>
-              </>
-            )}
+            style={{margin: 5, opacity: table.blocked ? 0.5 : 1, padding: 25}}
+            onPress={() => setSelected(table.id)}>
+            {createArrayFromCapacity(table.capacity).map((i) => (
+              <View
+                key={i}
+                style={[
+                  {
+                    width: 20,
+                    height: 20,
+                    borderRadius: 20,
+                    backgroundColor:
+                      selected === table.id ? theme.black : theme.grey,
+                    position: 'absolute',
+                    zIndex: 2,
+                  },
+                  getTablePosition(i, table.capacity),
+                ]}
+              />
+            ))}
+            <View
+              style={{
+                width: 80,
+                height: 80,
+                borderRadius: 20,
+                backgroundColor:
+                  selected === table.id ? theme.black : theme.grey,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              {table.blocked ? (
+                <Icon name={'block'} size={40} color={theme.red} />
+              ) : (
+                <>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={{color: theme.white, fontWeight: 'bold'}}>
+                      {table.capacity}
+                    </Text>
+                    <Icon name={'user'} color={theme.white} />
+                  </View>
+                </>
+              )}
+            </View>
           </TouchableOpacity>
         ))}
       </View>

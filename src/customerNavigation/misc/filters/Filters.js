@@ -16,18 +16,21 @@ const Filters = () => {
   const onButtonPress = () => {
     setIsVisible(true);
   };
-  const onClose = () => {
+  const onClose = useCallback(() => {
     setIndex(0);
     setIsVisible(false);
     animate(0);
-  };
-  const animate = (i) => {
-    Animated.timing(animation, {
-      toValue: i === 2 ? top : 0,
-      duration: 100,
-      useNativeDriver: true,
-    }).start();
-  };
+  }, [animate]);
+  const animate = useCallback(
+    (i) => {
+      Animated.timing(animation, {
+        toValue: i === 2 ? top : 0,
+        duration: 100,
+        useNativeDriver: true,
+      }).start();
+    },
+    [animation, top],
+  );
   const handleSheetAnimation = useCallback(
     (fromIndex, toIndex) => {
       if (fromIndex === 1 && toIndex === 2) {
@@ -38,13 +41,16 @@ const Filters = () => {
         onClose();
       }
     },
-    [index],
+    [animate, index, onClose],
   );
 
-  const handleSheetChanges = useCallback((index: number) => {
-    setIndex(index);
-    animate(index);
-  }, []);
+  const handleSheetChanges = useCallback(
+    (i) => {
+      setIndex(i);
+      animate(i);
+    },
+    [animate],
+  );
   return (
     <>
       <FilterButton onButtonPress={onButtonPress} colors={{}} />
