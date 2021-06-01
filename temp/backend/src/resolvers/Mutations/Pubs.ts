@@ -3,37 +3,24 @@ import { compare, hash } from 'bcrypt'
 import { generateAccessToken, handleError } from '../../utils/helpers'
 import { errors } from '../../utils/constants'
 
-export const user = extendType({
+export const pub = extendType({
   type: 'Mutation',
   definition(t) {
-    t.field('signup', {
-      type: 'AuthPayload',
-      args: {
-        email: nonNull(stringArg()),
-        password: nonNull(stringArg())
-      },
-      async resolve(_parent, { email, password }, ctx) {
+    t.field('createPub', {
+      type: 'Pubs',
+      async resolve(_parent, _args, ctx) {
         try {
-          const hashedPassword = await hash(password, 10)
-          console.log(email,password, hashedPassword)
-          const user = await ctx.prisma.user.create({
-            data: {
-              email,
-              password: hashedPassword
-            }
-          })
-          const accessToken = generateAccessToken(user.id)
+          const pub = await ctx.prisma.pub.create({data: {name: "123", address: "1243", images: "123", ownerId: 1}})
           return {
-            accessToken,
-            user
+            pub
           }
         } catch (e) {
-          handleError(errors.userAlreadyExists)
+          handleError(errors.pubAlreadyExists)
         }
       }
     })
-    t.field('login', {
-      type: 'AuthPayload',
+    t.field('updatePub', {
+      type: 'Pubs',
       args: {
         email: nonNull(stringArg()),
         password: nonNull(stringArg())

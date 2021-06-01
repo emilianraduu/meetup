@@ -1,4 +1,4 @@
-import { makeSchema } from 'nexus'
+import { declarativeWrappingPlugin, makeSchema } from 'nexus'
 import { join } from 'path'
 import * as allTypes from './resolvers'
 
@@ -22,4 +22,5 @@ export const schema = makeSchema({
     ],
   },
   prettierConfig: join(process.cwd(), 'package.json'),
+  plugins: [declarativeWrappingPlugin() ]
 })

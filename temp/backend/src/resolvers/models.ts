@@ -18,10 +18,28 @@ export const User = objectType({
   },
 })
 
+export const Exists = objectType({
+  name: 'Exists',
+  definition(t) {
+    t.boolean('exist')
+  },
+})
+
 export const AuthPayload = objectType({
   name: 'AuthPayload',
   definition(t) {
     t.string('accessToken')
     t.field('user', { type: 'User' })
+  },
+})
+
+export const Pubs = objectType({
+  name: 'Pubs',
+  definition(t) {
+    t.int('id')
+    t.string('address')
+    t.string('images')
+    t.string('name')
+    t.string('ownerId')
   },
 })

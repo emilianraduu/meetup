@@ -1,13 +1,26 @@
-import { queryField } from 'nexus'
+import { nonNull, queryField, stringArg } from 'nexus'
 
 export const me = queryField('me', {
   type: 'User',
   async resolve(_parent, _args, ctx) {
-    const user = await ctx.prisma.user.findUnique({
+    return await ctx.prisma.user.findUnique({
       where: {
-        id: ctx.userId,
-      },
+        id: ctx.userId
+      }
     })
-    return user
+  }
+})
+
+export const exists = queryField('exists', {
+  type: 'Exists',
+  args: {
+    email: nonNull(stringArg())
   },
+  async resolve(_parent, { email }, ctx) {
+
+    const user = await ctx.prisma.user.findUnique({
+     where: {email: email}
+    })
+    return { exist: !!user }
+  }
 })
