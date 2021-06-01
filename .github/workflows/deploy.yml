@@ -8,12 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     container: mingc/android-build-box:latest
     steps:
-      - name: Maximize build space
-        uses: easimon/maximize-build-space@master
-        with:
-            root-reserve-mb: 512
-            swap-size-mb: 1024
-            remove-dotnet: 'true'
+      - run: rm -rf /usr/share/dotnet
       - uses: actions/checkout@v2
       - name: Use Node.js
         uses: actions/setup-node@v1

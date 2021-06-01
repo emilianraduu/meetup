@@ -10,7 +10,6 @@ import PubCard from '../../main/PubCard';
 import {useNavigation} from '@react-navigation/native';
 import {pubs} from '../../../../dummyData';
 import {PubsContext} from '../../../contexts/pubContext';
-import PubScreen from '../../main/PubScreen';
 import {PubRoute} from '../../../helpers/routes';
 
 const Map = () => {
@@ -62,8 +61,9 @@ const Map = () => {
         <MapView
           style={{flex: 1}}
           onPress={() => {
-            bottomSheetRef?.current?.snapTo(0);
-            setSelected(undefined);
+            bottomSheetRef?.current?.snapTo(0, () => {
+              setSelected(undefined);
+            });
           }}
           initialRegion={{
             latitude: 37.78825,
@@ -86,7 +86,7 @@ const Map = () => {
             ref={bottomSheetRef}
             onChange={handleSheetChanges}
             index={1}
-            snapPoints={[-1, '30%']}
+            snapPoints={[-1, '20%']}
             animateOnMount={true}>
             <PubCard
               navigation={navigation}

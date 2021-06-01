@@ -558,3 +558,19 @@ Date: Tue, 01 Jun 2021 09:48:21 GMT
 [2021-06-01 09:48:22Z INFO GitHubActionsService] AAD Correlation ID for this token request: Unknown
 [2021-06-01 09:59:16Z INFO MessageListener] No message retrieved from session '958fb62c-4697-4b7b-acf0-952a7bb6d15b' within last 30 minutes.
 [2021-06-01 10:29:30Z INFO MessageListener] No message retrieved from session '958fb62c-4697-4b7b-acf0-952a7bb6d15b' within last 30 minutes.
+[2021-06-01 10:43:46Z WARN GitHubActionsService] Authentication failed with status code 401.
+WWW-Authenticate: Bearer
+Strict-Transport-Security: max-age=2592000
+X-TFS-ProcessId: c1dfeedc-caa3-4bf9-ae8d-4226acb4ca1d
+ActivityId: ce058da4-b521-45b4-b4be-6b547d715807
+X-TFS-Session: 6e6d41bb-9297-41df-a82e-505052fb8e7f
+X-VSS-E2EID: b706c0b8-e984-471f-9c9b-bfb7c1252c99
+X-VSS-SenderDeploymentId: ac98198d-4d34-0364-420d-bafa6e51dce2
+X-TFS-ServiceError: The+user+%27System%3aPublicAccess%3baaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa%27+is+not+authorized+to+access+this+resource.
+X-VSS-S2STargetService: 0000005A-0000-8888-8000-000000000000/visualstudio.com
+X-Cache: CONFIG_NOCACHE
+X-MSEdge-Ref: Ref A: D4B3917D0D3C41C0A9E044CF0BA591F0 Ref B: BUH01EDGE0206 Ref C: 2021-06-01T10:43:46Z
+Date: Tue, 01 Jun 2021 10:43:46 GMT
+
+[2021-06-01 10:43:46Z INFO RSAFileKeyManager] Loading RSA key parameters from file /Users/emilian.radu/Developer/personal/meetup/actions-runner/.credentials_rsaparams
+[2021-06-01 10:43:47Z INFO GitHubActionsService] AAD Correlation ID for this token request: Unknown
