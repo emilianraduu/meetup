@@ -26,7 +26,7 @@ import {
 } from '../helpers/routes';
 import {isLoggedIn, user} from '../helpers/variables';
 import {useReactiveVar} from '@apollo/client';
-import {useQuery} from 'react-apollo';
+import {useQuery} from '@apollo/client';
 import {ME_QUERY} from '../graphql/queries/User';
 import PermissionsStack from '../auth/PermissionsStack';
 

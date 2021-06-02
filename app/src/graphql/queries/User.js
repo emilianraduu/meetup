@@ -14,6 +14,10 @@ export const EXIST_QUERY = gql`
   query($email: String!) {
     exists(email: $email) {
       exist
+      email
+      firstName
+      lastName
+      photo
     }
   }
 `;

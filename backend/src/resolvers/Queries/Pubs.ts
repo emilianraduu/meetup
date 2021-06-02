@@ -1,11 +1,11 @@
-import { nonNull, queryField, stringArg } from 'nexus'
+import { intArg, nonNull, queryField } from 'nexus'
 
 export const getPubs = queryField('pubs', {
-  type: 'Pubs',
+  type: 'Pub',
   list: true,
   args: {
-    latitude: nonNull(stringArg()),
-    longitude: nonNull(stringArg())
+    latitude: nonNull(intArg()),
+    longitude: nonNull(intArg())
   },
   async resolve(_parent, {latitude, longitude}, ctx) {
     console.log(latitude, longitude)

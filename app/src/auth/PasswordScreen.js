@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   AsyncStorage,
   ScrollView,
@@ -14,100 +14,97 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {lightVibration} from '../helpers/vibrations';
 import {LOGIN_MUTATION, REGISTER_MUTATION} from '../graphql/mutations/User';
 import {isLoggedIn, user} from '../helpers/variables';
-import {useMutation} from 'react-apollo';
-import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
-import {LoginManager, AccessToken, GraphRequest} from 'react-native-fbsdk';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useMutation} from '@apollo/client';
 import {Loader} from '../customerNavigation/Loader';
-import { PubRoute } from '../helpers/routes';
+import FastImage from 'react-native-fast-image';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {validatePassword} from '../helpers/validators';
 
 const PasswordScreen = ({navigation, route}) => {
   const [loading, setLoading] = useState(false);
   const [values, setValues] = useState({});
-  const [error, setError] = useState(false);
-  const [login, {data}] = useMutation(LOGIN_MUTATION);
-  const [register, {registerData}] = useMutation(REGISTER_MUTATION);
+  const [error, setError] = useState('');
+  const [login] = useMutation(LOGIN_MUTATION);
+  const [register] = useMutation(REGISTER_MUTATION);
 
-  useEffect(() => {
-    if (registerData) {
-      isLoggedIn(true);
-      user(registerData?.login.user);
-      AsyncStorage.setItem('accessToken', registerData.login.accessToken);
-    } else {
-      setError(true);
-      setLoading(false);
-    }
-  }, [registerData]);
-
-  useEffect(() => {
-    if (data?.login?.accessToken) {
-      isLoggedIn(true);
-      user(data?.login.user);
-      AsyncStorage.setItem('accessToken', data.login.accessToken);
-    } else {
-      setError(true);
-      setLoading(false);
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (registerData) {
+  //     isLoggedIn(true);
+  //     user(registerData?.login.user);
+  //     AsyncStorage.setItem('accessToken', registerData.login.accessToken);
+  //   } else {
+  //     setLoading(false);
+  //   }
+  // }, [registerData]);
+  //
+  // useEffect(() => {
+  //   if (data?.login?.accessToken) {
+  //     isLoggedIn(true);
+  //     user(data?.login.user);
+  //     AsyncStorage.setItem('accessToken', data.login.accessToken);
+  //   } else {
+  //     setLoading(false);
+  //   }
+  // }, [data]);
 
   const handleRegister = async () => {
-    setLoading(true);
-    try {
-      await register({
-        variables: {
-          email: values.email,
-          password: values.password,
-        },
-      });
-
-      setLoading(false);
-    } catch (e) {
-      setError(true);
-      alert(e);
-      setLoading(false);
-    }
-  };
-  const initUser = (token) => {
-    fetch(
-      'https://graph.facebook.com/v2.5/me?fields=email,first_name,last_name,friends&access_token=' +
-        token,
-    )
-      .then((response) => {
-        response.json().then((json) => {
-          console.log(json);
+    if (validatePassword(values.password)) {
+      setLoading(true);
+      try {
+        const response = await register({
+          variables: {
+            email: route?.params?.email,
+            password: values.password,
+          },
         });
-      })
-      .catch(() => {
-        console.log('ERROR GETTING DATA FROM FACEBOOK');
-      });
+        AsyncStorage.setItem(
+          'accessToken',
+          response?.data?.signup?.accessToken,
+        );
+        user(response?.data?.signup?.user);
+        isLoggedIn(true);
+        setLoading(false);
+      } catch (e) {
+        setError();
+        alert(e);
+        setLoading(false);
+      }
+    } else {
+      setError('Password should have 6 characters');
+    }
   };
   const handleLogin = async () => {
-    setLoading(true);
-    try {
-      // await login({
-      //   variables: {
-      //     email: values.email,
-      //     password: values.password,
-      //   },
-      // });
-      isLoggedIn(true);
-      setLoading(false);
-    } catch (e) {
-      setError(true);
-      console.log(e);
-      handleRegister();
-      setLoading(false);
+    if (validatePassword(values.password)) {
+      setLoading(true);
+      try {
+        const response = await login({
+          variables: {
+            email: route?.params?.email,
+            password: values.password,
+          },
+        });
+        AsyncStorage.setItem('accessToken', response?.data?.login?.accessToken);
+        user(response?.data?.login?.user);
+        isLoggedIn(true);
+        setLoading(false);
+      } catch (e) {
+        alert(e);
+        isLoggedIn(false);
+        setLoading(false);
+      }
+    } else {
+      setError('Password should have 6 characters');
     }
   };
-  // const onDismiss = () => {
-  //   setError(false);
-  // };
   const goBack = () => {
     lightVibration();
     navigation.goBack();
   };
   const disabled = !values.email && !values.password;
   const onInputChange = ({key, value}) => {
+    if (error !== '') {
+      setError('');
+    }
     setValues({...values, [key]: value});
   };
 
@@ -118,11 +115,24 @@ const PasswordScreen = ({navigation, route}) => {
         <Ripple style={style.back} onPress={goBack}>
           <Icon name={'arrow-back'} color={theme.dark} size={30} />
         </Ripple>
-        <Text style={style.title}>Sign in</Text>
+        <Text style={style.title}>
+          {route?.params?.exist ? 'Sign in' : 'Register'}
+        </Text>
       </SafeAreaView>
       <View style={style.inputWrapper}>
-        <Text style={style.label}>Email</Text>
-        <Text>{route?.params?.values?.email}</Text>
+        <View style={style.section}>
+          {route?.params?.photo ? (
+            <FastImage
+              source={{uri: route?.params?.photo}}
+              style={{width: 50, height: 50, borderRadius: 50}}
+            />
+          ) : (
+            <Ionicons name={'person-circle'} size={70} color={theme.white} />
+          )}
+          <View>
+            <Text style={style.label}>{route?.params?.email}</Text>
+          </View>
+        </View>
         <Text style={style.label}>Password</Text>
         <TextInput
           placeholder={'examplepass12'}
@@ -133,14 +143,17 @@ const PasswordScreen = ({navigation, route}) => {
             onInputChange({key: 'password', value: e.nativeEvent.text})
           }
         />
+        <Text style={style.errorText}>{error}</Text>
       </View>
       <SafeAreaView style={style.buttonWrapper}>
         <Ripple
           rippleColor={GREEN_COLOR}
-          onPress={handleLogin}
+          onPress={route?.params?.exist ? handleLogin : handleRegister}
           disabled={disabled}
           style={disabled ? style.buttonDisabled : style.button}>
-          <Text style={{color: theme.white}}>Login</Text>
+          <Text style={{color: theme.white}}>
+            {route?.params?.exist ? 'Login' : 'Register'}
+          </Text>
         </Ripple>
       </SafeAreaView>
     </ScrollView>
@@ -235,6 +248,15 @@ const style = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
     fontSize: 15,
+  },
+  section: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  errorText: {
+    color: theme.red,
+    fontSize: 12,
+    fontWeight: 'bold',
   },
 });
 

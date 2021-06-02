@@ -7,10 +7,10 @@ export const pub = extendType({
   type: 'Mutation',
   definition(t) {
     t.field('createPub', {
-      type: 'Pubs',
+      type: 'Pub',
       async resolve(_parent, _args, ctx) {
         try {
-          const pub = await ctx.prisma.pub.create({data: {name: "123", address: "1243", images: "123", ownerId: 1}})
+          const pub = await ctx.prisma.pub.create({data: {name: "123", address: "1243", images: "123", ownerId: 1, latitude: 1, longitude: 2}})
           return {
             pub
           }
@@ -20,7 +20,7 @@ export const pub = extendType({
       }
     })
     t.field('updatePub', {
-      type: 'Pubs',
+      type: 'Pub',
       args: {
         email: nonNull(stringArg()),
         password: nonNull(stringArg())

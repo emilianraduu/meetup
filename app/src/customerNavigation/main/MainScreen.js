@@ -10,6 +10,7 @@ import Filters from '../misc/filters/Filters';
 import PubCard from './PubCard';
 import Map from '../misc/map/Map';
 import LottieView from 'lottie-react-native';
+import {useLazyQuery} from '@apollo/client';
 
 export const MainScreen = ({navigation}) => {
   const [lat, setLat] = useState(0);
@@ -17,42 +18,42 @@ export const MainScreen = ({navigation}) => {
   const {top} = useSafeAreaInsets();
   const {onSelectPub} = useContext(PubsContext);
 
-  useEffect(() => {
-    Geolocation.watchPosition(
-      ({coords: {latitude, longitude}}) => {
-        setLat(latitude);
-        setLng(longitude);
-      },
-      (e) => console.log(e),
-      {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 500,
-        distanceFilter: 10,
-      },
-    );
-  });
-  useEffect(() => {
-    Geolocation.getCurrentPosition(({coords: {latitude, longitude}}) => {
-      setLat(latitude);
-      setLng(longitude);
-    });
-  }, []);
-  const [locations, setLocations] = useState([]);
-  useEffect(() => {
-    if (lat && lng) {
-      if (locations.length < 5) {
-        const obj = randomLocation.randomCirclePoint(
-          {latitude: lat, longitude: lng},
-          300,
-        );
-
-        if (!locations.includes(obj)) {
-          setLocations([...locations, obj]);
-        }
-      }
-    }
-  }, [lat, lng, locations]);
+  // useEffect(() => {
+  //   Geolocation.watchPosition(
+  //     ({coords: {latitude, longitude}}) => {
+  //       setLat(latitude);
+  //       setLng(longitude);
+  //     },
+  //     (e) => console.log(e),
+  //     {
+  //       enableHighAccuracy: true,
+  //       timeout: 5000,
+  //       maximumAge: 500,
+  //       distanceFilter: 10,
+  //     },
+  //   );
+  // });
+  // useEffect(() => {
+  //   Geolocation.getCurrentPosition(({coords: {latitude, longitude}}) => {
+  //     setLat(latitude);
+  //     setLng(longitude);
+  //   });
+  // }, []);
+  // const [locations, setLocations] = useState([]);
+  // useEffect(() => {
+  //   if (lat && lng) {
+  //     if (locations.length < 5) {
+  //       const obj = randomLocation.randomCirclePoint(
+  //         {latitude: lat, longitude: lng},
+  //         300,
+  //       );
+  //
+  //       if (!locations.includes(obj)) {
+  //         setLocations([...locations, obj]);
+  //       }
+  //     }
+  //   }
+  // }, [lat, lng, locations]);
   return (
     <View style={{flex: 1, paddingTop: top, backgroundColor: theme.white}}>
       <ScrollView

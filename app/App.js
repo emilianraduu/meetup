@@ -8,7 +8,7 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import analytics from '@react-native-firebase/analytics';
 // import Socket from './src/helpers/socket';
 import {AppearanceProvider} from 'react-native-appearance';
-import {ApolloProvider} from 'react-apollo';
+import {ApolloProvider} from '@apollo/client';
 import {client} from './src/graphql';
 import {token} from './src/helpers/variables';
 import {LogBox} from 'react-native';

@@ -19,8 +19,12 @@ export const exists = queryField('exists', {
   async resolve(_parent, { email }, ctx) {
 
     const user = await ctx.prisma.user.findUnique({
-     where: {email: email}
+      where: { email: email }
     })
-    return { exist: !!user }
+    if (user) {
+      return { exist: true, ...user }
+    } else {
+      return { exist: false, email: email }
+    }
   }
 })

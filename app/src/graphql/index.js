@@ -18,7 +18,6 @@ const wsLink = new WebSocketLink({
 const httpLink = new HttpLink({uri: Config.API_URL});
 
 const authMiddleware = new ApolloLink((operation, forward) => {
-  console.log(token());
   operation.setContext({
     headers: {
       authorization: token(), // pune JWT-ul aici

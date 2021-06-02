@@ -77,7 +77,9 @@ const ProfileScreen = ({navigation}) => {
               style={{justifyContent: 'center', marginLeft: 20}}>
               <View>
                 <Text style={{fontSize: 22, fontWeight: 'bold'}}>
-                  {usr?.firstName} {usr?.lastName}
+                  {usr?.firstName && usr?.lastName
+                    ? `${usr.firstName} ${usr.lastName}`
+                    : 'Set your name'}
                 </Text>
                 <Text style={{fontSize: 14, color: theme.grey}}>
                   See profile details

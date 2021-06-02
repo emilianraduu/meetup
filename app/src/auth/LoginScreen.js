@@ -1,35 +1,53 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import {BIG_FONT_SIZE, GREEN_COLOR, theme} from '../helpers/constants';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Ripple from 'react-native-material-ripple';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {lightVibration} from '../helpers/vibrations';
-import {useLazyQuery} from 'react-apollo';
+import {useLazyQuery} from '@apollo/client';
 import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 import {LoginManager, AccessToken, GraphRequest} from 'react-native-fbsdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {EXIST_QUERY} from '../graphql/queries/User';
+import {PasswordRoute} from '../helpers/routes';
+import {validateEmail} from '../helpers/validators';
+import {Loader} from '../customerNavigation/Loader';
 
 const LoginScreen = ({navigation}) => {
   const [values, setValues] = useState({});
-  const [existQuery, {called, loading, data, error}] = useLazyQuery(
+  const [errorString, setError] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [existQuery, {called, loading, data, error: errorAPI}] = useLazyQuery(
     EXIST_QUERY,
     {
       variables: {email: values.email},
+      fetchPolicy: 'no-cache',
     },
   );
   const handleLogin = () => {
-    existQuery();
-    // navigation.navigate(PasswordRoute, {values});
+    if (validateEmail(values.email)) {
+      setSubmitted(true);
+      existQuery();
+    } else {
+      setError('Invalid Email');
+    }
   };
-  console.log(called, data, loading, JSON.stringify(error));
+  useEffect(() => {
+    if (data && !loading && !errorAPI && called && submitted) {
+      setSubmitted(false);
+      navigation.navigate(PasswordRoute, {...data?.exists});
+    }
+  }, [data, loading, errorAPI, called, navigation, submitted]);
   const goBack = () => {
     lightVibration();
     navigation.goBack();
   };
   const disabled = !values.email && !values.password;
   const onInputChange = ({key, value}) => {
+    if (errorString !== '') {
+      setError('');
+    }
     setValues({...values, [key]: value});
   };
 
@@ -112,6 +130,7 @@ const LoginScreen = ({navigation}) => {
   return (
     <ScrollView contentContainerStyle={style.scrollview}>
       <SafeAreaView style={style.page}>
+        {loading && <Loader />}
         <Ripple style={style.back} onPress={goBack}>
           <Icon name={'arrow-back'} color={theme.dark} size={30} />
         </Ripple>
@@ -129,6 +148,7 @@ const LoginScreen = ({navigation}) => {
             onInputChange({key: 'email', value: e.nativeEvent.text})
           }
         />
+        <Text style={style.errorText}>{errorString}</Text>
       </View>
       <SafeAreaView style={style.buttonWrapper}>
         <Ripple
@@ -250,6 +270,11 @@ const style = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
     fontSize: 15,
+  },
+  errorText: {
+    color: theme.red,
+    fontSize: 12,
+    fontWeight: 'bold',
   },
 });
 
