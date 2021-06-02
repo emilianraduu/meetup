@@ -1,7 +1,7 @@
 import { extendType, nonNull, stringArg } from 'nexus'
 import { compare, hash } from 'bcrypt'
 import { generateAccessToken, handleError } from '../../utils/helpers'
-import { errors } from '../../utils/constants'
+import { errors, user_status } from '../../utils/constants'
 
 export const user = extendType({
   type: 'Mutation',
@@ -10,16 +10,17 @@ export const user = extendType({
       type: 'AuthPayload',
       args: {
         email: nonNull(stringArg()),
-        password: nonNull(stringArg())
+        password: nonNull(stringArg()),
+        status: stringArg({default: user_status.client})
       },
-      async resolve(_parent, { email, password }, ctx) {
+      async resolve(_parent, { email, password, status }, ctx) {
         try {
           const hashedPassword = await hash(password, 10)
-          console.log(email,password, hashedPassword)
           const user = await ctx.prisma.user.create({
             data: {
               email,
-              password: hashedPassword
+              password: hashedPassword,
+              status
             }
           })
           const accessToken = generateAccessToken(user.id)

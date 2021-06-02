@@ -16,4 +16,11 @@ export const errors = {
   userAlreadyExists: new UserInputError('User already exists!'),
   pubAlreadyExists: new UserInputError('Location already exists!'),
   invalidUser: new UserInputError('Invalid username or password'),
+  notOwner: new UserInputError('This user is not an owner'),
+}
+
+export const user_status = {
+  admin: 'OWNER',
+  client: 'CLIENT',
+  waiter: 'WAITER'
 }

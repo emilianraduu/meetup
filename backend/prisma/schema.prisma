@@ -10,63 +10,72 @@ generator prisma {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  lastName  String?
-  firstName String?
-  photo     String?
-  pubs      Pub[]    @relation("Owner")
-  waiter    Pub[]    @relation("Waiters")
-  reviews   Review[] @relation("Reviewer")
-  status    String   @default("CLIENT")
-  waitedTables Table? @relation("Waiter")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  password     String
+  lastName     String?
+  firstName    String?
+  photo        String?
+  pubs         Pub[]    @relation("Owner")
+  waiter       Pub[]    @relation("Waiters")
+  reviews      Review[] @relation("Reviewer")
+  status       String   @default("CLIENT")
+  waitedTables Table?   @relation("Waiter")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model Pub {
-  id        Int         @id @default(autoincrement())
-  address   String      @unique
-  latitude  Int
-  longitude Int
-  freeTable Int?
-  avgRating Float       @default(0)
-  priceAvg  Int         @default(0)
-  images    String[]
-  name      String      @unique
-  reviews   Review[]    @relation("ReviewedPub")
-  locations Location[]  @relation("Pub")
-  owner     User        @relation(name: "Owner", fields: [ownerId], references: [id])
-  ownerId   Int
-  waiters   User[]      @relation(name: "Waiters", fields: [waiterId], references: [id])
-  waiterId  Int?
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  id         Int        @id @default(autoincrement())
+  address    String     @unique
+  latitude   Int
+  longitude  Int
+  freeTable  Int?
+  avgRating  Float      @default(0)
+  priceAvg   Int        @default(0)
+  images     String[]
+  name       String     @unique
+  reviews    Review[]   @relation("ReviewedPub")
+  locations  Location[] @relation("Pub")
+  owner      User       @relation(name: "Owner", fields: [ownerId], references: [id])
+  ownerId    Int
+  waiters    User[]     @relation(name: "Waiters", fields: [waiterId], references: [id])
+  waiterId   Int?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  schedule   Schedule?   @relation(name: "Schedule", references: [id], fields: [scheduleId])
+  scheduleId Int?
 }
 
+model Schedule {
+  id        Int    @id @default(autoincrement())
+  dayOfWeek String
+  timeStart String
+  timeEnd   String
+  Pub       Pub[]  @relation("Schedule")
+}
 
 model Location {
-  id        Int      @id @default(autoincrement())
-  name      String
-  tables    Table[]  @relation("Locate")
-  Pub       Pub      @relation(name: "Pub", fields: [pubId], references: [id])
-  pubId     Int
+  id     Int     @id @default(autoincrement())
+  name   String
+  tables Table[] @relation("Locate")
+  Pub    Pub     @relation(name: "Pub", fields: [pubId], references: [id])
+  pubId  Int
 }
 
 model Table {
-  id        Int      @id @default(autoincrement())
-  count     Int
-  occupied  Boolean  @default(false)
-  blocked   Boolean  @default(false)
-  reason    String?
-  xPos      Int
-  yPos      Int
-  name      String?
-  location  Location @relation(name: "Locate", fields: [tableId], references: [id])
-  tableId   Int
-  waiter    User?    @relation(name: "Waiter", fields: [waiterId], references: [id])
-  waiterId  Int
+  id       Int      @id @default(autoincrement())
+  count    Int
+  occupied Boolean  @default(false)
+  blocked  Boolean  @default(false)
+  reason   String?
+  xPos     Int
+  yPos     Int
+  name     String?
+  location Location @relation(name: "Locate", fields: [tableId], references: [id])
+  tableId  Int
+  waiter   User?    @relation(name: "Waiter", fields: [waiterId], references: [id])
+  waiterId Int
 }
 
 model Review {
@@ -75,7 +84,7 @@ model Review {
   comment   String
   user      User     @relation(name: "Reviewer", fields: [userId], references: [id])
   userId    Int
-  pub       Pub     @relation(name: "ReviewedPub", fields: [pubId], references: [id])
+  pub       Pub      @relation(name: "ReviewedPub", fields: [pubId], references: [id])
   pubId     Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
