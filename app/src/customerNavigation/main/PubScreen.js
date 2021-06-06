@@ -9,6 +9,8 @@ import {GalleryRoute} from '../../helpers/routes';
 import {theme} from '../../helpers/constants';
 import PubTabs from './Tabs';
 import Sheet from './Sheet';
+import {useReactiveVar} from '@apollo/client';
+import {pubImages, selectedPub} from '../../helpers/variables';
 
 const styles = StyleSheet.create({
   content: {
@@ -56,8 +58,9 @@ const styles = StyleSheet.create({
 });
 
 const PubScreen = ({navigation, route}) => {
+  const images = useReactiveVar(pubImages);
   const {top} = useSafeAreaInsets();
-  const {selectedPub: pub} = useContext(PubsContext);
+  const pub = useReactiveVar(selectedPub);
   return (
     <View style={{flex: 1, backgroundColor: theme.white}}>
       <StatusBar barStyle="light-content" />
@@ -68,35 +71,43 @@ const PubScreen = ({navigation, route}) => {
             top: top,
             elevation: 1,
             zIndex: 100,
-            padding: 15,
+            padding: 10,
+            borderRadius: 50,
+            margin: 10,
+            backgroundColor: 'rgba(0,0,0,0.5)',
           }}
-          onPress={() => navigation.goBack()}>
+          onPress={() => {
+            navigation.goBack();
+            // selectedPub(undefined)
+          }}>
           <Icon name={'arrow-left'} size={24} color={'#fff'} />
         </TouchableOpacity>
         <View>
-          <Swiper
-            showsButtons={false}
-            bounces={true}
-            loop={false}
-            showsPagination={false}
-            containerStyle={{
-              height: 200 + top,
-              flex: 0,
-            }}>
-            {pub.photos.map((photo, index) => (
-              <TouchableOpacity
-                key={index}
-                activeOpacity={0.9}
-                onPress={() => {
-                  navigation.navigate(GalleryRoute, {gallery: pub.photos});
-                }}>
-                <FastImage
-                  style={{height: 200 + top, width: '100%'}}
-                  source={{uri: photo}}
-                />
-              </TouchableOpacity>
-            ))}
-          </Swiper>
+          {images[pub?.id] && (
+            <Swiper
+              showsButtons={false}
+              bounces={true}
+              loop={false}
+              showsPagination={false}
+              containerStyle={{
+                height: 200 + top,
+                flex: 0,
+              }}>
+              {images[pub.id].map((photo, index) => (
+                <TouchableOpacity
+                  key={index}
+                  activeOpacity={0.9}
+                  onPress={() => {
+                    navigation.navigate(GalleryRoute, {gallery: pub.photos});
+                  }}>
+                  <FastImage
+                    style={{height: 200 + top, width: '100%'}}
+                    source={{uri: photo}}
+                  />
+                </TouchableOpacity>
+              ))}
+            </Swiper>
+          )}
         </View>
       </View>
       <Sheet pub={pub}>

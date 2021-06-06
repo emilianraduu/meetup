@@ -6,6 +6,9 @@ export const me = queryField('me', {
     return await ctx.prisma.user.findUnique({
       where: {
         id: ctx.userId
+      },
+      include: {
+        reservations: { where: {finished: false}}
       }
     })
   }

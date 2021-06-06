@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {AsyncStorage, StatusBar} from 'react-native';
+import {AsyncStorage, LogBox, StatusBar} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import MainNavigator from './src/customerNavigation/MainNavigator';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -11,7 +11,8 @@ import {AppearanceProvider} from 'react-native-appearance';
 import {ApolloProvider} from '@apollo/client';
 import {client} from './src/graphql';
 import {token} from './src/helpers/variables';
-import {LogBox} from 'react-native';
+import {SiriShortcutsEvent} from 'react-native-siri-shortcut';
+
 LogBox.ignoreAllLogs();
 export const App = () => {
   const routeNameRef = useRef();
@@ -20,6 +21,12 @@ export const App = () => {
 
   useEffect(() => {
     // Socket.instance.connect();
+    SiriShortcutsEvent.addListener(
+      'SiriShortcutListener',
+      ({userInfo, activityType}) => {
+        alert('aici');
+      },
+    );
     crashlytics().log('App mounted.');
     setTimeout(() => SplashScreen.hide(), 100);
   }, []);

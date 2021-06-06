@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Modal from 'react-native-modal';
@@ -7,13 +7,12 @@ import {theme} from '../../../helpers/constants';
 import MapView, {Marker} from 'react-native-maps';
 import PubCard from '../../main/PubCard';
 import {useNavigation} from '@react-navigation/native';
-import {pubs} from '../../../../dummyData';
-import {PubsContext} from '../../../contexts/pubContext';
-import {PubRoute} from '../../../helpers/routes';
+import {useReactiveVar} from '@apollo/client';
+import {lat, long, pubs} from '../../../helpers/variables';
 
 const Map = () => {
   const navigation = useNavigation();
-  const {onSelectPub} = useContext(PubsContext);
+  const pubList = useReactiveVar(pubs);
 
   const [isVisible, setIsVisible] = useState(false);
   const [selected, setSelected] = useState(undefined);
@@ -25,7 +24,8 @@ const Map = () => {
     setSelected(undefined);
   };
   const {top} = useSafeAreaInsets();
-
+  const latitude = useReactiveVar(lat);
+  const longitude = useReactiveVar(long);
   return (
     <View>
       <TouchableOpacity onPress={() => setIsVisible(true)}>
@@ -56,17 +56,26 @@ const Map = () => {
         <MapView
           style={{flex: 1}}
           initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+            latitude,
+            longitude,
+            latitudeDelta: 0.122,
+            longitudeDelta: 0.1421,
           }}>
-          {pubs.map((pub, index) => (
+          <Marker
+            coordinate={{latitude, longitude}}
+            flat
+            anchor={{x: 0.5, y: 0.5}}>
+            <Icon name="md-location-sharp" size={30} color={theme.green} />
+          </Marker>
+          {pubList?.map((pub, index) => (
             <Marker
-              coordinate={{latitude: 37.78825, longitude: -122.4324}}
+              key={index}
+              coordinate={{
+                latitude: Number(pub?.latitude),
+                longitude: Number(pub?.longitude),
+              }}
               onPress={() => {
                 setSelected(pub);
-                onSelectPub(pub?.id);
               }}
             />
           ))}
@@ -87,11 +96,7 @@ const Map = () => {
               navigation={navigation}
               pub={selected}
               index={selected?.id}
-              onSelectPub={() => {
-                navigation.navigate(PubRoute);
-                setIsVisible(false);
-                setSelected(undefined);
-              }}
+              onSelectPub={onClose}
             />
           )}
         </Modal>

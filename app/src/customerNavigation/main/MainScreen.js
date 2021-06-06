@@ -1,71 +1,98 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import Geolocation from '@react-native-community/geolocation';
-import {Dimensions, ScrollView, Text, View} from 'react-native';
-import randomLocation from 'random-location';
+import {Dimensions, FlatList, Text, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {pubs} from '../../../dummyData';
 import {theme} from '../../helpers/constants';
 import {PubsContext} from '../../contexts/pubContext';
 import Filters from '../misc/filters/Filters';
 import PubCard from './PubCard';
 import Map from '../misc/map/Map';
 import LottieView from 'lottie-react-native';
-import {useLazyQuery} from '@apollo/client';
+import {useLazyQuery, useReactiveVar} from '@apollo/client';
+import {PUBS_QUERY} from '../../graphql/queries/Pubs';
+import {lat, long, pubs} from '../../helpers/variables';
+import {Loader} from '../Loader';
 
 export const MainScreen = ({navigation}) => {
-  const [lat, setLat] = useState(0);
-  const [lng, setLng] = useState(0);
+  const latitude = useReactiveVar(lat);
+  const longitude = useReactiveVar(long);
   const {top} = useSafeAreaInsets();
   const {onSelectPub} = useContext(PubsContext);
-
-  // useEffect(() => {
-  //   Geolocation.watchPosition(
-  //     ({coords: {latitude, longitude}}) => {
-  //       setLat(latitude);
-  //       setLng(longitude);
-  //     },
-  //     (e) => console.log(e),
-  //     {
-  //       enableHighAccuracy: true,
-  //       timeout: 5000,
-  //       maximumAge: 500,
-  //       distanceFilter: 10,
-  //     },
-  //   );
-  // });
-  // useEffect(() => {
-  //   Geolocation.getCurrentPosition(({coords: {latitude, longitude}}) => {
-  //     setLat(latitude);
-  //     setLng(longitude);
-  //   });
-  // }, []);
-  // const [locations, setLocations] = useState([]);
-  // useEffect(() => {
-  //   if (lat && lng) {
-  //     if (locations.length < 5) {
-  //       const obj = randomLocation.randomCirclePoint(
-  //         {latitude: lat, longitude: lng},
-  //         300,
-  //       );
-  //
-  //       if (!locations.includes(obj)) {
-  //         setLocations([...locations, obj]);
-  //       }
-  //     }
-  //   }
-  // }, [lat, lng, locations]);
-  return (
-    <View style={{flex: 1, paddingTop: top, backgroundColor: theme.white}}>
-      <ScrollView
+  const [pubQuery, {loading, data, error}] = useLazyQuery(PUBS_QUERY, {
+    fetchPolicy: 'no-cache',
+  });
+  const pubList = useReactiveVar(pubs);
+  useEffect(() => {
+    Geolocation.watchPosition(
+      ({coords: {latitude: lt, longitude: lg}}) => {
+        lat(lt);
+        long(lg);
+      },
+      (e) => console.log(e),
+      {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 500,
+        distanceFilter: 10,
+      },
+    );
+  });
+  useEffect(() => {
+    if (data) {
+      pubs(data.pubs);
+    }
+    if (error) {
+      alert(JSON.stringify(error));
+    }
+  }, [data, error]);
+  useEffect(() => {
+    Geolocation.getCurrentPosition(
+      ({coords: {latitude: lt, longitude: lg}}) => {
+        lat(lt);
+        long(lg);
+      },
+    );
+  }, []);
+  useEffect(() => {
+    if (latitude && longitude) {
+      pubQuery({variables: {lat: latitude, long: longitude}});
+    }
+  }, [latitude, longitude, pubQuery]);
+  const emptyList = () => {
+    return (
+      <View
         style={{
           flex: 1,
-        }}
-        contentContainerStyle={{
-          padding: 20,
+          justifyContent: 'center',
+          alignSelf: 'center',
+        }}>
+        <LottieView
+          source={require('../../assets/animations/empty-stores.json')}
+          loop={true}
+          autoPlay={true}
+          style={{
+            width: Dimensions.get('window').width - 40,
+            alignSelf: 'center',
+          }}
+        />
+        <View style={{alignItems: 'center'}}>
+          <Text style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center'}}>
+            Seems like there isn't anything near you yet!
+          </Text>
+        </View>
+      </View>
+    );
+  };
+  return (
+    <View style={{flex: 1, paddingTop: top, backgroundColor: theme.white}}>
+      <View
+        style={{
           paddingBottom: 20,
+          flex: 1,
         }}>
         <View
           style={{
+            paddingHorizontal: 20,
             flexDirection: 'row',
             alignItems: 'center',
             marginBottom: 20,
@@ -77,41 +104,28 @@ export const MainScreen = ({navigation}) => {
             <Filters />
           </View>
         </View>
-        {pubs?.length === 0 ? (
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignSelf: 'center',
-            }}>
-            <LottieView
-              source={require('../../assets/animations/empty-stores.json')}
-              loop={true}
-              autoPlay={true}
-              style={{
-                width: Dimensions.get('window').width - 40,
-                alignSelf: 'center',
-              }}
-            />
-            <View style={{alignItems: 'center'}}>
-              <Text
-                style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center'}}>
-                Seems like there isn't anything near you yet!
-              </Text>
-            </View>
-          </View>
-        ) : (
-          pubs.map((pub, index) => (
-            <PubCard
-              key={index}
-              navigation={navigation}
-              index={index}
-              pub={pub}
-              onSelectPub={onSelectPub}
-            />
-          ))
+        {loading && <Loader />}
+        {pubList && (
+          <FlatList
+            data={pubList}
+            refreshing={loading}
+            style={{padding: 20}}
+            ListEmptyComponent={emptyList}
+            onRefresh={() => {
+              pubQuery({variables: {lat: latitude, long: longitude}});
+            }}
+            renderItem={({item: pub, index}) => (
+              <PubCard
+                key={index}
+                navigation={navigation}
+                index={index}
+                pub={pub}
+                onSelectPub={onSelectPub}
+              />
+            )}
+          />
         )}
-      </ScrollView>
+      </View>
     </View>
   );
 };

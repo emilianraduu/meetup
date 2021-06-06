@@ -39,6 +39,11 @@ const LoginScreen = ({navigation}) => {
       navigation.navigate(PasswordRoute, {...data?.exists});
     }
   }, [data, loading, errorAPI, called, navigation, submitted]);
+  useEffect(() => {
+    if (errorAPI) {
+      alert(errorAPI);
+    }
+  }, [errorAPI]);
   const goBack = () => {
     lightVibration();
     navigation.goBack();

@@ -6,7 +6,7 @@ const Label = ({text, colors, ...restProps}) => {
   const {textStyle, root} = styles({colors});
   return (
     <View style={root} {...restProps}>
-      <Text style={textStyle}>${text}</Text>
+      <Text style={textStyle}>{text}</Text>
     </View>
   );
 };

@@ -20,7 +20,7 @@ const httpLink = new HttpLink({uri: Config.API_URL});
 const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext({
     headers: {
-      authorization: token(), // pune JWT-ul aici
+      authorization: token(),
     },
   });
   return forward(operation);

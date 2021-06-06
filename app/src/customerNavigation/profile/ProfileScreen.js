@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Ripple from 'react-native-material-ripple';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
@@ -17,32 +17,65 @@ import {Loader} from '../Loader';
 import FastImage from 'react-native-fast-image';
 import {theme} from '../../helpers/constants';
 import {
+  NotificationRoute,
   PermissionsRoute,
   PersonalRoute,
   ProfileNotificationsRoute,
+  SiriRoute,
 } from '../../helpers/routes';
-import {isLoggedIn} from '../../helpers/variables';
-import {useReactiveVar} from '@apollo/client';
-import {user} from '../../helpers/variables';
+import {isLoggedIn, user} from '../../helpers/variables';
+import {useMutation, useReactiveVar} from '@apollo/client';
+import {launchImageLibrary} from 'react-native-image-picker';
+import storage from '@react-native-firebase/storage';
+import {UPDATE_PHOTO_MUTATION} from '../../graphql/mutations/User';
+import {supportsSiriButton} from 'react-native-siri-shortcut/AddToSiriButton';
 
 const ProfileScreen = ({navigation}) => {
   const [showLogout, setShowLogout] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [photo, setPhoto] = useState('');
   const usr = useReactiveVar(user);
+  const [updateUserPhoto, {loading, data, error}] = useMutation(
+    UPDATE_PHOTO_MUTATION,
+  );
 
+  useEffect(() => {
+    const getUrl = async () => {
+      return await storage().ref(usr?.photo).getDownloadURL();
+    };
+    if (usr?.photo) {
+      getUrl().then((url) => {
+        setPhoto(url);
+      });
+    }
+  }, [usr]);
+
+  useEffect(() => {
+    if (data?.updateUser) {
+      user(data.updateUser);
+    }
+    if (error) {
+      alert(error);
+    }
+  }, [data, error]);
   const logout = async () => {
     isLoggedIn(undefined);
     AsyncStorage.removeItem('accessToken');
     setShowLogout(false);
   };
-  const goToNotif = () => {
-    navigation.navigate(ProfileNotificationsRoute);
+  const goTo = (page, options) => {
+    navigation.navigate(page, options);
   };
-  const goToPerm = () => {
-    navigation.navigate(PermissionsRoute);
-  };
-  const goToPers = () => {
-    navigation.navigate(PersonalRoute);
+
+  const onPhotoPress = () => {
+    launchImageLibrary({mediaType: 'photo'}, async ({assets}) => {
+      const reference = storage().ref(assets?.[0].fileName);
+      const r = await reference.putFile(assets?.[0].uri);
+      if (r && usr) {
+        await updateUserPhoto({
+          variables: {photo: assets?.[0].fileName, id: usr?.id},
+        });
+      }
+    });
   };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
@@ -62,14 +95,16 @@ const ProfileScreen = ({navigation}) => {
             Profile
           </Text>
           <View style={{flexDirection: 'row', marginTop: 20}}>
-            {usr?.photo ? (
-              <FastImage
-                source={{uri: usr.photo}}
-                style={{width: 50, height: 50, borderRadius: 50}}
-              />
-            ) : (
-              <Ionicons name={'person-circle'} size={70} color={theme.red} />
-            )}
+            <TouchableOpacity onPress={onPhotoPress}>
+              {photo ? (
+                <FastImage
+                  source={{uri: photo}}
+                  style={{width: 70, height: 70, borderRadius: 50}}
+                />
+              ) : (
+                <Ionicons name={'person-circle'} size={70} color={theme.red} />
+              )}
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate(PersonalRoute);
@@ -95,11 +130,15 @@ const ProfileScreen = ({navigation}) => {
             </Text>
           </View>
           <View>
-            <Ripple onPress={goToPers} style={style.nav}>
+            <Ripple onPress={() => goTo(PersonalRoute)} style={style.nav}>
               <Text>Personal information</Text>
               <Ionicons name={'person-outline'} color={theme.dark} size={20} />
             </Ripple>
-            <Ripple onPress={goToNotif} style={style.nav}>
+            <Ripple
+              onPress={() => {
+                goTo(NotificationRoute);
+              }}
+              style={style.nav}>
               <Text>Notifications</Text>
               <Ionicons
                 name={'notifications-outline'}
@@ -107,7 +146,7 @@ const ProfileScreen = ({navigation}) => {
                 size={20}
               />
             </Ripple>
-            <Ripple onPress={goToPerm} style={style.nav}>
+            <Ripple onPress={() => goTo(PermissionsRoute)} style={style.nav}>
               <Text>Permissions</Text>
               <Ionicons
                 name={'location-outline'}
@@ -124,15 +163,17 @@ const ProfileScreen = ({navigation}) => {
             </Text>
           </View>
           <View>
-            <Ripple onPress={goToPers} style={style.nav}>
-              <Text>Siri settings</Text>
-              <Ionicons name={'ios-search'} color={theme.dark} size={20} />
-            </Ripple>
-            <Ripple onPress={goToNotif} style={style.nav}>
+            {supportsSiriButton && (
+              <Ripple onPress={() => goTo(SiriRoute)} style={style.nav}>
+                <Text>Siri settings</Text>
+                <Ionicons name={'ios-search'} color={theme.dark} size={20} />
+              </Ripple>
+            )}
+            <Ripple style={style.nav}>
               <Text>How meetup works</Text>
               <Ionicons name={'git-network'} color={theme.dark} size={20} />
             </Ripple>
-            <Ripple onPress={goToPerm} style={style.nav}>
+            <Ripple style={style.nav}>
               <Text>Get help</Text>
               <Ionicons name={'help-circle'} color={theme.dark} size={20} />
             </Ripple>

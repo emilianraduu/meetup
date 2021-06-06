@@ -32,11 +32,11 @@ export const TableScreen = () => {
   return (
     <View style={{flex: 1, backgroundColor: theme.white}}>
       <BottomSheetScrollView contentContainerStyle={container}>
-        {pub.locations?.length > 1 && (
+        {pub?.locations?.length > 1 && (
           <>
             <Text style={spaceText}>Pick a space</Text>
             <View style={section}>
-              {pub.locations.map((loc, index) => (
+              {pub?.locations?.map((loc, index) => (
                 <TouchableOpacity
                   key={index}
                   onPress={() => onSelectLocation(loc.id)}
@@ -54,7 +54,7 @@ export const TableScreen = () => {
           </>
         )}
 
-        {pub.locations.map((loc) => (
+        {pub?.locations?.map((loc) => (
           <TableTab
             key={loc.id}
             location={loc}

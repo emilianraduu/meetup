@@ -10,11 +10,11 @@ const PubContainer = ({children}) => {
   const onSelectPub = (pubId) => {
     const pub = pubs.find((p) => p.id === pubId);
     setSelectedPub(pub);
-    setSelectedLocation(pub.locations[0]);
+    setSelectedLocation(pub?.locations?.[0]);
   };
   const onSelectLocation = (locationId) => {
     setSelectedLocation(
-      selectedPub.locations.find((loc) => loc.id === locationId),
+      selectedPub.locations?.find((loc) => loc.id === locationId),
     );
   };
   return (

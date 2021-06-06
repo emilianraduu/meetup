@@ -1,46 +1,75 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import Swiper from 'react-native-swiper';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {PubRoute} from '../../helpers/routes';
-import FastImage from 'react-native-fast-image';
 import {theme} from '../../helpers/constants';
 import DollarIcon from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import StarRating from 'react-native-star-rating';
+import storage from '@react-native-firebase/storage';
+import Swiper from 'react-native-swiper';
+import FastImage from 'react-native-fast-image';
+import {pubImages, selectedPub} from '../../helpers/variables';
+import {useReactiveVar} from '@apollo/client';
 
 const PubCard = ({index, pub, navigation, onSelectPub}) => {
+  const images = useReactiveVar(pubImages);
+  const [currentImage, setCurrentImage] = useState(undefined);
+  useEffect(() => {
+    if (pub && pub.images) {
+      pub.images.forEach(async (i) => {
+        setCurrentImage(await storage().ref(i.toString()).getDownloadURL());
+      });
+    }
+  }, [pub]);
+
+  useEffect(() => {
+    if (pub && images[pub.id]) {
+      if (!images[pub.id].includes(currentImage) && currentImage) {
+        pubImages({...images, [pub.id]: [...images[pub.id], currentImage]});
+      }
+    }
+
+    if (pub && images && !images[pub.id] && currentImage) {
+      pubImages({...images, [pub.id]: [currentImage]});
+    }
+  }, [images, currentImage, pub]);
+
   return (
     <View key={index} style={style.wrapper}>
       <View style={{borderRadius: 20, overflow: 'hidden'}}>
         <View style={{height: 200}}>
-          <Swiper
-            showsButtons={false}
-            bounces={true}
-            loop={false}
-            showsPagination={false}
-            containerStyle={{
-              height: 200,
-            }}>
-            {pub?.photos?.map((photo, i) => (
-              <TouchableOpacity
-                key={i}
-                onPress={() => {
-                  navigation.navigate(PubRoute);
-                  onSelectPub(pub?.id);
-                }}>
-                <Image
-                  style={{height: 200, width: '100%'}}
-                  source={{uri: photo}}
-                />
-              </TouchableOpacity>
-            ))}
-          </Swiper>
+          {images[pub?.id] && (
+            <Swiper
+              showsButtons={false}
+              bounces={true}
+              loop={false}
+              showsPagination={false}
+              containerStyle={{
+                height: 200,
+              }}>
+              {images[pub.id].map((photo, i) => (
+                <TouchableOpacity
+                  key={i}
+                  onPress={() => {
+                    navigation.navigate(PubRoute);
+                    selectedPub(pub);
+                    onSelectPub?.();
+                  }}>
+                  <FastImage
+                    style={{height: 200, width: '100%'}}
+                    source={{uri: photo}}
+                  />
+                </TouchableOpacity>
+              ))}
+            </Swiper>
+          )}
         </View>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate(PubRoute);
-            onSelectPub(pub?.id);
+            selectedPub(pub);
+            onSelectPub?.();
           }}
           style={style.processable}>
           <PubDetails pub={pub} />
@@ -57,7 +86,7 @@ export const PubDetails = ({pub, wrapperStyle}) => {
         <Text style={style.title}>{pub?.name}</Text>
         <Text style={style.address}>{pub?.address}</Text>
         <View style={style.section}>
-          <Text style={style.distance}>15 min</Text>
+          <Text style={style.distance}>{pub?.distance}m</Text>
           <Icon
             name={'shoe-prints'}
             size={12}
@@ -68,13 +97,13 @@ export const PubDetails = ({pub, wrapperStyle}) => {
       </View>
       <View style={style.right}>
         <View style={style.section}>
-          <Text style={style.tables}>{pub?.totalEmptyTables} free tables</Text>
+          <Text style={style.tables}>{pub?.freeTable} free tables</Text>
         </View>
         <View style={style.section}>
           {[1, 2, 3].map((i) => (
             <DollarIcon
               key={i}
-              color={pub?.price >= i ? theme.red : theme.grey}
+              color={pub?.priceAvg < i - 1 ? theme.grey : theme.red}
               size={15}
               name={'dollar'}
               style={{marginRight: 5}}
@@ -88,7 +117,7 @@ export const PubDetails = ({pub, wrapperStyle}) => {
             emptyStarColor={theme.red}
             halfStarColor={theme.red}
             maxStars={5}
-            rating={pub?.stars}
+            rating={pub?.avgRating}
             starSize={16}
             activeOpacity={1}
             starStyle={style.star}

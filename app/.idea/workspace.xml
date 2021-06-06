@@ -5,11 +5,128 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="33e3479a-477f-4991-b415-f82aaa59210d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../backend/src/resolvers/Mutations/Locations.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/resolvers/Mutations/Reservations.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/resolvers/Mutations/Reviews.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/resolvers/Mutations/Schedule.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/resolvers/Mutations/Tables.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/resolvers/Queries/Reservations.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/resolvers/Queries/Reviews.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/resolvers/Queries/Tables.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/prisma/schema.prisma" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/src/resolvers/Mutations/Pubs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/resolvers/Mutations/Pubs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/resolvers/Mutations/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/resolvers/Mutations/User.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/resolvers/Mutations/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/resolvers/Mutations/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/src/resolvers/Queries/Pubs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/resolvers/Queries/Pubs.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/src/resolvers/Queries/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/resolvers/Queries/User.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/resolvers/Queries/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/resolvers/Queries/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/src/resolvers/models.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/resolvers/models.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/utils/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/utils/constants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/utils/helpers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/utils/helpers.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/utils/rules.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/utils/rules.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Courses/ActiveCourseActions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Courses/ActiveCourseContext.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Courses/CourseRouter.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Courses/CoursesActions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Courses/CoursesContext.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Courses/CoursesRouter.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Courses/create/CourseCreate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Courses/create/CourseCreateForm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Courses/edit/CourseEdit.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Courses/edit/CourseEditForm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Courses/listing/CoursesListing.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Courses/listing/CoursesListingWeb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/BackButton.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Box/BlackBox.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Box/BlackBoxMobile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Box/Box.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Box/InfoBox.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Box/ProfileBox.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Box/SmallBox.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Box/styles/box.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Checkboxes/FieldCheckbox.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Checkboxes/styles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/DatePickers/FieldDateAndTimePicker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/DatePickers/FieldDatePicker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/DatePickers/styles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Dropdown/AddDropdown.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Dropdown/AddDropdownMob.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Dropdown/Dropdown.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Dropdown/DropdownMob.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Dropdown/styles/dropdown.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/EmptyData/EmptyData.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Filter/FilterMenuMob.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Filter/FilterPanel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Filter/FiltersWeb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Filter/HeaderFilters.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Filter/OrderPanel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Filter/SubmenuChooser.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Filter/styles/filterMob.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Header/HeaderBottomWeb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Header/HeaderMob.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Header/HeaderTopMob.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Header/HeaderTopWeb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Header/HeaderWeb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Header/styles/headerMob.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Header/styles/headerWeb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Icons/CloseIcon.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Icons/styles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/InfiniteScroll.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Input/CustomField.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Input/FieldInput.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Input/NoKeyboardInput.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Input/NumberInput.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Input/UnderlineInputWithIcon.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Input/styles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Modals/Modal.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Navbar/NavbarMob.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Navbar/NavbarWeb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Navbar/SubmenuWeb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Paginator/Paginator.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Paginator/styles/paginator.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/PrivateRoute.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Search/MainSearch.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Select/CreateableFieldSelect.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Select/FieldSelect.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Select/InfiniteSelect.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Select/styles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Separators/styles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Statistics/BarChartStatistics.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Statistics/PieChartStatistics.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Statistics/styles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Table/HistoryTable.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Table/Table.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Table/styles/table.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Toast.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Trail/TrailMob.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Trail/TrailWeb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Trail/styles/trailMob.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Global/Trail/styles/trailWeb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Layout/Layout.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Layout/LayoutAuth.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Rooms/ActiveRoomActions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Rooms/ActiveRoomContext.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Rooms/RoomRooter.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Rooms/RoomsActions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Rooms/RoomsContext.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Rooms/RoomsRouter.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Rooms/create/RoomsCreate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Rooms/create/RoomsCreateForm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Rooms/edit/RoomsEdit.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Rooms/edit/RoomsEditForm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Rooms/listing/RoomsListing.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Rooms/listing/RoomsListingWeb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Timetable/TimetableActions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Timetable/TimetableContext.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Timetable/TimetableRoutes.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Timetable/create/TimetableCreate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Timetable/create/TimetableCreateForm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Timetable/listing/Timetable.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Timetable/listing/TimetableListing.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Timetable/listing/TimetableListingWeb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Timetable/listing/styles.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +154,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/customerNavigation/profile" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -44,9 +162,13 @@
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
     <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/customerNavigation/profile" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/customerNavigation/main/table" />
       <recent name="$PROJECT_DIR$/src/assets/animations" />
@@ -63,6 +185,7 @@
       <updated>1622486981903</updated>
       <workItem from="1622486985459" duration="16706000" />
       <workItem from="1622571229964" duration="7204000" />
+      <workItem from="1622793704495" duration="23992000" />
     </task>
     <servers />
   </component>

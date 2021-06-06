@@ -10,18 +10,17 @@ export const handleError = (error: any) => {
 }
 
 export const generateAccessToken = (userId: number) => {
-  const accessToken = sign(
+  return sign(
     {
       userId,
       type: tokens.access.name,
-      timestamp: Date.now(),
+      timestamp: Date.now()
     },
     APP_SECRET,
     {
-      expiresIn: tokens.access.expiry,
+      expiresIn: tokens.access.expiry
     }
   )
-  return accessToken
 }
 
 export const prisma = new PrismaClient()
@@ -51,6 +50,44 @@ export const createContext = (ctx: any): Context => {
     ...ctx,
     prisma,
     pubsub,
-    userId,
+    userId
   }
+}
+
+export const findPub = async (ctx: Context, pubId: number): Promise<boolean> => {
+  let pub
+  try {
+    pub = await ctx.prisma.pub.findUnique({
+      where: {
+        id: pubId
+      }
+    })
+  } catch (e) {
+    return false
+  }
+
+  if (!pub) return false
+  if (pub && pub.ownerId !== ctx.userId) return true
+  if (pub && pub.ownerId !== ctx.userId) return false
+}
+
+export const findUser = async (ctx: Context): Promise<any> => {
+  let user = null
+  try {
+    user = await ctx.prisma.user.findUnique({
+      where: {
+        id: ctx.userId
+      }
+    })
+  } catch (e) {
+    return false
+  }
+
+  return user
+}
+
+export const getTables = async (ctx: Context, locationId: number): Promise<any> => {
+  return await ctx.prisma.table.findMany({
+    where: { locationId }
+  })
 }

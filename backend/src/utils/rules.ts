@@ -19,7 +19,7 @@ export const rules = {
 }
 
 export const permissions = shield({
-  Mutation: { createPub: rules.isAuthenticatedUser },
+  // Mutation: { createPub: rules.isAuthenticatedUser },
   Query: {
     me: rules.isAuthenticatedUser
   }

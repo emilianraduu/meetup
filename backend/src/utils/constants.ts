@@ -15,8 +15,14 @@ export const errors = {
   notAuthenticated: new AuthenticationError('Unauthenticated user!'),
   userAlreadyExists: new UserInputError('User already exists!'),
   pubAlreadyExists: new UserInputError('Location already exists!'),
+  scheduleAlreadyExists: new UserInputError('Schedule already exists!'),
+  scheduleNotFOund: new UserInputError('Schedule not found!'),
   invalidUser: new UserInputError('Invalid username or password'),
+  invalidPub: new UserInputError('Invalid pub'),
   notOwner: new UserInputError('This user is not an owner'),
+  pubNotFound: new UserInputError('Pub not found.'),
+  locationNotFound: new UserInputError('Location not found.'),
+  reservationNotFound: new UserInputError('Reservation not found.'),
 }
 
 export const user_status = {

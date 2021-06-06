@@ -85,7 +85,7 @@ const FilterContent = ({animation, onClose, index}) => {
   };
 
   const renderRailSelected = useCallback(() => <RailSelected />, []);
-  const renderLabel = useCallback((value) => <Label text={value} />, []);
+  const renderLabel = useCallback((value) => <Label text={`$${value}`} />, []);
   const renderNotch = useCallback(() => <View />, []);
   const handleValueChange = useCallback((low, high) => {
     setLow(low);

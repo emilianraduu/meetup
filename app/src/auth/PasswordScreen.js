@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   AsyncStorage,
   ScrollView,
@@ -19,6 +19,7 @@ import {Loader} from '../customerNavigation/Loader';
 import FastImage from 'react-native-fast-image';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {validatePassword} from '../helpers/validators';
+import storage from '@react-native-firebase/storage';
 
 const PasswordScreen = ({navigation, route}) => {
   const [loading, setLoading] = useState(false);
@@ -26,26 +27,18 @@ const PasswordScreen = ({navigation, route}) => {
   const [error, setError] = useState('');
   const [login] = useMutation(LOGIN_MUTATION);
   const [register] = useMutation(REGISTER_MUTATION);
+  const [photo, setPhoto] = useState('');
 
-  // useEffect(() => {
-  //   if (registerData) {
-  //     isLoggedIn(true);
-  //     user(registerData?.login.user);
-  //     AsyncStorage.setItem('accessToken', registerData.login.accessToken);
-  //   } else {
-  //     setLoading(false);
-  //   }
-  // }, [registerData]);
-  //
-  // useEffect(() => {
-  //   if (data?.login?.accessToken) {
-  //     isLoggedIn(true);
-  //     user(data?.login.user);
-  //     AsyncStorage.setItem('accessToken', data.login.accessToken);
-  //   } else {
-  //     setLoading(false);
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    const getUrl = async () => {
+      return await storage().ref(route?.params?.photo).getDownloadURL();
+    };
+    if (route?.params?.photo) {
+      getUrl().then((url) => {
+        setPhoto(url);
+      });
+    }
+  }, [route]);
 
   const handleRegister = async () => {
     if (validatePassword(values.password)) {
@@ -121,13 +114,18 @@ const PasswordScreen = ({navigation, route}) => {
       </SafeAreaView>
       <View style={style.inputWrapper}>
         <View style={style.section}>
-          {route?.params?.photo ? (
+          {photo ? (
             <FastImage
-              source={{uri: route?.params?.photo}}
-              style={{width: 50, height: 50, borderRadius: 50}}
+              source={{uri: photo}}
+              style={{width: 50, height: 50, borderRadius: 50, marginRight: 5}}
             />
           ) : (
-            <Ionicons name={'person-circle'} size={70} color={theme.white} />
+            <Ionicons
+              name={'person-circle'}
+              size={50}
+              color={theme.white}
+              style={{marginRight: 5}}
+            />
           )}
           <View>
             <Text style={style.label}>{route?.params?.email}</Text>

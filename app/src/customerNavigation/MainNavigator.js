@@ -54,7 +54,10 @@ const MainNavigator = () => {
       isLoggedIn(true);
       user(data.me);
     }
+    if (error) {
+    }
   }, [data, error]);
+
   return (
     <>
       <AppLoading isLoading={loading} progress={progress} />

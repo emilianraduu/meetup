@@ -9,7 +9,9 @@ import {
   PersonalRoute,
   ProfileNotificationsRoute,
   ProfileRoute,
+  SiriRoute,
 } from '../../helpers/routes';
+import SiriScreen from './SiriScreen';
 
 const Stack = createStackNavigator();
 export const ProfileStack = () => {
@@ -23,6 +25,11 @@ export const ProfileStack = () => {
       <Stack.Screen
         name={ProfileNotificationsRoute}
         component={NotificationsScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={SiriRoute}
+        component={SiriScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen

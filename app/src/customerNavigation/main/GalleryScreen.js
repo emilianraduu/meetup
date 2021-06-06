@@ -6,21 +6,21 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {DARK_COLOR, theme} from '../../helpers/constants';
+import {theme} from '../../helpers/constants';
 import FastImage from 'react-native-fast-image';
-import {PubsContext} from '../../contexts/pubContext';
 import ImageView from 'react-native-image-viewing';
+import {useReactiveVar} from '@apollo/client';
+import {pubImages, selectedPub} from '../../helpers/variables';
 
 export const GalleryScreen = ({navigation}) => {
-  const {
-    selectedPub: {photos},
-  } = useContext(PubsContext);
   const [visible, setVisible] = useState(false);
+  const pub = useReactiveVar(selectedPub);
+  const images = useReactiveVar(pubImages);
   const [index, setIndex] = useState(undefined);
-  const photosUri = photos.map((ph) => ({uri: ph}));
+  const photosUri = images?.[pub?.id].map((uri) => ({uri}));
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: theme.white}}>
       <StatusBar barStyle={'dark-content'} />
@@ -28,7 +28,7 @@ export const GalleryScreen = ({navigation}) => {
         <Icon name={'arrow-left'} size={24} color={theme.dark} />
       </TouchableOpacity>
       <ScrollView contentContainerStyle={style.scrollView}>
-        {photos.map((image, i) => (
+        {images[pub?.id].map((image, i) => (
           <View key={i} style={style.shadow}>
             <TouchableOpacity
               onPress={() => {

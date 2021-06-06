@@ -6,6 +6,10 @@ export const ME_QUERY = gql`
       lastName
       email
       firstName
+      id
+      photo
+      maxDistance
+      status
     }
   }
 `;

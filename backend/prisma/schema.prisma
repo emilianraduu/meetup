@@ -10,82 +10,137 @@ generator prisma {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  email        String   @unique
+  id           Int           @id @default(autoincrement())
+  email        String        @unique
   password     String
   lastName     String?
   firstName    String?
   photo        String?
-  pubs         Pub[]    @relation("Owner")
-  waiter       Pub[]    @relation("Waiters")
-  reviews      Review[] @relation("Reviewer")
-  status       String   @default("CLIENT")
-  waitedTables Table?   @relation("Waiter")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  maxDistance  Int           @default(5000)
+  pubs         Pub[]         @relation("Owner")
+  waiter       Pub[]         @relation("Waiters")
+  reviews      Review[]      @relation("Reviewer")
+  status       String        @default("CLIENT")
+  waitedTables Table?        @relation("Waiter")
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  reservations Reservation[] @relation("UserReservation")
 }
 
 model Pub {
-  id         Int        @id @default(autoincrement())
-  address    String     @unique
-  latitude   Int
-  longitude  Int
-  freeTable  Int?
-  avgRating  Float      @default(0)
-  priceAvg   Int        @default(0)
-  images     String[]
-  name       String     @unique
-  reviews    Review[]   @relation("ReviewedPub")
-  locations  Location[] @relation("Pub")
-  owner      User       @relation(name: "Owner", fields: [ownerId], references: [id])
-  ownerId    Int
-  waiters    User[]     @relation(name: "Waiters", fields: [waiterId], references: [id])
-  waiterId   Int?
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  schedule   Schedule?   @relation(name: "Schedule", references: [id], fields: [scheduleId])
-  scheduleId Int?
+  id           Int           @id @default(autoincrement())
+  ownerId      Int
+  waiterId     Int?
+  owner        User          @relation(name: "Owner", fields: [ownerId], references: [id])
+  waiters      User[]        @relation(name: "Waiters", fields: [waiterId], references: [id])
+  reservations Reservation[] @relation("PubReservation")
+  schedules    Schedule[]
+  address      String        @unique
+  latitude     Float
+  longitude    Float
+  freeTable    Int?
+  description  String?
+  avgRating    Float         @default(0)
+  priceAvg     Int           @default(0)
+  images       String[]
+  name         String        @unique
+  reviews      Review[]      @relation("ReviewedPub")
+  locations    Location[]    @relation("Pub")
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  currency     String?
+  menu         Menu?         @relation("Menu")
+}
+
+model Menu {
+  id       Int           @id @default(autoincrement())
+  pubId    Int
+  pub      Pub           @relation(name: "Menu", fields: [pubId], references: [id])
+  sections MenuSection[] @relation("Sections")
+}
+
+model MenuSection {
+  id     Int        @id @default(autoincrement())
+  name   String
+  image  String
+  items  MenuItem[] @relation("Items")
+  menuId Int
+  menu   Menu       @relation(name: "Sections", fields: [menuId], references: [id])
+}
+
+model MenuItem {
+  id          Int         @id @default(autoincrement())
+  sectionId   Int
+  section     MenuSection @relation("Items", fields: [sectionId], references: [id])
+  name        String
+  image       String
+  price       Float?
+  description String
 }
 
 model Schedule {
   id        Int    @id @default(autoincrement())
+  pubId     Int?
   dayOfWeek String
   timeStart String
   timeEnd   String
-  Pub       Pub[]  @relation("Schedule")
+  Pub       Pub?   @relation(fields: [pubId], references: [id])
+}
+
+model Reservation {
+  id         Int      @id @default(autoincrement())
+  tableId    Int
+  locationId Int
+  pub        Pub      @relation(name: "PubReservation", fields: [pubId], references: [id])
+  pubId      Int
+  date       DateTime
+  startHour  String
+  finished   Boolean  @default(false)
+  endHour    String?
+  userId     Int
+  user       User     @relation(name: "UserReservation", fields: [userId], references: [id])
+  table      Table    @relation(name: "TableReservation", fields: [tableId], references: [id])
+  location   Location @relation(name: "LocationReservation", fields: [locationId], references: [id])
+  Table      Table[]  @relation("TableReservations")
 }
 
 model Location {
-  id     Int     @id @default(autoincrement())
-  name   String
-  tables Table[] @relation("Locate")
-  Pub    Pub     @relation(name: "Pub", fields: [pubId], references: [id])
-  pubId  Int
+  id           Int           @id @default(autoincrement())
+  pubId        Int
+  name         String
+  tables       Table[]       @relation("Locate")
+  Pub          Pub           @relation(name: "Pub", fields: [pubId], references: [id])
+  rows         Int           @default(0)
+  columns      Int           @default(0)
+  reservations Reservation[] @relation("LocationReservation")
 }
 
 model Table {
-  id       Int      @id @default(autoincrement())
-  count    Int
-  occupied Boolean  @default(false)
-  blocked  Boolean  @default(false)
-  reason   String?
-  xPos     Int
-  yPos     Int
-  name     String?
-  location Location @relation(name: "Locate", fields: [tableId], references: [id])
-  tableId  Int
-  waiter   User?    @relation(name: "Waiter", fields: [waiterId], references: [id])
-  waiterId Int
+  id            Int           @id @default(autoincrement())
+  count         Int
+  occupied      Boolean       @default(false)
+  blocked       Boolean       @default(false)
+  reason        String?
+  xPos          Int
+  yPos          Int
+  name          String?
+  location      Location      @relation(name: "Locate", fields: [locationId], references: [id])
+  locationId    Int
+  waiter        User?         @relation(name: "Waiter", fields: [waiterId], references: [id])
+  waiterId      Int
+  reservation   Reservation?  @relation("TableReservations", fields: [reservationId], references: [id])
+  reservationId Int?
+  Reservation   Reservation[] @relation("TableReservation")
 }
 
 model Review {
   id        Int      @id @default(autoincrement())
+  pubId     Int
+  userId    Int
   rating    Int
   comment   String
   user      User     @relation(name: "Reviewer", fields: [userId], references: [id])
-  userId    Int
   pub       Pub      @relation(name: "ReviewedPub", fields: [pubId], references: [id])
-  pubId     Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

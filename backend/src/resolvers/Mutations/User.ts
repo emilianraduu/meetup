@@ -1,4 +1,4 @@
-import { extendType, nonNull, stringArg } from 'nexus'
+import { extendType, intArg, nonNull, stringArg } from 'nexus'
 import { compare, hash } from 'bcrypt'
 import { generateAccessToken, handleError } from '../../utils/helpers'
 import { errors, user_status } from '../../utils/constants'
@@ -11,7 +11,7 @@ export const user = extendType({
       args: {
         email: nonNull(stringArg()),
         password: nonNull(stringArg()),
-        status: stringArg({default: user_status.client})
+        status: stringArg({ default: user_status.client })
       },
       async resolve(_parent, { email, password, status }, ctx) {
         try {
@@ -59,6 +59,31 @@ export const user = extendType({
         return {
           accessToken,
           user
+        }
+      }
+    })
+    t.field('updateUser', {
+      type: 'User',
+      args: {
+        firstName: stringArg(),
+        lastName: stringArg(),
+        photo: stringArg(),
+        id: nonNull(intArg()),
+        maxDistance: intArg()
+      },
+      async resolve(_parent, { firstName, lastName, photo, id, maxDistance }, ctx) {
+        try {
+          return await ctx.prisma.user.update({
+            where: { id },
+            data: {
+              firstName,
+              lastName,
+              maxDistance,
+              photo
+            }
+          })
+        } catch (e) {
+          console.log(e)
         }
       }
     })
