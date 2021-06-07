@@ -20,6 +20,12 @@ export const whiteTheme = {
   green: '#7AD8B9',
 };
 
+export const user_status = {
+  admin: 'OWNER',
+  waiter: 'WAITER',
+  client: 'CLIENT',
+};
+
 export const BIG_FONT_SIZE = Dimensions.get('screen').width / 8;
 
 // export const API_URL = 'http://192.168.2.101:8080/';

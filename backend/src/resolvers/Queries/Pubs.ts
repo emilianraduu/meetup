@@ -31,6 +31,22 @@ export const getPubs = queryField('pubs', {
   }
 })
 
+
+
+export const getMyPubs = queryField('myPubs', {
+  type: 'Pub',
+  list: true,
+  async resolve(_parent, _args, ctx) {
+    try {
+      return await ctx.prisma.pub.findMany({
+        where: { ownerId: ctx.userId }
+      })
+    } catch (e) {
+      handleError(errors.invalidUser)
+    }
+  }
+})
+
 export const getPub = queryField('pub', {
   type: 'Pub',
   args: {
@@ -42,6 +58,15 @@ export const getPub = queryField('pub', {
         where: { id },
         include: {
           reviews: true,
+          menu: {
+            include: {
+              sections: {
+                include: {
+                  items: true
+                }
+              }
+            }
+          },
           locations: {
             include: {
               tables: {

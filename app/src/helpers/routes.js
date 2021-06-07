@@ -18,7 +18,11 @@ export const ReviewsRoute = 'Reviews';
 export const AboutRoute = 'About';
 
 export const ExploreRoute = 'Explore';
+export const MyPubsRoute = 'MyPubs';
 export const HistoryRoute = 'History';
+export const AnalyticsRoute = 'Analytics';
 export const MainRoute = 'Main';
+export const MainAdminRoute = 'MainAdmin';
+export const AddPubRoute = 'AddPub';
 export const PubRoute = 'Pub';
 export const GalleryRoute = 'Gallery';

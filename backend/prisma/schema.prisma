@@ -62,7 +62,7 @@ model Menu {
 model MenuSection {
   id     Int        @id @default(autoincrement())
   name   String
-  image  String
+  image  String?
   items  MenuItem[] @relation("Items")
   menuId Int
   menu   Menu       @relation(name: "Sections", fields: [menuId], references: [id])
@@ -73,7 +73,7 @@ model MenuItem {
   sectionId   Int
   section     MenuSection @relation("Items", fields: [sectionId], references: [id])
   name        String
-  image       String
+  image       String?
   price       Float?
   description String
 }

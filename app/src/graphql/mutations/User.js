@@ -36,11 +36,13 @@ export const REGISTER_MUTATION = gql`
 export const UPDATE_PHOTO_MUTATION = gql`
   mutation update($id: Int!, $photo: String) {
     updateUser(id: $id, photo: $photo) {
-      id
+      lastName
       email
       firstName
-      lastName
+      id
       photo
+      maxDistance
+      status
     }
   }
 `;
@@ -58,11 +60,13 @@ export const UPDATE_DATA_MUTATION = gql`
       lastName: $lastName
       maxDistance: $maxDistance
     ) {
-      id
+      lastName
       email
       firstName
-      lastName
+      id
       photo
+      maxDistance
+      status
     }
   }
 `;

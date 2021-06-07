@@ -16,7 +16,7 @@ const WelcomeScreen = ({navigation}) => {
   };
   // const onPressSecond = () => {
   //   lightVibration();
-  //   customerNavigation.navigate(EnterpriseLoginRoute);
+  //   navigation.navigate(EnterpriseLoginRoute);
   // };
   return (
     <View style={style.container}>

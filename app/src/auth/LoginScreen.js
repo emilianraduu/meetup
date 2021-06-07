@@ -12,7 +12,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {EXIST_QUERY} from '../graphql/queries/User';
 import {PasswordRoute} from '../helpers/routes';
 import {validateEmail} from '../helpers/validators';
-import {Loader} from '../customerNavigation/Loader';
+import {Loader} from '../navigation/Loader';
 
 const LoginScreen = ({navigation}) => {
   const [values, setValues] = useState({});
@@ -28,7 +28,11 @@ const LoginScreen = ({navigation}) => {
   const handleLogin = () => {
     if (validateEmail(values.email)) {
       setSubmitted(true);
-      existQuery();
+      try {
+        existQuery();
+      } catch (e) {
+        console.log(e);
+      }
     } else {
       setError('Invalid Email');
     }
@@ -113,7 +117,7 @@ const LoginScreen = ({navigation}) => {
         // this.setState({ userInfo });
         console.log(userInfo);
         // checkPermissions().then((hasPermissions) => {
-        //   customerNavigation.navigate('CameraScreen');
+        //   navigation.navigate('CameraScreen');
         // });
       } catch (error) {
         if (error.code === statusCodes.SIGN_IN_CANCELLED) {

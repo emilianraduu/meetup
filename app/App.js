@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {AsyncStorage, LogBox, StatusBar} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
-import MainNavigator from './src/customerNavigation/MainNavigator';
+import MainNavigator from './src/navigation/MainNavigator';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import crashlytics from '@react-native-firebase/crashlytics';
 import analytics from '@react-native-firebase/analytics';

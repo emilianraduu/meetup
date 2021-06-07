@@ -173,7 +173,7 @@
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = XMR3494594;
+						DevelopmentTeam = VX2LVTYX89;
 						LastSwiftMigration = 1230;
 					};
 				};
@@ -369,7 +369,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = meetup/meetup.entitlements;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = XMR3494594;
+				DEVELOPMENT_TEAM = VX2LVTYX89;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = meetup/Info.plist;
@@ -398,7 +398,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = meetup/meetup.entitlements;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = XMR3494594;
+				DEVELOPMENT_TEAM = VX2LVTYX89;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = meetup/Info.plist;

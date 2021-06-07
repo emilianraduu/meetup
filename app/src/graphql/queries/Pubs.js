@@ -16,3 +16,20 @@ export const PUBS_QUERY = gql`
     }
   }
 `;
+
+export const MY_PUBS_QUERY = gql`
+  query {
+    myPubs {
+      id
+      images
+      address
+      priceAvg
+      avgRating
+      freeTable
+      latitude
+      longitude
+      name
+      distance
+    }
+  }
+`;

@@ -66,6 +66,43 @@ export const Pub = objectType({
     t.list.field('schedule', { type: 'Schedule' })
     t.list.field('locations', { type: 'Location' })
     t.list.field('reviews', { type: 'Review' })
+    t.field('menu', {type: 'Menu'})
+  }
+})
+
+export const Menu = objectType({
+  name: 'Menu',
+  definition(t) {
+    t.int('id')
+    t.int('pubId')
+    t.field('pub', {type: 'Pub'})
+    t.list.field('sections', {type: 'MenuSection'})
+  }
+})
+
+
+export const MenuSection = objectType({
+  name: 'MenuSection',
+  definition(t) {
+    t.int('id')
+    t.string('name')
+    t.string('image')
+    t.list.field('items', {type: 'MenuItem'})
+    t.int('menuId')
+    t.field('menu', {type: 'Menu'})
+  }
+})
+
+export const MenuItem = objectType({
+  name: 'MenuItem',
+  definition(t) {
+    t.int('id')
+    t.int('sectionId')
+    t.field('section', { type: 'MenuSection' })
+    t.string('name')
+    t.string('image')
+    t.float('price')
+    t.string('description')
   }
 })
 

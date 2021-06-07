@@ -13,9 +13,9 @@ import Ripple from 'react-native-material-ripple';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {lightVibration} from '../helpers/vibrations';
 import {LOGIN_MUTATION, REGISTER_MUTATION} from '../graphql/mutations/User';
-import {isLoggedIn, user} from '../helpers/variables';
+import {isLoggedIn, token, user} from '../helpers/variables';
 import {useMutation} from '@apollo/client';
-import {Loader} from '../customerNavigation/Loader';
+import {Loader} from '../navigation/Loader';
 import FastImage from 'react-native-fast-image';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {validatePassword} from '../helpers/validators';
@@ -54,6 +54,7 @@ const PasswordScreen = ({navigation, route}) => {
           'accessToken',
           response?.data?.signup?.accessToken,
         );
+        token(response?.data?.login?.accessToken);
         user(response?.data?.signup?.user);
         isLoggedIn(true);
         setLoading(false);
@@ -78,6 +79,7 @@ const PasswordScreen = ({navigation, route}) => {
         });
         AsyncStorage.setItem('accessToken', response?.data?.login?.accessToken);
         user(response?.data?.login?.user);
+        token(response?.data?.login?.accessToken);
         isLoggedIn(true);
         setLoading(false);
       } catch (e) {
