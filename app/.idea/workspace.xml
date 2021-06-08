@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="33e3479a-477f-4991-b415-f82aaa59210d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../backend/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/resolvers/Queries/Pubs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/resolvers/Queries/Pubs.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../backend/src/resolvers/Subscriptions/Pubs.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/src/resolvers/models.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/resolvers/models.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/utils/helpers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/utils/helpers.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

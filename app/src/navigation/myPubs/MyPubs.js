@@ -9,6 +9,7 @@ import {pubs} from '../../helpers/variables';
 import {Loader} from '../Loader';
 import AddPub from './AddPub';
 import {AddPubRoute} from '../../helpers/routes';
+import PubCard from '../main/PubCard';
 
 const MyPubsScreen = ({navigation}) => {
   const {top} = useSafeAreaInsets();
@@ -63,7 +64,7 @@ const MyPubsScreen = ({navigation}) => {
         {loading && <Loader />}
         {pubList && (
           <FlatList
-            data={[]}
+            data={pubList}
             refreshing={loading}
             style={style.flatList}
             contentContainerStyle={style.listContent}
@@ -71,7 +72,14 @@ const MyPubsScreen = ({navigation}) => {
             onRefresh={() => {
               pubQuery();
             }}
-            renderItem={({item: pub, index}) => <View />}
+            renderItem={({item: pub, index}) => (
+              <PubCard
+                key={index}
+                navigation={navigation}
+                index={index}
+                pub={pub}
+              />
+            )}
           />
         )}
       </View>

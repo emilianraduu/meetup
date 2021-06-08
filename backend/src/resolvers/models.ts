@@ -167,4 +167,3 @@ export const Location = objectType({
     // t.list.field('', {type: 'Schedule'})
   }
 })
-

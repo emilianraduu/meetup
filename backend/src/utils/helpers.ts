@@ -24,7 +24,7 @@ export const generateAccessToken = (userId: number) => {
 }
 
 export const prisma = new PrismaClient()
-const pubsub = new PubSub()
+export const pubsub = new PubSub()
 
 export const createContext = (ctx: any): Context => {
   let userId: number
