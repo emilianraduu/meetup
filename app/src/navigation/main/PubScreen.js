@@ -1,69 +1,44 @@
-import {StatusBar, StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, {useContext} from 'react';
+import {Share, StatusBar, TouchableOpacity, View} from 'react-native';
+import React, {useEffect} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Swiper from 'react-native-swiper';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {PubsContext} from '../../contexts/pubContext';
 import {GalleryRoute} from '../../helpers/routes';
 import {theme} from '../../helpers/constants';
 import PubTabs from './Tabs';
 import Sheet from './Sheet';
-import {useReactiveVar} from '@apollo/client';
-import {pubImages, selectedPub} from '../../helpers/variables';
-
-const styles = StyleSheet.create({
-  content: {
-    marginTop: 50,
-  },
-  foreground: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  message: {
-    color: 'white',
-    fontSize: 40,
-    paddingTop: 24,
-    paddingBottom: 7,
-  },
-  headerWrapper: {
-    backgroundColor: 'green',
-    width: '100%',
-    paddingBottom: 25,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  headerTitle: {
-    fontSize: 16,
-    color: 'white',
-    margin: 12,
-  },
-  tabsWrapper: {
-    paddingVertical: 12,
-  },
-  tabTextContainerStyle: {
-    backgroundColor: 'transparent',
-    borderRadius: 18,
-  },
-  tabTextContainerActiveStyle: {
-    backgroundColor: 'lightgreen',
-  },
-  tabText: {
-    fontSize: 16,
-    lineHeight: 20,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    color: 'white',
-  },
-});
+import {useLazyQuery, useReactiveVar} from '@apollo/client';
+import {lat, long, pubImages, selectedPub} from '../../helpers/variables';
+import {PUB_QUERY} from '../../graphql/queries/Pubs';
 
 const PubScreen = ({navigation, route}) => {
   const images = useReactiveVar(pubImages);
   const {top} = useSafeAreaInsets();
   const pub = useReactiveVar(selectedPub);
+  const latitude = useReactiveVar(lat);
+  const longitude = useReactiveVar(long);
+  const [pubQuery, {loading, data, error, called}] = useLazyQuery(PUB_QUERY, {
+    fetchPolicy: 'no-cache',
+  });
+  useEffect(() => {
+    if (pub?.id && !called) {
+      pubQuery({
+        variables: {id: pub.id, latitude, longitude},
+      });
+    }
+  }, [pub]);
+  useEffect(() => {
+    if (data?.pub) {
+      selectedPub(data?.pub);
+    }
+    if (error) {
+      alert(error);
+    }
+  }, [data, error]);
   return (
     <View style={{flex: 1, backgroundColor: theme.white}}>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="dark-content" />
       <View>
         <TouchableOpacity
           style={{
@@ -73,14 +48,31 @@ const PubScreen = ({navigation, route}) => {
             zIndex: 100,
             padding: 10,
             borderRadius: 50,
-            margin: 10,
+            left: 10,
             backgroundColor: 'rgba(0,0,0,0.5)',
           }}
           onPress={() => {
             navigation.goBack();
-            // selectedPub(undefined)
           }}>
           <Icon name={'arrow-left'} size={24} color={'#fff'} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            top: top,
+            elevation: 1,
+            zIndex: 100,
+            padding: 10,
+            borderRadius: 50,
+            right: 10,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          }}
+          onPress={() => {
+            Share.share({
+              message: 'Check out this location!',
+            });
+          }}>
+          <Icon name={'share'} size={24} color={'#fff'} />
         </TouchableOpacity>
         <View>
           {images[pub?.id] && (

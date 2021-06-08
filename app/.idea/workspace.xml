@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="33e3479a-477f-4991-b415-f82aaa59210d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../backend/src/resolvers/Mutations/Menu.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../backend/src/resolvers/Queries/Menu.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/resolvers/Mutations/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/resolvers/Mutations/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/src/resolvers/Queries/Pubs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/resolvers/Queries/Pubs.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/src/resolvers/models.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/resolvers/models.ts" afterDir="false" />
     </list>
@@ -38,19 +35,20 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/customerNavigation/profile" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/navigation/main" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
-    <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/navigation/main" />
       <recent name="$PROJECT_DIR$/src/customerNavigation/profile" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -71,7 +69,7 @@
       <workItem from="1622486985459" duration="16706000" />
       <workItem from="1622571229964" duration="7204000" />
       <workItem from="1622793704495" duration="36571000" />
-      <workItem from="1623060485182" duration="589000" />
+      <workItem from="1623060485182" duration="19625000" />
     </task>
     <servers />
   </component>

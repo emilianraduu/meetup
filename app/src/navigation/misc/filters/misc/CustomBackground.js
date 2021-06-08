@@ -1,13 +1,8 @@
 import React, {useMemo} from 'react';
-import {BottomSheetBackgroundProps} from '@gorhom/bottom-sheet';
 import Animated, {interpolateColors} from 'react-native-reanimated';
 import {theme} from '../../../../helpers/constants';
 
-const CustomBackground = ({
-  animatedIndex,
-  style,
-  index,
-}: BottomSheetBackgroundProps) => {
+const CustomBackground = ({animatedIndex, style, index}) => {
   const animatedBackground = useMemo(
     () =>
       interpolateColors(animatedIndex, {

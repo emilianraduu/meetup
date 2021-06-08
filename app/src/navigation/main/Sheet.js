@@ -44,7 +44,6 @@ const Sheet = ({children, pub}) => {
     <BottomSheet
       handleComponent={null}
       ref={bottomSheetRef}
-      animateOnMount={true}
       index={0}
       onChange={handleSheetChanges}
       snapPoints={['70%', '100%']}>

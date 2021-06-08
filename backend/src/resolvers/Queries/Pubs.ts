@@ -32,7 +32,6 @@ export const getPubs = queryField('pubs', {
 })
 
 
-
 export const getMyPubs = queryField('myPubs', {
   type: 'Pub',
   list: true,
@@ -50,14 +49,20 @@ export const getMyPubs = queryField('myPubs', {
 export const getPub = queryField('pub', {
   type: 'Pub',
   args: {
-    id: nonNull(intArg())
+    id: nonNull(intArg()),
+    latitude: floatArg(),
+    longitude: floatArg()
   },
-  async resolve(_parent, { id }, ctx) {
+  async resolve(_parent, { id, latitude, longitude }, ctx) {
     try {
-      return await ctx.prisma.pub.findUnique({
+      const pub = await ctx.prisma.pub.findUnique({
         where: { id },
         include: {
-          reviews: true,
+          reviews: {
+            include: {
+              user: true
+            }
+          },
           menu: {
             include: {
               sections: {
@@ -78,7 +83,11 @@ export const getPub = queryField('pub', {
           }
         }
       })
+      const distance = getDistance({ latitude, longitude }, { latitude: pub.latitude, longitude: pub.longitude })
+
+      return { ...pub, distance }
     } catch (e) {
+      console.log(e)
       handleError(errors.pubNotFound)
     }
   }

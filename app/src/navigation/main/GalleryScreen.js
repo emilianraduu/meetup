@@ -3,11 +3,12 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {theme} from '../../helpers/constants';
 import FastImage from 'react-native-fast-image';
@@ -18,15 +19,22 @@ import {pubImages, selectedPub} from '../../helpers/variables';
 export const GalleryScreen = ({navigation}) => {
   const [visible, setVisible] = useState(false);
   const pub = useReactiveVar(selectedPub);
+  const {top} = useSafeAreaInsets();
   const images = useReactiveVar(pubImages);
   const [index, setIndex] = useState(undefined);
   const photosUri = images?.[pub?.id].map((uri) => ({uri}));
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: theme.white}}>
+    <View style={{flex: 1, backgroundColor: theme.white, paddingTop: top}}>
       <StatusBar barStyle={'dark-content'} />
-      <TouchableOpacity style={style.back} onPress={() => navigation.goBack()}>
-        <Icon name={'arrow-left'} size={24} color={theme.dark} />
-      </TouchableOpacity>
+      <View style={style.title}>
+        <TouchableOpacity
+          style={style.back}
+          onPress={() => navigation.goBack()}>
+          <Icon name={'arrow-left'} size={24} color={theme.dark} />
+        </TouchableOpacity>
+        <Text style={style.titleText}>Gallery</Text>
+      </View>
+
       <ScrollView contentContainerStyle={style.scrollView}>
         {images[pub?.id].map((image, i) => (
           <View key={i} style={style.shadow}>
@@ -54,7 +62,7 @@ export const GalleryScreen = ({navigation}) => {
           setIndex(undefined);
         }}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -80,7 +88,6 @@ const style = StyleSheet.create({
     elevation: 1,
   },
   scrollView: {
-    flex: 1,
     flexWrap: 'wrap',
     flexDirection: 'row',
     padding: 12,
@@ -88,6 +95,14 @@ const style = StyleSheet.create({
   back: {
     elevation: 1,
     zIndex: 100,
-    padding: 15,
+    marginRight: 15,
   },
+  title: {
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    paddingTop: 20,
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  titleText: {fontSize: 34, fontWeight: 'bold'},
 });

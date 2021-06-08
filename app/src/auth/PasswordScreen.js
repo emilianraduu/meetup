@@ -138,6 +138,7 @@ const PasswordScreen = ({navigation, route}) => {
           placeholder={'examplepass12'}
           placeholderTextColor={theme.grey}
           style={style.input}
+          onSubmitEditing={route?.params?.exist ? handleLogin : handleRegister}
           secureTextEntry={true}
           onChange={(e) =>
             onInputChange({key: 'password', value: e.nativeEvent.text})

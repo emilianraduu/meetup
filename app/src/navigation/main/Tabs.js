@@ -11,6 +11,9 @@ import ProfileScreen from '../profile/ProfileScreen';
 import {ReviewScreen} from '../reviews/ReviewScreen';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {theme} from '../../helpers/constants';
+import PubReviews from './PubReviews';
+import PubMenu from './PubMenu';
+import PubAbout from './PubAbout';
 
 const Tabby = ({isFocused, options, onPress, label, onLongPress}) => {
   const ref = useRef();
@@ -127,9 +130,9 @@ function PubTabs() {
   return (
     <Tab.Navigator tabBar={(props) => <PubTabBar {...props} />}>
       <Tab.Screen name={TableRoute} component={TableScreen} />
-      <Tab.Screen name={MenuRoute} component={ProfileScreen} />
-      <Tab.Screen name={ReviewsRoute} component={ReviewScreen} />
-      <Tab.Screen name={AboutRoute} component={ProfileScreen} />
+      <Tab.Screen name={MenuRoute} component={PubMenu} />
+      <Tab.Screen name={ReviewsRoute} component={PubReviews} />
+      <Tab.Screen name={AboutRoute} component={PubAbout} />
     </Tab.Navigator>
   );
 }

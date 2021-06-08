@@ -151,6 +151,7 @@ const LoginScreen = ({navigation}) => {
           placeholder={'example@email.com'}
           style={style.input}
           autoCapitalize={'none'}
+          onSubmitEditing={handleLogin}
           placeholderTextColor={theme.grey}
           autoCorrect={false}
           onChange={(e) =>

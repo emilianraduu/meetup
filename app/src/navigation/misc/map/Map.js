@@ -8,9 +8,9 @@ import MapView, {Marker} from 'react-native-maps';
 import PubCard from '../../main/PubCard';
 import {useNavigation} from '@react-navigation/native';
 import {useReactiveVar} from '@apollo/client';
-import {lat, long, pubs} from '../../../helpers/variables';
+import {pubs} from '../../../helpers/variables';
 
-const Map = () => {
+const Map = ({latitude, longitude}) => {
   const navigation = useNavigation();
   const pubList = useReactiveVar(pubs);
 
@@ -24,8 +24,6 @@ const Map = () => {
     setSelected(undefined);
   };
   const {top} = useSafeAreaInsets();
-  const latitude = useReactiveVar(lat);
-  const longitude = useReactiveVar(long);
   return (
     <View>
       <TouchableOpacity onPress={() => setIsVisible(true)}>
@@ -53,48 +51,52 @@ const Map = () => {
           }}>
           <Icon name={'arrow-back'} color={theme.white} size={30} />
         </TouchableOpacity>
-        <MapView
-          style={{flex: 1}}
-          showsUserLocation={true}
-          followsUserLocation={true}
-          initialRegion={{
-            latitude,
-            longitude,
-            latitudeDelta: 0.122,
-            longitudeDelta: 0.1421,
-          }}>
-          {pubList?.map((pub, index) => (
-            <Marker
-              key={index}
-              coordinate={{
-                latitude: Number(pub?.latitude),
-                longitude: Number(pub?.longitude),
-              }}
-              onPress={() => {
-                setSelected(pub);
-              }}
-            />
-          ))}
-        </MapView>
+        {latitude && longitude && (
+          <MapView
+            style={{flex: 1}}
+            showsUserLocation={true}
+            followsUserLocation={true}
+            initialRegion={{
+              latitude,
+              longitude,
+              latitudeDelta: 0.122,
+              longitudeDelta: 0.1421,
+            }}>
+            {pubList?.map((pub, index) => (
+              <Marker
+                key={index}
+                coordinate={{
+                  latitude: Number(pub?.latitude),
+                  longitude: Number(pub?.longitude),
+                }}
+                onPress={() => {
+                  setSelected(pub);
+                }}
+              />
+            ))}
+          </MapView>
+        )}
         <Modal
           isVisible={selected}
           style={{
             justifyContent: 'flex-end',
           }}
+          animationInTiming={1800}
           animateOnMount={true}
+          animationOutTiming={500}
           onBackdropPress={removeSelected}
           backdropOpacity={0.3}
-          swipeDirection={'down'}
-          onSwipeComplete={removeSelected}
+          // swipeDirection={'down'}
+          // onSwipeComplete={removeSelected}
           onBackButtonPress={removeSelected}>
-          {selected && (
+          <View>
             <PubCard
               navigation={navigation}
               pub={selected}
               index={selected?.id}
               onSelectPub={onClose}
             />
-          )}
+          </View>
         </Modal>
       </Modal>
     </View>

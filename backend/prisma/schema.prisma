@@ -121,13 +121,12 @@ model Table {
   occupied      Boolean       @default(false)
   blocked       Boolean       @default(false)
   reason        String?
-  xPos          Int
-  yPos          Int
+  position      Int           @default(0)
   name          String?
   location      Location      @relation(name: "Locate", fields: [locationId], references: [id])
   locationId    Int
   waiter        User?         @relation(name: "Waiter", fields: [waiterId], references: [id])
-  waiterId      Int
+  waiterId      Int?
   reservation   Reservation?  @relation("TableReservations", fields: [reservationId], references: [id])
   reservationId Int?
   Reservation   Reservation[] @relation("TableReservation")

@@ -7,6 +7,7 @@ export const PUBS_QUERY = gql`
       images
       address
       priceAvg
+      currency
       avgRating
       freeTable
       latitude
@@ -21,6 +22,7 @@ export const MY_PUBS_QUERY = gql`
   query {
     myPubs {
       id
+      currency
       images
       address
       priceAvg
@@ -30,6 +32,70 @@ export const MY_PUBS_QUERY = gql`
       longitude
       name
       distance
+    }
+  }
+`;
+
+export const PUB_QUERY = gql`
+  query($id: Int!, $latitude: Float, $longitude: Float) {
+    pub(id: $id, latitude: $latitude, longitude: $longitude) {
+      address
+      id
+      images
+      name
+      currency
+      ownerId
+      priceAvg
+      avgRating
+      distance
+      freeTable
+      latitude
+      longitude
+      schedule {
+        id
+        timeEnd
+        timeStart
+      }
+      locations {
+        name
+        id
+        rows
+        columns
+        tables {
+          id
+          count
+          occupied
+          blocked
+          reason
+          position
+          name
+        }
+      }
+      reviews {
+        id
+        rating
+        comment
+        userId
+        user {
+          lastName
+          firstName
+          photo
+        }
+      }
+      menu {
+        id
+        sections {
+          id
+          name
+          items {
+            name
+            id
+            price
+            image
+            description
+          }
+        }
+      }
     }
   }
 `;

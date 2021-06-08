@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import Geolocation from '@react-native-community/geolocation';
-import {Dimensions, FlatList, Text, View} from 'react-native';
+import {Dimensions, FlatList, StatusBar, Text, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {theme} from '../../helpers/constants';
 import {PubsContext} from '../../contexts/pubContext';
@@ -10,12 +10,13 @@ import Map from '../misc/map/Map';
 import LottieView from 'lottie-react-native';
 import {useLazyQuery, useReactiveVar} from '@apollo/client';
 import {PUBS_QUERY} from '../../graphql/queries/Pubs';
-import {lat, long, pubs} from '../../helpers/variables';
+import {lat, long, pubs, user} from '../../helpers/variables';
 import {Loader} from '../Loader';
 
 export const MainScreen = ({navigation}) => {
   const latitude = useReactiveVar(lat);
   const longitude = useReactiveVar(long);
+  const usr = useReactiveVar(user);
   const {top} = useSafeAreaInsets();
   const {onSelectPub} = useContext(PubsContext);
   const [pubQuery, {loading, data, error}] = useLazyQuery(PUBS_QUERY, {
@@ -54,10 +55,10 @@ export const MainScreen = ({navigation}) => {
     );
   }, []);
   useEffect(() => {
-    if (latitude && longitude) {
+    if (latitude && longitude && usr?.maxDistance) {
       pubQuery({variables: {lat: latitude, long: longitude}});
     }
-  }, [latitude, longitude, pubQuery]);
+  }, [latitude, longitude, pubQuery, usr]);
   const emptyList = () => {
     return (
       <View
@@ -85,6 +86,7 @@ export const MainScreen = ({navigation}) => {
   };
   return (
     <View style={{flex: 1, paddingTop: top, backgroundColor: theme.white}}>
+      <StatusBar barStyle={'dark-content'} />
       <View
         style={{
           flex: 1,
@@ -100,7 +102,7 @@ export const MainScreen = ({navigation}) => {
           }}>
           <Text style={{fontSize: 34, fontWeight: 'bold'}}>Explore</Text>
           <View style={{flexDirection: 'row'}}>
-            <Map />
+            <Map latitude={latitude} longitude={longitude} />
             <Filters />
           </View>
         </View>

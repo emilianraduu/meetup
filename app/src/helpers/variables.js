@@ -8,5 +8,6 @@ export const pubImages = makeVar({});
 export const selectedPub = makeVar(undefined);
 export const lat = makeVar(undefined);
 export const long = makeVar(undefined);
+export const selectedLocation = makeVar(undefined);
 
 export const showError = makeVar(false);

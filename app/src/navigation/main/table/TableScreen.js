@@ -1,19 +1,19 @@
-import React, {useContext, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {theme} from '../../../helpers/constants';
-import {PubsContext} from '../../../contexts/pubContext';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import TableTab from './TableTab';
 import ReservationModal from './ReservationModal';
+import {useReactiveVar} from '@apollo/client';
+import {selectedLocation, selectedPub} from '../../../helpers/variables';
 
 export const TableScreen = () => {
-  const {selectedPub: pub, onSelectLocation, selectedLocation} = useContext(
-    PubsContext,
-  );
+  const pub = useReactiveVar(selectedPub);
   const [selected, setSelected] = useState(undefined);
   const [showReservationModal, setShowReservationModal] = useState(false);
   const [customModal, showCustomModal] = useState(false);
+  const location = useReactiveVar(selectedLocation);
 
   const {bottom} = useSafeAreaInsets();
   const {
@@ -29,6 +29,11 @@ export const TableScreen = () => {
     bottom,
     selected,
   });
+  useEffect(() => {
+    if (!location && pub?.locations?.[0]) {
+      selectedLocation(pub.locations[0]);
+    }
+  }, [location, pub]);
   return (
     <View style={{flex: 1, backgroundColor: theme.white}}>
       <BottomSheetScrollView contentContainerStyle={container}>
@@ -39,12 +44,12 @@ export const TableScreen = () => {
               {pub?.locations?.map((loc, index) => (
                 <TouchableOpacity
                   key={index}
-                  onPress={() => onSelectLocation(loc.id)}
+                  onPress={() => selectedLocation(loc)}
                   style={[
                     button,
                     {
                       backgroundColor:
-                        loc.id === selectedLocation.id ? theme.red : theme.grey,
+                        loc.id === location?.id ? theme.red : theme.grey,
                     },
                   ]}>
                   <Text style={text}>{loc.name}</Text>
@@ -53,11 +58,10 @@ export const TableScreen = () => {
             </View>
           </>
         )}
-
         {pub?.locations?.map((loc) => (
           <TableTab
             key={loc.id}
-            location={loc}
+            locId={loc.id}
             selected={selected}
             setSelected={setSelected}
           />
@@ -78,7 +82,7 @@ export const TableScreen = () => {
         <Text style={smallText}>or</Text>
         <TouchableOpacity
           onPress={() => {
-            showCustomModal(true);
+            setShowReservationModal(true);
           }}>
           <Text style={customBtn}>Request custom table</Text>
         </TouchableOpacity>
