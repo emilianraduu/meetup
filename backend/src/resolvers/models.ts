@@ -12,9 +12,26 @@ export const User = objectType({
     t.string('photo')
     t.int('maxDistance')
     t.string('status')
-    t.list.field('reservations', {type: 'Reservation'})
+    t.list.field('reservations', { type: 'Reservation' })
+    t.list.field('notifications', { type: 'Notification' })
+    t.list.field('reviews', { type: 'Review' })
+    t.field('pub', { type: 'Pub' })
+    t.list.field('pubs', { type: 'Pub' })
+    t.int('pubId')
+    t.list.field('tables', { type: 'Table' })
   }
 })
+
+export const Notification = objectType({
+  name: 'Notification',
+  definition(t) {
+    t.int('id')
+    t.int('userId')
+    t.field('user', { type: 'User' })
+    t.string('message')
+  }
+})
+
 
 export const Exists = objectType({
   name: 'Exists',
@@ -38,6 +55,7 @@ export const Review = objectType({
     t.int('pubId')
     t.field('pub', { type: 'Pub' })
     t.string('createdAt')
+    t.boolean('anonymous')
   }
 })
 
@@ -53,21 +71,25 @@ export const Pub = objectType({
   name: 'Pub',
   definition(t) {
     t.int('id')
+    t.string('ownerId')
+    t.field('owner', { type: 'User' })
     t.string('address')
     t.list.string('images')
     t.string('name')
-    t.string('ownerId')
     t.int('priceAvg')
     t.string('currency')
     t.float('avgRating')
+    t.int('numberOfRatings')
     t.int('distance')
     t.int('freeTable')
     t.float('latitude')
     t.float('longitude')
     t.list.field('schedule', { type: 'Schedule' })
     t.list.field('locations', { type: 'Location' })
+    t.list.field('reservations', { type: 'Reservation' })
     t.list.field('reviews', { type: 'Review' })
-    t.field('menu', {type: 'Menu'})
+    t.list.field('waiters', { type: 'User' })
+    t.field('menu', { type: 'Menu' })
   }
 })
 
@@ -76,8 +98,8 @@ export const Menu = objectType({
   definition(t) {
     t.int('id')
     t.int('pubId')
-    t.field('pub', {type: 'Pub'})
-    t.list.field('sections', {type: 'MenuSection'})
+    t.field('pub', { type: 'Pub' })
+    t.list.field('sections', { type: 'MenuSection' })
   }
 })
 
@@ -88,9 +110,9 @@ export const MenuSection = objectType({
     t.int('id')
     t.string('name')
     t.string('image')
-    t.list.field('items', {type: 'MenuItem'})
+    t.list.field('items', { type: 'MenuItem' })
     t.int('menuId')
-    t.field('menu', {type: 'Menu'})
+    t.field('menu', { type: 'Menu' })
   }
 })
 
@@ -111,9 +133,11 @@ export const Schedule = objectType({
   name: 'Schedule',
   definition(t) {
     t.int('id')
+    t.int('pubId')
     t.int('dayOfWeek')
     t.string('timeStart')
     t.string('timeEnd')
+    t.field('pub', { type: 'Pub' })
   }
 })
 
@@ -141,7 +165,6 @@ export const Table = objectType({
   definition(t) {
     t.int('id')
     t.int('count')
-    t.boolean('occupied')
     t.boolean('blocked')
     t.string('reason')
     t.int('position')
@@ -149,7 +172,8 @@ export const Table = objectType({
     t.field('waiter', { type: 'User' })
     t.int('waiterId')
     t.int('locationId')
-    t.field('reservation', { type: 'Reservation' })
+    t.field('location', { type: 'Location' })
+    t.list.field('reservations', { type: 'Reservation' })
     t.int('reservationId')
   }
 })
@@ -161,9 +185,11 @@ export const Location = objectType({
     t.int('id')
     t.string('name')
     t.int('pubId')
+    t.field('pub', { type: 'Pub' })
+    t.int('pubId')
     t.int('rows')
     t.int('columns')
     t.list.field('tables', { type: 'Table' })
-    // t.list.field('', {type: 'Schedule'})
+    t.list.field('reservations', { type: 'Reservation' })
   }
 })

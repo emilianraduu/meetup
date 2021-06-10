@@ -36,6 +36,7 @@ export const getMyPubs = queryField('myPubs', {
   type: 'Pub',
   list: true,
   async resolve(_parent, _args, ctx) {
+    console.log('aici')
     try {
       return await ctx.prisma.pub.findMany({
         where: { ownerId: ctx.userId }
@@ -76,7 +77,7 @@ export const getPub = queryField('pub', {
             include: {
               tables: {
                 include: {
-                  reservation: true
+                  reservations: true
                 }
               }
             }

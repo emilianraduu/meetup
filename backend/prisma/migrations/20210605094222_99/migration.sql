@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Location" ADD COLUMN     "rows" INTEGER NOT NULL DEFAULT 0,
-ADD COLUMN     "columns" INTEGER NOT NULL DEFAULT 0;

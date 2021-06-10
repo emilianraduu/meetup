@@ -11,7 +11,8 @@ export const menu = extendType({
         pubId: nonNull(intArg())
       },
       async resolve(_parent, { pubId }, ctx) {
-        if (await findPub(ctx, pubId)) {
+        const pub = await findPub(ctx, pubId)
+        if (pub?.ownerId === ctx.userId) {
           try {
             return await ctx.prisma.menu.create({
               data: {

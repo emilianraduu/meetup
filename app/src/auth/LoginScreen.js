@@ -139,7 +139,7 @@ const LoginScreen = ({navigation}) => {
   return (
     <ScrollView contentContainerStyle={style.scrollview}>
       <SafeAreaView style={style.page}>
-        {loading && <Loader />}
+        <Loader loading={loading} />
         <Ripple style={style.back} onPress={goBack}>
           <Icon name={'arrow-back'} color={theme.dark} size={30} />
         </Ripple>

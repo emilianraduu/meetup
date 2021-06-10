@@ -6,20 +6,26 @@ import LottieView from 'lottie-react-native';
 import {useLazyQuery, useReactiveVar} from '@apollo/client';
 import {MY_PUBS_QUERY} from '../../graphql/queries/Pubs';
 import {pubs} from '../../helpers/variables';
-import {Loader} from '../Loader';
 import AddPub from './AddPub';
 import {AddPubRoute} from '../../helpers/routes';
 import PubCard from '../main/PubCard';
+import {useIsFocused} from '@react-navigation/native';
 
 const MyPubsScreen = ({navigation}) => {
   const {top} = useSafeAreaInsets();
-  const [pubQuery, {loading, data, error}] = useLazyQuery(MY_PUBS_QUERY, {
-    fetchPolicy: 'no-cache',
-  });
+  const [pubQuery, {loading, data, error}] = useLazyQuery(MY_PUBS_QUERY);
+  const isFocused = useIsFocused();
+
   const pubList = useReactiveVar(pubs);
   useEffect(() => {
     pubQuery();
   }, []);
+
+  useEffect(() => {
+    if (isFocused) {
+      pubQuery();
+    }
+  }, [isFocused]);
   useEffect(() => {
     if (data) {
       pubs(data.myPubs);
@@ -28,6 +34,7 @@ const MyPubsScreen = ({navigation}) => {
       alert(JSON.stringify(error));
     }
   }, [data, error]);
+  console.log(data);
 
   const emptyList = () => {
     return (
@@ -61,27 +68,24 @@ const MyPubsScreen = ({navigation}) => {
             <AddPub onPress={addPress} />
           </View>
         </View>
-        {loading && <Loader />}
-        {pubList && (
-          <FlatList
-            data={pubList}
-            refreshing={loading}
-            style={style.flatList}
-            contentContainerStyle={style.listContent}
-            ListEmptyComponent={emptyList}
-            onRefresh={() => {
-              pubQuery();
-            }}
-            renderItem={({item: pub, index}) => (
-              <PubCard
-                key={index}
-                navigation={navigation}
-                index={index}
-                pub={pub}
-              />
-            )}
-          />
-        )}
+        <FlatList
+          data={pubList}
+          refreshing={loading}
+          style={style.flatList}
+          contentContainerStyle={style.listContent}
+          ListEmptyComponent={emptyList}
+          onRefresh={() => {
+            pubQuery();
+          }}
+          renderItem={({item: pub, index}) => (
+            <PubCard
+              key={index}
+              navigation={navigation}
+              index={index}
+              pub={pub}
+            />
+          )}
+        />
       </View>
     </View>
   );

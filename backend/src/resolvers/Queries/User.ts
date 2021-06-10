@@ -8,7 +8,20 @@ export const me = queryField('me', {
         id: ctx.userId
       },
       include: {
-        reservations: { where: {finished: false}}
+        notifications: true,
+        reservations: { where: {finished: false}},
+        reviews: {
+          include: {
+            pub: true
+          }
+        },
+        pub: true,
+        tables: {
+          include: {
+            reservations: true,
+            location: true
+          }
+        },
       }
     })
   }

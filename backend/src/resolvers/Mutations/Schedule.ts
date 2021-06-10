@@ -14,7 +14,8 @@ export const schedule = extendType({
         pubId: nonNull(intArg())
       },
       async resolve(_parent, { pubId, dayOfWeek, timeStart, timeEnd }, ctx) {
-        if(await findPub(ctx,pubId)) {
+        const pub = await findPub(ctx,pubId)
+        if(pub?.ownerId === ctx.userId) {
           try {
             return await ctx.prisma.schedule.create({
               data: {
@@ -42,7 +43,8 @@ export const schedule = extendType({
         id: nonNull(intArg())
       },
       async resolve(_parent, { id, pubId, dayOfWeek, timeStart, timeEnd }, ctx) {
-        if(await findPub(ctx,pubId)) {
+        const pub = await findPub(ctx,pubId)
+        if(pub?.ownerId === ctx.userId) {
           try {
             return await ctx.prisma.schedule.update({
               where: { id },

@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Schedule" ALTER COLUMN "timeStart" SET DATA TYPE TEXT,
-ALTER COLUMN "timeEnd" SET DATA TYPE TEXT;

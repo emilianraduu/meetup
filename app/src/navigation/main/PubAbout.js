@@ -5,7 +5,6 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import LottieView from 'lottie-react-native';
 import MapView, {Marker} from 'react-native-maps';
-import Geocoder from 'react-native-geocoding';
 import {useReactiveVar} from '@apollo/client';
 import {selectedPub} from '../../helpers/variables';
 

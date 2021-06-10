@@ -54,7 +54,7 @@ const PasswordScreen = ({navigation, route}) => {
           'accessToken',
           response?.data?.signup?.accessToken,
         );
-        token(response?.data?.login?.accessToken);
+        token(response?.data?.signup?.accessToken);
         user(response?.data?.signup?.user);
         isLoggedIn(true);
         setLoading(false);

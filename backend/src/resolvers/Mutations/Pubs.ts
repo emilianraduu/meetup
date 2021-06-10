@@ -1,4 +1,4 @@
-import { extendType, intArg, nonNull, stringArg } from 'nexus'
+import { extendType, floatArg, nonNull, stringArg } from 'nexus'
 import { findUser, handleError } from '../../utils/helpers'
 import { errors, user_status } from '../../utils/constants'
 
@@ -11,25 +11,25 @@ export const pub = extendType({
         name: nonNull(stringArg()),
         address: nonNull(stringArg()),
         images: stringArg({ list: true }),
-        latitude: nonNull(intArg()),
-        longitude: nonNull(intArg())
+        latitude: nonNull(floatArg()),
+        longitude: nonNull(floatArg()),
+        currency: stringArg()
       },
-      async resolve(_parent, { name, address, images, latitude, longitude }, ctx) {
+      async resolve(_parent, { name, address, images, latitude, longitude, currency }, ctx) {
         const user = await findUser(ctx)
         if(user?.status === user_status.admin) {
           try {
-            const pub = await ctx.prisma.pub.create({
+            return await ctx.prisma.pub.create({
               data: {
                 name,
                 ownerId: user.id,
                 address,
                 images,
                 latitude,
+                currency,
                 longitude
               }
             })
-            console.log(pub)
-            return pub
 
           } catch (e) {
             handleError(errors.pubAlreadyExists)

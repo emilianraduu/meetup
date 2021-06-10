@@ -54,7 +54,7 @@ export const createContext = (ctx: any): Context => {
   }
 }
 
-export const findPub = async (ctx: Context, pubId: number): Promise<boolean> => {
+export const findPub = async (ctx: Context, pubId: number): Promise<any> => {
   let pub
   try {
     pub = await ctx.prisma.pub.findUnique({
@@ -66,9 +66,7 @@ export const findPub = async (ctx: Context, pubId: number): Promise<boolean> => 
     return false
   }
 
-  if (!pub) return false
-  if (pub && pub.ownerId !== ctx.userId) return true
-  if (pub && pub.ownerId !== ctx.userId) return false
+  return pub
 }
 
 export const findUser = async (ctx: Context): Promise<any> => {

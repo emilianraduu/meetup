@@ -1,9 +1,0 @@
--- AlterTable
-ALTER TABLE "Pub" ALTER COLUMN "latitude" SET DATA TYPE DOUBLE PRECISION,
-ALTER COLUMN "longitude" SET DATA TYPE DOUBLE PRECISION;
-
--- AlterTable
-ALTER TABLE "Table" ADD COLUMN     "reservationId" INTEGER;
-
--- AddForeignKey
-ALTER TABLE "Table" ADD FOREIGN KEY ("reservationId") REFERENCES "Reservation"("id") ON DELETE SET NULL ON UPDATE CASCADE;

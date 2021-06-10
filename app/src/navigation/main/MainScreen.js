@@ -19,9 +19,7 @@ export const MainScreen = ({navigation}) => {
   const usr = useReactiveVar(user);
   const {top} = useSafeAreaInsets();
   const {onSelectPub} = useContext(PubsContext);
-  const [pubQuery, {loading, data, error}] = useLazyQuery(PUBS_QUERY, {
-    fetchPolicy: 'no-cache',
-  });
+  const [pubQuery, {loading, data, error}] = useLazyQuery(PUBS_QUERY);
   const pubList = useReactiveVar(pubs);
   useEffect(() => {
     Geolocation.watchPosition(
@@ -38,6 +36,7 @@ export const MainScreen = ({navigation}) => {
       },
     );
   });
+
   useEffect(() => {
     if (data) {
       pubs(data.pubs);
@@ -53,6 +52,9 @@ export const MainScreen = ({navigation}) => {
         long(lg);
       },
     );
+    navigation.addEventListener('blur', () => {
+      console.log('aici');
+    });
   }, []);
   useEffect(() => {
     if (latitude && longitude && usr?.maxDistance) {
@@ -106,7 +108,7 @@ export const MainScreen = ({navigation}) => {
             <Filters />
           </View>
         </View>
-        {loading && <Loader />}
+        <Loader loading={loading} />
         {pubList && (
           <FlatList
             data={pubList}

@@ -11,16 +11,20 @@ export const user = extendType({
       args: {
         email: nonNull(stringArg()),
         password: nonNull(stringArg()),
-        status: stringArg({ default: user_status.client })
+        status: stringArg({ default: user_status.client }),
+        firstName: stringArg(),
+        lastName: stringArg()
       },
-      async resolve(_parent, { email, password, status }, ctx) {
+      async resolve(_parent, { email, password, status, firstName, lastName }, ctx) {
         try {
           const hashedPassword = await hash(password, 10)
           const user = await ctx.prisma.user.create({
             data: {
               email,
               password: hashedPassword,
-              status
+              status,
+              firstName,
+              lastName
             }
           })
           const accessToken = generateAccessToken(user.id)
@@ -84,6 +88,60 @@ export const user = extendType({
           })
         } catch (e) {
           console.log(e)
+        }
+      }
+    })
+    t.field('createWaiter', {
+      type: 'User',
+      args: {
+        email: nonNull(stringArg()),
+        status: stringArg({ default: user_status.client }),
+        firstName: stringArg(),
+        lastName: stringArg()
+      },
+      async resolve(_parent, { email, status, firstName, lastName }, ctx) {
+        try {
+          return await ctx.prisma.user.create({
+            data: {
+              email,
+              status,
+              firstName,
+              lastName
+            }
+          })
+        } catch (e) {
+          handleError(errors.userAlreadyExists)
+        }
+      }
+    })
+    t.field('deleteWaiter', {
+      type: 'AuthPayload',
+      args: {
+        email: nonNull(stringArg()),
+        password: nonNull(stringArg()),
+        status: stringArg({ default: user_status.client }),
+        firstName: stringArg(),
+        lastName: stringArg()
+      },
+      async resolve(_parent, { email, password, status, firstName, lastName }, ctx) {
+        try {
+          const hashedPassword = await hash(password, 10)
+          const user = await ctx.prisma.user.create({
+            data: {
+              email,
+              password: hashedPassword,
+              status,
+              firstName,
+              lastName
+            }
+          })
+          const accessToken = generateAccessToken(user.id)
+          return {
+            accessToken,
+            user
+          }
+        } catch (e) {
+          handleError(errors.userAlreadyExists)
         }
       }
     })

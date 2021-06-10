@@ -42,7 +42,6 @@ const MenuItem = ({item, pub}) => {
       <Text> {item.name}</Text>
       <Text> {item.description}</Text>
       <Text>
-        {' '}
         {item.price} {pub.currency}
       </Text>
     </View>

@@ -9,7 +9,6 @@ export const reserveTable = subscriptionField('newTable', {
   subscribe: withFilter(
     (_root, _args, ctx) => ctx.pubsub.asyncIterator('newTable'),
     (payload, { roomId }) => {
-      console.log('aici')
       return payload.roomId === roomId
     }
   ),

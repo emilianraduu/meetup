@@ -11,7 +11,11 @@ export const getTable = queryField('table', {
   async resolve(_parent, { locationId }, ctx) {
     try {
       return await ctx.prisma.table.findMany({
-        where: { locationId }
+        where: { locationId },
+        include: {
+          location: true,
+          waiter: true
+        }
       })
     } catch (e) {
       handleError(errors.locationNotFound)

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import {gql} from '@apollo/client';
 
 export const PUBS_QUERY = gql`
   query($lat: Float!, $long: Float!) {
@@ -9,6 +9,7 @@ export const PUBS_QUERY = gql`
       priceAvg
       currency
       avgRating
+      numberOfRatings
       freeTable
       latitude
       longitude
@@ -27,6 +28,7 @@ export const MY_PUBS_QUERY = gql`
       address
       priceAvg
       avgRating
+      numberOfRatings
       freeTable
       latitude
       longitude
@@ -47,6 +49,7 @@ export const PUB_QUERY = gql`
       ownerId
       priceAvg
       avgRating
+      numberOfRatings
       distance
       freeTable
       latitude
@@ -64,7 +67,6 @@ export const PUB_QUERY = gql`
         tables {
           id
           count
-          occupied
           blocked
           reason
           position

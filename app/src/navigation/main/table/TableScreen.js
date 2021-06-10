@@ -7,6 +7,8 @@ import TableTab from './TableTab';
 import ReservationModal from './ReservationModal';
 import {useReactiveVar} from '@apollo/client';
 import {selectedLocation, selectedPub} from '../../../helpers/variables';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
+import dayjs from 'dayjs';
 
 export const TableScreen = () => {
   const pub = useReactiveVar(selectedPub);
@@ -39,6 +41,42 @@ export const TableScreen = () => {
       <BottomSheetScrollView contentContainerStyle={container}>
         {pub?.locations?.length > 1 && (
           <>
+            <Text style={spaceText}>Pick a date</Text>
+            <View style={section}>
+              <RNDateTimePicker
+                testID="dateTimePicker"
+                value={new Date()}
+                minuteInterval={5}
+                mode={'date'}
+                minimumDate={new Date()}
+                style={{flex: 1, alignSelf: 'flex-start'}}
+                display="default"
+                onChange={(e) => console.log(e)}
+              />
+            </View>
+            <Text style={spaceText}>Pick a time</Text>
+            <View style={section}>
+              <RNDateTimePicker
+                testID="dateTimePicker"
+                value={new Date()}
+                minuteInterval={5}
+                mode={'time'}
+                style={{flex: 1, alignSelf: 'flex-start'}}
+                display="default"
+                onChange={(e) => console.log(e)}
+              />
+              <RNDateTimePicker
+                testID="dateTimePicker"
+                value={new Date()}
+                minuteInterval={5}
+                style={{flex: 1, alignItems: 'flex-end'}}
+                mode={'time'}
+                display="default"
+                onChange={(e) =>
+                  console.log(dayjs(e.nativeEvent.timestamp).format('HH:mm'))
+                }
+              />
+            </View>
             <Text style={spaceText}>Pick a space</Text>
             <View style={section}>
               {pub?.locations?.map((loc, index) => (
@@ -106,6 +144,8 @@ const styles = ({bottom, selected}) =>
     section: {
       flexDirection: 'row',
       backgroundColor: theme.white,
+      flex: 1,
+      marginBottom: 20,
     },
     button: {
       padding: 5,
