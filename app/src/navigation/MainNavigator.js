@@ -10,10 +10,8 @@ import {MyTabBar} from './MyTabBar';
 import {createStackNavigator} from '@react-navigation/stack';
 import PubScreen from './main/PubScreen';
 import {GalleryScreen} from './main/GalleryScreen';
-import PubContainer from '../contexts/pubContext';
 import {ReviewScreen} from './reviews/ReviewScreen';
 import {HistoryScreen} from './history/HistoryScreen';
-import UserContainer from '../contexts/userContext';
 import {AuthStack} from '../auth/AuthStack';
 import {
   ExploreRoute,
@@ -30,11 +28,14 @@ import {ME_QUERY} from '../graphql/queries/User';
 import PermissionsStack from '../auth/PermissionsStack';
 import AdminNavigator from './AdminNavigator';
 
-const MainNavigator = () => {
+const MainNavigator = ({setLoadedNav}) => {
   const [progress] = useState(0);
   const [permissions, setPermissions] = useState(undefined);
   const [checkPerm, setCheckPerm] = useState(true);
   const usr = useReactiveVar(user);
+  const isLogged = useReactiveVar(isLoggedIn);
+  const {loading, data, error} = useQuery(ME_QUERY, {fetchPolicy: 'no-cache'});
+
   useEffect(() => {
     if (checkPerm) {
       const getPerms = async () => {
@@ -48,8 +49,7 @@ const MainNavigator = () => {
       });
     }
   }, [checkPerm]);
-  const isLogged = useReactiveVar(isLoggedIn);
-  const {loading, data, error} = useQuery(ME_QUERY, {fetchPolicy: 'no-cache'});
+
   useEffect(() => {
     if (data?.me) {
       isLoggedIn(true);
@@ -58,6 +58,10 @@ const MainNavigator = () => {
     if (error) {
     }
   }, [data, error]);
+
+  useEffect(() => {
+    setLoadedNav(true);
+  }, []);
   const renderNav = () => {
     switch (usr?.status) {
       case user_status.admin:
@@ -89,78 +93,74 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
   return (
     <>
-      <PubContainer>
-        <UserContainer>
-          <Tab.Navigator
-            tabBar={(props) => <MyTabBar {...props} />}
-            initialRouteName={ExploreRoute}>
-            <Tab.Screen
-              name={ExploreRoute}
-              component={MainStack}
-              options={{
-                tabBarIcon: ({focused}) => {
-                  return (
-                    <Icon
-                      name={'search1'}
-                      style={{alignSelf: 'center'}}
-                      color={focused ? '#d10808' : GREY_COLOR}
-                      size={26}
-                    />
-                  );
-                },
-              }}
-            />
-            <Tab.Screen
-              name={HistoryRoute}
-              component={HistoryScreen}
-              options={{
-                tabBarIcon: ({focused}) => {
-                  return (
-                    <Icon
-                      name={'book'}
-                      style={{alignSelf: 'center'}}
-                      color={focused ? '#d10808' : GREY_COLOR}
-                      size={26}
-                    />
-                  );
-                },
-              }}
-            />
-            <Tab.Screen
-              name={ReviewsRoute}
-              component={ReviewScreen}
-              options={{
-                tabBarIcon: ({focused}) => {
-                  return (
-                    <Icon
-                      name={'star'}
-                      style={{alignSelf: 'center'}}
-                      color={focused ? '#d10808' : GREY_COLOR}
-                      size={26}
-                    />
-                  );
-                },
-              }}
-            />
-            <Tab.Screen
-              name={ProfileRoute}
-              component={ProfileStack}
-              options={{
-                tabBarIcon: ({focused}) => {
-                  return (
-                    <Icon
-                      name={'user'}
-                      style={{alignSelf: 'center'}}
-                      color={focused ? '#d10808' : GREY_COLOR}
-                      size={26}
-                    />
-                  );
-                },
-              }}
-            />
-          </Tab.Navigator>
-        </UserContainer>
-      </PubContainer>
+      <Tab.Navigator
+        tabBar={(props) => <MyTabBar {...props} />}
+        initialRouteName={ExploreRoute}>
+        <Tab.Screen
+          name={ExploreRoute}
+          component={MainStack}
+          options={{
+            tabBarIcon: ({focused}) => {
+              return (
+                <Icon
+                  name={'search1'}
+                  style={{alignSelf: 'center'}}
+                  color={focused ? '#d10808' : GREY_COLOR}
+                  size={26}
+                />
+              );
+            },
+          }}
+        />
+        <Tab.Screen
+          name={HistoryRoute}
+          component={HistoryScreen}
+          options={{
+            tabBarIcon: ({focused}) => {
+              return (
+                <Icon
+                  name={'book'}
+                  style={{alignSelf: 'center'}}
+                  color={focused ? '#d10808' : GREY_COLOR}
+                  size={26}
+                />
+              );
+            },
+          }}
+        />
+        <Tab.Screen
+          name={ReviewsRoute}
+          component={ReviewScreen}
+          options={{
+            tabBarIcon: ({focused}) => {
+              return (
+                <Icon
+                  name={'star'}
+                  style={{alignSelf: 'center'}}
+                  color={focused ? '#d10808' : GREY_COLOR}
+                  size={26}
+                />
+              );
+            },
+          }}
+        />
+        <Tab.Screen
+          name={ProfileRoute}
+          component={ProfileStack}
+          options={{
+            tabBarIcon: ({focused}) => {
+              return (
+                <Icon
+                  name={'user'}
+                  style={{alignSelf: 'center'}}
+                  color={focused ? '#d10808' : GREY_COLOR}
+                  size={26}
+                />
+              );
+            },
+          }}
+        />
+      </Tab.Navigator>
     </>
   );
 };

@@ -1,9 +1,8 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 import {Dimensions, FlatList, StatusBar, Text, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {theme} from '../../helpers/constants';
-import {PubsContext} from '../../contexts/pubContext';
 import Filters from '../misc/filters/Filters';
 import PubCard from './PubCard';
 import Map from '../misc/map/Map';
@@ -12,14 +11,16 @@ import {useLazyQuery, useReactiveVar} from '@apollo/client';
 import {PUBS_QUERY} from '../../graphql/queries/Pubs';
 import {lat, long, pubs, user} from '../../helpers/variables';
 import {Loader} from '../Loader';
+import dayjs from 'dayjs';
 
 export const MainScreen = ({navigation}) => {
   const latitude = useReactiveVar(lat);
   const longitude = useReactiveVar(long);
   const usr = useReactiveVar(user);
   const {top} = useSafeAreaInsets();
-  const {onSelectPub} = useContext(PubsContext);
-  const [pubQuery, {loading, data, error}] = useLazyQuery(PUBS_QUERY);
+  const [pubQuery, {loading, data, error}] = useLazyQuery(PUBS_QUERY, {
+    fetchPolicy: 'no-cache',
+  });
   const pubList = useReactiveVar(pubs);
   useEffect(() => {
     Geolocation.watchPosition(
@@ -37,6 +38,21 @@ export const MainScreen = ({navigation}) => {
     );
   });
 
+  const getNextUserReservation = () => {
+    if (usr?.reservations && usr?.reservations.length > 0) {
+      const today = new Date();
+      return usr.reservations?.reduce?.((a, b) => {
+        return a.date - today < b.date - today ? a : b;
+      });
+      // const next = ((reservation) => {
+      //   if (reservation?.startHour) {
+      //
+      //     console.log(dayjs(reservation.date).hour(hours).minute(minutes));
+      //   }
+      // });
+    }
+  };
+
   useEffect(() => {
     if (data) {
       pubs(data.pubs);
@@ -52,15 +68,13 @@ export const MainScreen = ({navigation}) => {
         long(lg);
       },
     );
-    navigation.addEventListener('blur', () => {
-      console.log('aici');
-    });
   }, []);
   useEffect(() => {
     if (latitude && longitude && usr?.maxDistance) {
       pubQuery({variables: {lat: latitude, long: longitude}});
     }
   }, [latitude, longitude, pubQuery, usr]);
+  const nextReservation = getNextUserReservation();
   const emptyList = () => {
     return (
       <View
@@ -125,10 +139,20 @@ export const MainScreen = ({navigation}) => {
                 navigation={navigation}
                 index={index}
                 pub={pub}
-                onSelectPub={onSelectPub}
               />
             )}
           />
+        )}
+        {nextReservation && (
+          <View style={{padding: 10}}>
+            <View style={{flexDirection: 'row'}}>
+              <Text>
+                Your next reservation is at {nextReservation.startHour} on{' '}
+                {dayjs(nextReservation.date).format('d')}
+              </Text>
+              <Text> </Text>
+            </View>
+          </View>
         )}
       </View>
     </View>

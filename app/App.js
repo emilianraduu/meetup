@@ -6,7 +6,6 @@ import MainNavigator from './src/navigation/MainNavigator';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import crashlytics from '@react-native-firebase/crashlytics';
 import analytics from '@react-native-firebase/analytics';
-// import Socket from './src/helpers/socket';
 import {AppearanceProvider} from 'react-native-appearance';
 import {ApolloProvider} from '@apollo/client';
 import {client} from './src/graphql';
@@ -18,6 +17,7 @@ export const App = () => {
   const routeNameRef = useRef();
   const navigationRef = useRef();
   const [loaded, setLoaded] = useState(false);
+  const [loadedNav, setLoadedNav] = useState(false);
 
   useEffect(() => {
     // Socket.instance.connect();
@@ -28,10 +28,6 @@ export const App = () => {
       },
     );
     crashlytics().log('App mounted.');
-    setTimeout(() => SplashScreen.hide(), 100);
-  }, []);
-
-  useEffect(() => {
     const checkToken = async () => {
       token(await AsyncStorage.getItem('accessToken'));
     };
@@ -39,6 +35,12 @@ export const App = () => {
       setLoaded(true);
     });
   }, []);
+
+  useEffect(() => {
+    if (loadedNav && loaded) {
+      SplashScreen.hide();
+    }
+  }, [loadedNav, loaded]);
 
   return (
     <AppearanceProvider>
@@ -59,7 +61,7 @@ export const App = () => {
           }}>
           <SafeAreaProvider>
             <StatusBar barStyle={'light-content'} />
-            <MainNavigator />
+            <MainNavigator setLoadedNav={setLoadedNav} />
           </SafeAreaProvider>
         </NavigationContainer>
       </ApolloProvider>

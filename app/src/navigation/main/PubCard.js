@@ -18,7 +18,8 @@ const PubCard = ({index, pub, navigation, onSelectPub}) => {
   useEffect(() => {
     if (pub && pub.images) {
       pub.images.forEach(async (i) => {
-        setCurrentImage(await storage().ref(i.toString()).getDownloadURL());
+        const imageUrl = await storage().ref(i.toString()).getDownloadURL();
+        setCurrentImage({uri: imageUrl, name: i});
       });
     }
   }, [pub]);
@@ -39,7 +40,7 @@ const PubCard = ({index, pub, navigation, onSelectPub}) => {
     <View key={index} style={style.wrapper}>
       <View style={{borderRadius: 20, overflow: 'hidden'}}>
         <View style={{height: 200}}>
-          {images[pub?.id] && (
+          {images?.[pub?.id] && (
             <Swiper
               showsButtons={false}
               bounces={true}
@@ -48,7 +49,7 @@ const PubCard = ({index, pub, navigation, onSelectPub}) => {
               containerStyle={{
                 height: 200,
               }}>
-              {images[pub.id].map((photo, i) => (
+              {images?.[pub?.id].map((photo, i) => (
                 <TouchableOpacity
                   key={i}
                   onPress={() => {
@@ -58,7 +59,7 @@ const PubCard = ({index, pub, navigation, onSelectPub}) => {
                   }}>
                   <FastImage
                     style={{height: 200, width: '100%'}}
-                    source={{uri: photo}}
+                    source={{uri: photo.uri}}
                   />
                 </TouchableOpacity>
               ))}
@@ -97,7 +98,7 @@ export const PubDetails = ({pub, wrapperStyle}) => {
       </View>
       <View style={style.right}>
         <View style={style.section}>
-          <Text style={style.tables}>{pub?.freeTable} free tables</Text>
+          <Text style={style.tables}>{Number(pub?.freeTable)} free tables</Text>
         </View>
         <View style={style.section}>
           {[1, 2, 3].map((i) => (

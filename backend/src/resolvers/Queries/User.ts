@@ -9,7 +9,14 @@ export const me = queryField('me', {
       },
       include: {
         notifications: true,
-        reservations: { where: {finished: false}},
+        reservations: {
+          where: { finished: false },
+          include: {
+            pub: true,
+            location: true,
+            user: true
+          }
+        },
         reviews: {
           include: {
             pub: true
@@ -21,7 +28,7 @@ export const me = queryField('me', {
             reservations: true,
             location: true
           }
-        },
+        }
       }
     })
   }

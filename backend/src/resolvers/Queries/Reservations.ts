@@ -14,7 +14,12 @@ export const getReservations = queryField('reservations', {
   async resolve(_parent, { id, userId, locationId, pubId }, ctx) {
     try {
       return await ctx.prisma.reservation.findMany({
-        where: { id, userId, locationId, pubId }
+        where: { id, userId, locationId, pubId },
+        include: {
+          pub: true,
+          location: true,
+          user: true
+        }
       })
     } catch (e) {
       handleError(errors.reservationNotFound)

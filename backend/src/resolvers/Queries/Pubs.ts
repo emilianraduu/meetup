@@ -36,7 +36,6 @@ export const getMyPubs = queryField('myPubs', {
   type: 'Pub',
   list: true,
   async resolve(_parent, _args, ctx) {
-    console.log('aici')
     try {
       return await ctx.prisma.pub.findMany({
         where: { ownerId: ctx.userId }
@@ -81,14 +80,14 @@ export const getPub = queryField('pub', {
                 }
               }
             }
-          }
+          },
+          waiters: true
         }
       })
-      const distance = getDistance({ latitude, longitude }, { latitude: pub.latitude, longitude: pub.longitude })
+      const distance = latitude && longitude && getDistance({ latitude, longitude }, { latitude: pub.latitude, longitude: pub.longitude })
 
       return { ...pub, distance }
     } catch (e) {
-      console.log(e)
       handleError(errors.pubNotFound)
     }
   }

@@ -84,6 +84,13 @@ export const PUB_QUERY = gql`
           photo
         }
       }
+      waiters {
+        id
+        firstName
+        lastName
+        email
+        photo
+      }
       menu {
         id
         sections {

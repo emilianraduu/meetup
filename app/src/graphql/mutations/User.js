@@ -17,7 +17,7 @@ export const LOGIN_MUTATION = gql`
   }
 `;
 export const REGISTER_MUTATION = gql`
-  mutation login($email: String!, $password: String!) {
+  mutation signup($email: String!, $password: String!) {
     signup(email: $email, password: $password) {
       accessToken
       user {
@@ -67,6 +67,18 @@ export const UPDATE_DATA_MUTATION = gql`
       photo
       maxDistance
       status
+    }
+  }
+`;
+
+export const CREATE_WAITER = gql`
+  mutation createWaiter($email: String!, $pubId: Int!) {
+    createWaiter(email: $email, pubId: $pubId) {
+      id
+      email
+      photo
+      firstName
+      lastName
     }
   }
 `;

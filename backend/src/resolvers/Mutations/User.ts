@@ -1,6 +1,6 @@
 import { extendType, intArg, nonNull, stringArg } from 'nexus'
 import { compare, hash } from 'bcrypt'
-import { generateAccessToken, handleError } from '../../utils/helpers'
+import { findPub, generateAccessToken, handleError } from '../../utils/helpers'
 import { errors, user_status } from '../../utils/constants'
 
 export const user = extendType({
@@ -95,50 +95,48 @@ export const user = extendType({
       type: 'User',
       args: {
         email: nonNull(stringArg()),
-        status: stringArg({ default: user_status.client }),
-        firstName: stringArg(),
-        lastName: stringArg()
+        pubId: nonNull(intArg())
       },
-      async resolve(_parent, { email, status, firstName, lastName }, ctx) {
+      async resolve(_parent, { email, pubId }, ctx) {
         try {
-          return await ctx.prisma.user.create({
-            data: {
-              email,
-              status,
-              firstName,
-              lastName
-            }
+          const user = await ctx.prisma.user.findUnique({
+            where: { email }
           })
+          if (!user) {
+            return await ctx.prisma.user.create({
+              data: {
+                email,
+                status: user_status.waiter,
+                pubId
+              }
+            })
+          } else {
+            return await ctx.prisma.user.update({
+              where: { id: user.id },
+              data: {
+                status: user_status.waiter,
+                pubId
+              }
+            })
+          }
         } catch (e) {
           handleError(errors.userAlreadyExists)
         }
       }
     })
     t.field('deleteWaiter', {
-      type: 'AuthPayload',
+      type: 'User',
       args: {
-        email: nonNull(stringArg()),
-        password: nonNull(stringArg()),
-        status: stringArg({ default: user_status.client }),
-        firstName: stringArg(),
-        lastName: stringArg()
+        id: nonNull(intArg()),
+        pubId: nonNull(intArg())
       },
-      async resolve(_parent, { email, password, status, firstName, lastName }, ctx) {
+      async resolve(_parent, { id, pubId }, ctx) {
         try {
-          const hashedPassword = await hash(password, 10)
-          const user = await ctx.prisma.user.create({
-            data: {
-              email,
-              password: hashedPassword,
-              status,
-              firstName,
-              lastName
-            }
-          })
-          const accessToken = generateAccessToken(user.id)
-          return {
-            accessToken,
-            user
+          const pub = await findPub(ctx, pubId)
+          if (pub?.ownerId === ctx.userId) {
+            return await ctx.prisma.user.delete({
+              where: { id }
+            })
           }
         } catch (e) {
           handleError(errors.userAlreadyExists)

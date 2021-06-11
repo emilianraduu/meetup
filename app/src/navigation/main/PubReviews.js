@@ -20,10 +20,11 @@ const PubReviews = () => {
       <BottomSheetScrollView contentContainerStyle={container}>
         {/*<LottieView*/}
         {/*  source={require('../../assets/animations/empty-stores.json')}*/}
-        {/*  loop={true}*/}
-        {/*  autoPlay={true}*/}
+        {/*  // loop={true}*/}
+        {/*  // autoPlay={true}*/}
         {/*  style={empty}*/}
         {/*/>*/}
+        {pub?.reviews?.length === 0 && <Text>No reviews yet!</Text>}
         {pub?.reviews?.map((review) => (
           <View key={review.id}>
             <StarRating

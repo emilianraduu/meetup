@@ -81,9 +81,7 @@ const Map = ({latitude, longitude}) => {
           style={{
             justifyContent: 'flex-end',
           }}
-          animationInTiming={1800}
           animateOnMount={true}
-          animationOutTiming={500}
           onBackdropPress={removeSelected}
           backdropOpacity={0.3}
           // swipeDirection={'down'}

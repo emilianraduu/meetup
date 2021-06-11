@@ -37,6 +37,10 @@ export const tables = extendType({
                 position,
                 locationId,
                 waiterId
+              },
+              include: {
+                waiter: true,
+                location: true,
               }
             })
             if(!blocked) {

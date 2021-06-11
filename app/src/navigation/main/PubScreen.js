@@ -9,7 +9,13 @@ import {theme} from '../../helpers/constants';
 import PubTabs from './Tabs';
 import Sheet from './Sheet';
 import {useLazyQuery, useReactiveVar} from '@apollo/client';
-import {lat, long, pubImages, selectedPub} from '../../helpers/variables';
+import {
+  lat,
+  long,
+  pubImages,
+  selectedLocation,
+  selectedPub,
+} from '../../helpers/variables';
 import {PUB_QUERY} from '../../graphql/queries/Pubs';
 import {Loader} from '../Loader';
 
@@ -19,16 +25,14 @@ const PubScreen = ({navigation, route}) => {
   const pub = useReactiveVar(selectedPub);
   const latitude = useReactiveVar(lat);
   const longitude = useReactiveVar(long);
-  const [pubQuery, {loading, data, error, called}] = useLazyQuery(PUB_QUERY, {
-    fetchPolicy: 'no-cache',
-  });
+  const [pubQuery, {loading, data, error, called}] = useLazyQuery(PUB_QUERY);
   useEffect(() => {
     if (pub?.id && !called) {
       pubQuery({
         variables: {id: pub.id, latitude, longitude},
       });
     }
-  }, [pub]);
+  }, [called, latitude, longitude, pub, pubQuery]);
   useEffect(() => {
     if (data?.pub) {
       selectedPub(data?.pub);
@@ -56,6 +60,7 @@ const PubScreen = ({navigation, route}) => {
             }}
             onPress={() => {
               navigation.goBack();
+              selectedLocation(undefined);
             }}>
             <Icon name={'arrow-left'} size={24} color={'#fff'} />
           </TouchableOpacity>
@@ -99,7 +104,7 @@ const PubScreen = ({navigation, route}) => {
                     }}>
                     <FastImage
                       style={{height: 200 + top, width: '100%'}}
-                      source={{uri: photo}}
+                      source={{uri: photo.uri}}
                     />
                   </TouchableOpacity>
                 ))}

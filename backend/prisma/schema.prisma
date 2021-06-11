@@ -45,7 +45,7 @@ model Pub {
   address         String        @unique
   latitude        Float
   longitude       Float
-  freeTable       Int?
+  freeTable       Int?          @default(0)
   description     String?
   avgRating       Float         @default(0)
   numberOfRatings Int           @default(0)

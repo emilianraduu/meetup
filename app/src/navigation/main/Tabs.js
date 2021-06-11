@@ -1,19 +1,25 @@
 import {ScrollView, Text, TouchableOpacity} from 'react-native';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   AboutRoute,
+  AnalyticsRoute,
   MenuRoute,
   ReviewsRoute,
   TableRoute,
+  WaitersRoute,
 } from '../../helpers/routes';
 import {TableScreen} from './table/TableScreen';
 import ProfileScreen from '../profile/ProfileScreen';
 import {ReviewScreen} from '../reviews/ReviewScreen';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {theme} from '../../helpers/constants';
+import {theme, user_status} from '../../helpers/constants';
 import PubReviews from './PubReviews';
 import PubMenu from './PubMenu';
 import PubAbout from './PubAbout';
+import {useReactiveVar} from '@apollo/client';
+import {selectedPub, user} from '../../helpers/variables';
+import PubWaiters from './PubWaiters';
+import PubAnalytics from '../analytics/PubAnalytics';
 
 const Tabby = ({isFocused, options, onPress, label, onLongPress}) => {
   const ref = useRef();
@@ -45,7 +51,10 @@ const Tabby = ({isFocused, options, onPress, label, onLongPress}) => {
 
 function PubTabBar({state, descriptors, navigation, position}) {
   const ref = useRef();
-  const [scrollPos, setScrollPos] = useState(0);
+  const [scrollPos, setScrollPos] = useState(undefined);
+  useEffect(() => {
+    ref.current?.scrollTo?.({x: 10, y: 10});
+  }, [ref]);
   return (
     <ScrollView
       horizontal={true}
@@ -127,11 +136,26 @@ function PubTabBar({state, descriptors, navigation, position}) {
 const Tab = createMaterialTopTabNavigator();
 
 function PubTabs() {
+  const pub = useReactiveVar(selectedPub);
+  const usr = useReactiveVar(user);
+
   return (
     <Tab.Navigator tabBar={(props) => <PubTabBar {...props} />}>
       <Tab.Screen name={TableRoute} component={TableScreen} />
       <Tab.Screen name={MenuRoute} component={PubMenu} />
       <Tab.Screen name={ReviewsRoute} component={PubReviews} />
+      {pub &&
+        usr &&
+        Number(pub.ownerId) === Number(usr.id) &&
+        usr.status === user_status.admin && (
+          <Tab.Screen name={WaitersRoute} component={PubWaiters} />
+        )}
+      {pub &&
+        usr &&
+        Number(pub.ownerId) === Number(usr.id) &&
+        usr.status === user_status.admin && (
+          <Tab.Screen name={AnalyticsRoute} component={PubAnalytics} />
+        )}
       <Tab.Screen name={AboutRoute} component={PubAbout} />
     </Tab.Navigator>
   );

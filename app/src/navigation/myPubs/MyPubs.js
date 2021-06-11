@@ -13,7 +13,9 @@ import {useIsFocused} from '@react-navigation/native';
 
 const MyPubsScreen = ({navigation}) => {
   const {top} = useSafeAreaInsets();
-  const [pubQuery, {loading, data, error}] = useLazyQuery(MY_PUBS_QUERY);
+  const [pubQuery, {loading, data, error, refetch}] = useLazyQuery(
+    MY_PUBS_QUERY,
+  );
   const isFocused = useIsFocused();
 
   const pubList = useReactiveVar(pubs);
@@ -34,7 +36,6 @@ const MyPubsScreen = ({navigation}) => {
       alert(JSON.stringify(error));
     }
   }, [data, error]);
-  console.log(data);
 
   const emptyList = () => {
     return (
@@ -75,7 +76,7 @@ const MyPubsScreen = ({navigation}) => {
           contentContainerStyle={style.listContent}
           ListEmptyComponent={emptyList}
           onRefresh={() => {
-            pubQuery();
+            refetch();
           }}
           renderItem={({item: pub, index}) => (
             <PubCard

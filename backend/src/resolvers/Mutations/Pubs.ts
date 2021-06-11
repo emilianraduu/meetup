@@ -1,5 +1,5 @@
-import { extendType, floatArg, nonNull, stringArg } from 'nexus'
-import { findUser, handleError } from '../../utils/helpers'
+import { booleanArg, extendType, floatArg, intArg, nonNull, stringArg } from 'nexus'
+import { findPub, findUser, handleError } from '../../utils/helpers'
 import { errors, user_status } from '../../utils/constants'
 
 export const pub = extendType({
@@ -17,7 +17,7 @@ export const pub = extendType({
       },
       async resolve(_parent, { name, address, images, latitude, longitude, currency }, ctx) {
         const user = await findUser(ctx)
-        if(user?.status === user_status.admin) {
+        if (user?.status === user_status.admin) {
           try {
             return await ctx.prisma.pub.create({
               data: {
@@ -39,12 +39,35 @@ export const pub = extendType({
         }
       }
     })
-    // t.field('updatePub', {
-    //   type: 'Pub',
-    //
-    //   async resolve(_parent, _args, ctx) {
-    //     return {}
-    //   }
-    // })
+    t.field('updatePub', {
+      type: 'Pub',
+      args: {
+        name: stringArg(),
+        address: stringArg(),
+        images: stringArg({ list: true }),
+        latitude: floatArg(),
+        longitude: floatArg(),
+        currency: stringArg(),
+        id: nonNull(intArg()),
+      },
+      async resolve(_parent, {  id, name, address, images, latitude, longitude, currency }, ctx) {
+        try {
+          const pub = await findPub(ctx, id)
+
+          if (pub.ownerId === ctx.userId) {
+            return await ctx.prisma.pub.update({
+              where: { id: id },
+              data: {
+                name, address, images, latitude, longitude, currency
+              }
+            })
+          } else {
+            return handleError(errors.invalidUser)
+          }
+        } catch(e){
+          handleError(errors.notAuthenticated)
+        }
+      }
+    })
   }
 })

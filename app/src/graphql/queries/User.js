@@ -10,6 +10,20 @@ export const ME_QUERY = gql`
       photo
       maxDistance
       status
+      reservations {
+        id
+        startHour
+        date
+        location {
+          id
+          name
+        }
+        pub {
+          id
+          name
+          address
+        }
+      }
     }
   }
 `;
