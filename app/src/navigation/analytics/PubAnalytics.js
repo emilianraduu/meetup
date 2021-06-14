@@ -3,6 +3,7 @@ import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {theme} from '../../helpers/constants';
 import {Dimensions} from 'react-native';
 import {BarChart, LineChart} from 'react-native-chart-kit';
+
 const chartConfig = {
   backgroundGradientFrom: '#1E2923',
   backgroundGradientFromOpacity: 0,

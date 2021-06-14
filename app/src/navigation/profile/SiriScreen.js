@@ -1,25 +1,11 @@
-import React, {useEffect} from 'react';
-import {
-  Button,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import React from 'react';
+import {StatusBar, StyleSheet, Text, View} from 'react-native';
 import {theme} from '../../helpers/constants';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Ripple from 'react-native-material-ripple';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Ionicon from 'react-native-vector-icons/Ionicons';
 import {lightVibration} from '../../helpers/vibrations';
-import {
-  clearAllShortcuts,
-  clearShortcutsWithIdentifiers,
-  presentShortcut,
-  SiriShortcutsEvent,
-  suggestShortcuts,
-} from 'react-native-siri-shortcut';
+import {presentShortcut} from 'react-native-siri-shortcut';
 import AddtoSiriButton, {
   SiriButtonStyles,
 } from 'react-native-siri-shortcut/AddToSiriButton';

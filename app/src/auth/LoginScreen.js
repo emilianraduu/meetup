@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {lightVibration} from '../helpers/vibrations';
 import {useLazyQuery} from '@apollo/client';
 import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
-import {LoginManager, AccessToken, GraphRequest} from 'react-native-fbsdk';
+import {AccessToken, GraphRequest, LoginManager} from 'react-native-fbsdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {EXIST_QUERY} from '../graphql/queries/User';
 import {PasswordRoute} from '../helpers/routes';
@@ -151,7 +151,6 @@ const LoginScreen = ({navigation}) => {
           placeholder={'example@email.com'}
           style={style.input}
           autoCapitalize={'none'}
-          onSubmitEditing={handleLogin}
           placeholderTextColor={theme.grey}
           autoCorrect={false}
           onChange={(e) =>

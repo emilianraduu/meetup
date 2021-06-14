@@ -9,10 +9,12 @@ import StarRating from 'react-native-star-rating';
 import storage from '@react-native-firebase/storage';
 import Swiper from 'react-native-swiper';
 import FastImage from 'react-native-fast-image';
-import {pubImages, selectedPub} from '../../helpers/variables';
+import {date, lat, long, pubImages, selectedPub} from '../../helpers/variables';
 import {useReactiveVar} from '@apollo/client';
+import moment from 'moment';
+import {getDistance} from 'geolib';
 
-const PubCard = ({index, pub, navigation, onSelectPub}) => {
+const PubCard = ({index, navigation, onSelectPub, pub}) => {
   const images = useReactiveVar(pubImages);
   const [currentImage, setCurrentImage] = useState(undefined);
   useEffect(() => {
@@ -26,7 +28,11 @@ const PubCard = ({index, pub, navigation, onSelectPub}) => {
 
   useEffect(() => {
     if (pub && images[pub.id]) {
-      if (!images[pub.id].includes(currentImage) && currentImage) {
+      if (
+        images[pub.id].filter((e) => e.name === currentImage?.name).length <
+          1 &&
+        currentImage
+      ) {
         pubImages({...images, [pub.id]: [...images[pub.id], currentImage]});
       }
     }
@@ -81,24 +87,45 @@ const PubCard = ({index, pub, navigation, onSelectPub}) => {
 };
 
 export const PubDetails = ({pub, wrapperStyle}) => {
+  const currentDate = useReactiveVar(date);
+  let freeTables = 0;
+  for (const item in pub?.locations) {
+    freeTables += pub?.locations?.[item]?.tables?.length;
+  }
+  if (pub?.reservations?.length > 0 && pub) {
+    for (const it in pub?.reservations) {
+      const res = pub?.reservations[it];
+      const day = moment(currentDate);
+      const reservation = moment(Number(res?.date));
+      const reservationEnd = moment(Number(res?.date)).add(
+        pub.reservationTime,
+        'hours',
+      );
+      if (day.isBetween(reservation, reservationEnd, null, '[]')) {
+        freeTables -= 1;
+      }
+    }
+  }
   return (
     <View style={[style.space, wrapperStyle]}>
       <View style={style.left}>
         <Text style={style.title}>{pub?.name}</Text>
         <Text style={style.address}>{pub?.address}</Text>
-        <View style={style.section}>
-          <Text style={style.distance}>{pub?.distance}m</Text>
-          <Icon
-            name={'shoe-prints'}
-            size={12}
-            color={theme.red}
-            style={{marginLeft: 5, alignSelf: 'center'}}
-          />
-        </View>
+        {pub?.distance && (
+          <View style={style.section}>
+            <Text style={style.distance}>{pub?.distance}m</Text>
+            <Icon
+              name={'shoe-prints'}
+              size={12}
+              color={theme.red}
+              style={{marginLeft: 5, alignSelf: 'center'}}
+            />
+          </View>
+        )}
       </View>
       <View style={style.right}>
         <View style={style.section}>
-          <Text style={style.tables}>{Number(pub?.freeTable)} free tables</Text>
+          <Text style={style.tables}>{freeTables} free tables</Text>
         </View>
         <View style={style.section}>
           {[1, 2, 3].map((i) => (
@@ -158,7 +185,6 @@ const style = StyleSheet.create({
   },
   left: {
     flex: 1,
-    justifyContent: 'flex-end',
     maxWidth: '60%',
   },
   title: {fontSize: 24, fontWeight: 'bold'},

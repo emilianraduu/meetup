@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {theme} from '../../../../helpers/constants';
 
 const THUMB_RADIUS = 12;

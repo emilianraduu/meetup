@@ -109,5 +109,20 @@ export const menu = extendType({
         }
       }
     })
+    t.field('deleteItem', {
+      type: 'MenuItem',
+      args: {
+        id: nonNull(intArg())
+      },
+      async resolve(_parent, { id }, ctx) {
+        try {
+          return await ctx.prisma.menuItem.delete({
+            where: { id }
+          })
+        } catch (e) {
+          handleError(errors.locationNotFound)
+        }
+      }
+    })
   }
 })

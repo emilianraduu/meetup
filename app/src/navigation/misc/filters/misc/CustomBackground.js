@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import Animated, {interpolateColors} from 'react-native-reanimated';
 import {theme} from '../../../../helpers/constants';
 
-const CustomBackground = ({animatedIndex, style, index}) => {
+const CustomBackground = ({animatedIndex, style, index, border}) => {
   const animatedBackground = useMemo(
     () =>
       interpolateColors(animatedIndex, {
@@ -15,9 +15,19 @@ const CustomBackground = ({animatedIndex, style, index}) => {
     () => [
       style,
       {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowOpacity: 0.18,
+        shadowRadius: 5.0,
+        elevation: 1,
+      },
+      {
         backgroundColor: animatedBackground,
-        borderTopLeftRadius: index === 1 || index === 0 ? 14 : 0,
-        borderTopRightRadius: index === 1 || index === 0 ? 14 : 0,
+        borderTopLeftRadius: border ? 14 : 0,
+        borderTopRightRadius: border ? 14 : 0,
       },
     ],
     [style, animatedBackground],

@@ -12,7 +12,11 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Ripple from 'react-native-material-ripple';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {lightVibration} from '../helpers/vibrations';
-import {LOGIN_MUTATION, REGISTER_MUTATION} from '../graphql/mutations/User';
+import {
+  LOGIN_MUTATION,
+  REGISTER_MUTATION,
+  REGISTER_WAITER,
+} from '../graphql/mutations/User';
 import {isLoggedIn, token, user} from '../helpers/variables';
 import {useMutation} from '@apollo/client';
 import {Loader} from '../navigation/Loader';
@@ -27,8 +31,8 @@ const PasswordScreen = ({navigation, route}) => {
   const [error, setError] = useState('');
   const [login] = useMutation(LOGIN_MUTATION);
   const [register] = useMutation(REGISTER_MUTATION);
+  const [registerWaiter] = useMutation(REGISTER_WAITER);
   const [photo, setPhoto] = useState('');
-
   useEffect(() => {
     const getUrl = async () => {
       return await storage().ref(route?.params?.photo).getDownloadURL();
@@ -67,6 +71,33 @@ const PasswordScreen = ({navigation, route}) => {
       setError('Password should have 6 characters');
     }
   };
+  const handleWaiter = async () => {
+    if (validatePassword(values.password)) {
+      setLoading(true);
+      try {
+        const response = await registerWaiter({
+          variables: {
+            id: Number(route?.params?.id),
+            password: values.password,
+          },
+        });
+        AsyncStorage.setItem(
+          'accessToken',
+          response?.data?.setWaiterPassword?.accessToken,
+        );
+        token(response?.data?.setWaiterPassword?.accessToken);
+        user(response?.data?.setWaiterPassword?.user);
+        isLoggedIn(true);
+        setLoading(false);
+      } catch (e) {
+        setError();
+        alert(e);
+        setLoading(false);
+      }
+    } else {
+      setError('Password should have 6 characters');
+    }
+  };
   const handleLogin = async () => {
     if (validatePassword(values.password)) {
       setLoading(true);
@@ -84,6 +115,7 @@ const PasswordScreen = ({navigation, route}) => {
         setLoading(false);
       } catch (e) {
         alert(e);
+        console.log(JSON.stringify(e));
         isLoggedIn(false);
         setLoading(false);
       }
@@ -102,7 +134,6 @@ const PasswordScreen = ({navigation, route}) => {
     }
     setValues({...values, [key]: value});
   };
-
   return (
     <ScrollView contentContainerStyle={style.scrollview}>
       <Loader loading={loading} />
@@ -111,7 +142,11 @@ const PasswordScreen = ({navigation, route}) => {
           <Icon name={'arrow-back'} color={theme.dark} size={30} />
         </Ripple>
         <Text style={style.title}>
-          {route?.params?.exist ? 'Sign in' : 'Register'}
+          {route?.params?.exist
+            ? route?.params?.hasPassword
+              ? 'Sign in'
+              : 'Waiter'
+            : 'Register'}
         </Text>
       </SafeAreaView>
       <View style={style.inputWrapper}>
@@ -138,7 +173,13 @@ const PasswordScreen = ({navigation, route}) => {
           placeholder={'examplepass12'}
           placeholderTextColor={theme.grey}
           style={style.input}
-          onSubmitEditing={route?.params?.exist ? handleLogin : handleRegister}
+          onSubmitEditing={
+            route?.params?.exist
+              ? route?.params?.hasPassword
+                ? handleLogin
+                : handleWaiter
+              : handleRegister
+          }
           secureTextEntry={true}
           onChange={(e) =>
             onInputChange({key: 'password', value: e.nativeEvent.text})
@@ -149,7 +190,13 @@ const PasswordScreen = ({navigation, route}) => {
       <SafeAreaView style={style.buttonWrapper}>
         <Ripple
           rippleColor={GREEN_COLOR}
-          onPress={route?.params?.exist ? handleLogin : handleRegister}
+          onPress={
+            route?.params?.exist
+              ? route?.params?.hasPassword
+                ? handleLogin
+                : handleWaiter
+              : handleRegister
+          }
           disabled={disabled}
           style={disabled ? style.buttonDisabled : style.button}>
           <Text style={{color: theme.white}}>

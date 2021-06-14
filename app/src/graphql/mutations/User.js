@@ -10,8 +10,45 @@ export const LOGIN_MUTATION = gql`
         firstName
         id
         photo
-        maxDistance
         status
+        pub {
+          id
+          name
+          locations {
+            id
+            name
+          }
+        }
+        tables {
+          id
+          name
+          location {
+            id
+            name
+          }
+        }
+        reservations {
+          id
+          date
+          finished
+          location {
+            id
+            name
+          }
+          table {
+            id
+            count
+          }
+          pub {
+            id
+            latitude
+            longitude
+            name
+            latitude
+            longitude
+            address
+          }
+        }
       }
     }
   }
@@ -26,8 +63,27 @@ export const REGISTER_MUTATION = gql`
         firstName
         id
         photo
-        maxDistance
         status
+        reservations {
+          id
+          date
+          finished
+          location {
+            id
+            name
+          }
+          table {
+            id
+            count
+          }
+          pub {
+            id
+            name
+            latitude
+            longitude
+            address
+          }
+        }
       }
     }
   }
@@ -41,31 +97,19 @@ export const UPDATE_PHOTO_MUTATION = gql`
       firstName
       id
       photo
-      maxDistance
       status
     }
   }
 `;
 
 export const UPDATE_DATA_MUTATION = gql`
-  mutation update(
-    $id: Int!
-    $firstName: String
-    $lastName: String
-    $maxDistance: Int
-  ) {
-    updateUser(
-      id: $id
-      firstName: $firstName
-      lastName: $lastName
-      maxDistance: $maxDistance
-    ) {
+  mutation update($id: Int!, $firstName: String, $lastName: String) {
+    updateUser(id: $id, firstName: $firstName, lastName: $lastName) {
       lastName
       email
       firstName
       id
       photo
-      maxDistance
       status
     }
   }
@@ -79,6 +123,21 @@ export const CREATE_WAITER = gql`
       photo
       firstName
       lastName
+    }
+  }
+`;
+
+export const REGISTER_WAITER = gql`
+  mutation setWaiterPassword($id: Int!, $password: String!) {
+    setWaiterPassword(id: $id, password: $password) {
+      accessToken
+      user {
+        id
+        email
+        photo
+        firstName
+        lastName
+      }
     }
   }
 `;

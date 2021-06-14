@@ -10,41 +10,46 @@ import {theme} from '../../../helpers/constants';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import TableTab from './TableTab';
-import ReservationModal from './ReservationModal';
 import {useMutation, useReactiveVar} from '@apollo/client';
-import {selectedLocation, selectedPub, user} from '../../../helpers/variables';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
-import dayjs from 'dayjs';
+import {
+  date,
+  selectedLocation,
+  selectedPub,
+  user,
+} from '../../../helpers/variables';
 import AddLocationModal from './AddLocationModal';
 import {CREATE_RESERVATION} from '../../../graphql/mutations/Reservation';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment';
+import {client} from '../../../graphql';
+import {PUB_QUERY} from '../../../graphql/queries/Pubs';
 
 export const TableScreen = ({navigation}) => {
   const pub = useReactiveVar(selectedPub);
   const usr = useReactiveVar(user);
   const [selected, setSelected] = useState(undefined);
-  const [showReservationModal, setShowReservationModal] = useState(false);
   const [showLocationModal, setShowLocationModal] = useState(false);
   const location = useReactiveVar(selectedLocation);
-  const [values, setValues] = useState({});
-  const [create, {data, error, loading}] = useMutation(CREATE_RESERVATION);
+  const [create] = useMutation(CREATE_RESERVATION);
+  const currentDate = useReactiveVar(date);
 
   const {bottom} = useSafeAreaInsets();
-  const {
-    container,
-    spaceText,
-    section,
-    button,
-    text,
-    cta,
-    smallText,
-    customBtn,
-  } = styles({
+  const hasReservation = usr?.reservations?.find((res) => !res.finished);
+
+  const {container, spaceText, section, button, text, cta} = styles({
     bottom,
     selected,
+    hasReservation,
   });
   const onInputChange = ({key, value}) => {
-    setValues({...values, [key]: value});
+    date(value);
   };
+  useEffect(() => {
+    return () => {
+      selectedLocation(undefined);
+      setSelected(undefined);
+    };
+  }, []);
   useEffect(() => {
     if (!location && pub?.locations?.[0]) {
       selectedLocation(pub.locations[0]);
@@ -59,9 +64,8 @@ export const TableScreen = ({navigation}) => {
       variables: {
         pubId: pub.id,
         locationId: location.id,
-        date: values.date,
-        startHour: dayjs(values.startHour).format('HH:mm'),
-        tableId: selected,
+        date: moment(currentDate),
+        tableId: selected.id,
       },
     });
     if (response?.data.createReservation) {
@@ -72,41 +76,88 @@ export const TableScreen = ({navigation}) => {
           ? [...user.reservations, response?.data.createReservation]
           : [response?.data.createReservation],
       });
-      setShowReservationModal(false);
+      const newLocations = pub.locations;
+      const indexLocation = newLocations.findIndex(
+        (loc) => loc.id === location.id,
+      );
+      const tableIndex = newLocations[indexLocation].tables.findIndex(
+        (table) => table.id === selected.id,
+      );
+      newLocations[indexLocation].tables[tableIndex].reservations = [
+        ...newLocations[indexLocation].tables[tableIndex].reservations,
+        response?.data.createReservation,
+      ];
+      client.writeQuery({
+        query: PUB_QUERY,
+        data: {
+          pub: {
+            ...pub,
+            locations: newLocations,
+          },
+        },
+      });
       navigation.goBack();
     }
   };
   return (
     <View style={{flex: 1, backgroundColor: theme.white}}>
       <BottomSheetScrollView contentContainerStyle={container}>
-        <>
+        {Number(usr?.id) === Number(pub?.ownerId) ? (
+          <Text style={spaceText}>
+            Setup locations to match your place layout. {'\n\n'}This helps users
+            visualize the layout and waiters to easily determine where tables
+            are free.
+          </Text>
+        ) : (
           <Text style={spaceText}>Pick a space</Text>
-          <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+        )}
+        <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+          <View style={section}>
+            {pub?.locations?.map((loc, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => selectedLocation(loc)}
+                style={[
+                  button,
+                  {
+                    backgroundColor:
+                      loc.id === location?.id ? theme.red : theme.grey,
+                  },
+                ]}>
+                <Text style={text}>{loc.name}</Text>
+              </TouchableOpacity>
+            ))}
+            {Number(usr?.id) === Number(pub?.ownerId) && (
+              <TouchableOpacity
+                onPress={openAddLocation}
+                style={[button, {borderWidth: 1, borderColor: theme.red}]}>
+                <Text style={[text, {color: theme.red}]}>Add location</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </ScrollView>
+        {Number(usr?.id) !== Number(pub?.ownerId) && (
+          <View>
+            <Text style={spaceText}>When you will arrive?</Text>
             <View style={section}>
-              {pub?.locations?.map((loc, index) => (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => selectedLocation(loc)}
-                  style={[
-                    button,
-                    {
-                      backgroundColor:
-                        loc.id === location?.id ? theme.red : theme.grey,
-                    },
-                  ]}>
-                  <Text style={text}>{loc.name}</Text>
-                </TouchableOpacity>
-              ))}
-              {Number(usr?.id) === Number(pub?.ownerId) && (
-                <TouchableOpacity
-                  onPress={openAddLocation}
-                  style={[button, {borderWidth: 1, borderColor: theme.red}]}>
-                  <Text style={[text, {color: theme.red}]}>Add location</Text>
-                </TouchableOpacity>
-              )}
+              <RNDateTimePicker
+                testID="dateTimePicker"
+                value={new Date(currentDate)}
+                minuteInterval={5}
+                mode={'datetime'}
+                style={{flex: 1, alignSelf: 'flex-start'}}
+                themeVariant={'light'}
+                display="default"
+                onChange={(e) => {
+                  onInputChange({
+                    key: 'date',
+                    value: new Date(e.nativeEvent.timestamp),
+                  });
+                }}
+              />
             </View>
-          </ScrollView>
-        </>
+          </View>
+        )}
         {pub?.locations?.map((loc) => (
           <TableTab
             key={loc.id}
@@ -117,82 +168,28 @@ export const TableScreen = ({navigation}) => {
         ))}
 
         {Number(usr?.id) !== Number(pub?.ownerId) && (
-          <TouchableOpacity
-            disabled={!selected}
-            style={cta}
-            onPress={() => {
-              setShowReservationModal(true);
-            }}>
-            <Text style={text}>Reserve table</Text>
-          </TouchableOpacity>
+          <>
+            {hasReservation && (
+              <Text
+                style={{
+                  textAlign: 'center',
+                  marginBottom: 15,
+                  color: theme.red,
+                  fontWeight: 'bold',
+                }}>
+                You have a reservation ongoing please try again after it is
+                finished
+              </Text>
+            )}
+            <TouchableOpacity
+              disabled={!selected || hasReservation}
+              style={cta}
+              onPress={completeReservation}>
+              <Text style={text}>Make reservation</Text>
+            </TouchableOpacity>
+          </>
         )}
-        <ReservationModal
-          visible={showReservationModal}
-          onClose={() => setShowReservationModal(false)}>
-          {selected && (
-            <View>
-              <Text style={spaceText}>Pick a date</Text>
-              <View style={section}>
-                <RNDateTimePicker
-                  testID="dateTimePicker"
-                  value={values.date ? new Date(values.date) : new Date()}
-                  minuteInterval={5}
-                  mode={'date'}
-                  themeVariant={'light'}
-                  minimumDate={new Date()}
-                  style={{flex: 1, alignSelf: 'flex-start'}}
-                  display="default"
-                  onChange={(e) =>
-                    onInputChange({
-                      key: 'date',
-                      value: dayjs(e.nativeEvent.timestamp),
-                    })
-                  }
-                />
-              </View>
-              <Text style={spaceText}>When you will arrive?</Text>
-              <View style={section}>
-                <RNDateTimePicker
-                  testID="dateTimePicker"
-                  value={
-                    values.startHour ? new Date(values.startHour) : new Date()
-                  }
-                  minuteInterval={5}
-                  mode={'time'}
-                  style={{flex: 1, alignSelf: 'flex-start'}}
-                  themeVariant={'light'}
-                  display="default"
-                  onChange={(e) =>
-                    onInputChange({
-                      key: 'startHour',
-                      value: e.nativeEvent.timestamp,
-                    })
-                  }
-                />
-              </View>
-              {/*<View style={section}>*/}
-              {/*  <RNDateTimePicker*/}
-              {/*    testID="dateTimePicker"*/}
-              {/*    value={values.endTime ? new Date(values.endTime) : new Date()}*/}
-              {/*    themeVariant={'light'}*/}
-              {/*    minuteInterval={5}*/}
-              {/*    style={{flex: 1, alignItems: 'flex-end'}}*/}
-              {/*    mode={'time'}*/}
-              {/*    display="default"*/}
-              {/*    onChange={(e) =>*/}
-              {/*      onInputChange({*/}
-              {/*        key: 'endTime',*/}
-              {/*        value: dayjs(e.nativeEvent.timestamp),*/}
-              {/*      })*/}
-              {/*    }*/}
-              {/*  />*/}
-              {/*</View>*/}
-              <TouchableOpacity style={cta} onPress={completeReservation}>
-                <Text style={text}>Complete reservation</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        </ReservationModal>
+
         <AddLocationModal
           onClose={() => setShowLocationModal(false)}
           visible={showLocationModal}
@@ -201,14 +198,14 @@ export const TableScreen = ({navigation}) => {
     </View>
   );
 };
-const styles = ({bottom, selected}) =>
+const styles = ({bottom, selected, hasReservation}) =>
   StyleSheet.create({
     container: {
       padding: 20,
       paddingBottom: bottom + 30,
     },
     spaceText: {
-      fontSize: 12,
+      fontSize: 13,
       fontWeight: 'bold',
       color: theme.black,
       marginBottom: 5,
@@ -226,7 +223,7 @@ const styles = ({bottom, selected}) =>
     },
     text: {color: theme.white},
     cta: {
-      backgroundColor: selected ? theme.red : theme.black,
+      backgroundColor: selected && !hasReservation ? theme.red : theme.black,
       paddingVertical: 12,
       paddingHorizontal: 20,
       borderRadius: 8,

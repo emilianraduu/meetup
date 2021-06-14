@@ -21,6 +21,7 @@ const AddTableModal = ({visible, onClose, locationId, position}) => {
   const onInputChange = ({key, value}) => {
     setValues({...values, [key]: value});
   };
+
   const addLocation = async () => {
     const response = await create({
       variables: {
@@ -37,11 +38,12 @@ const AddTableModal = ({visible, onClose, locationId, position}) => {
       const index = locations.findIndex((loc) => loc.id === location.id);
       if (index !== -1) {
         locations[index] = {
-          ...location[index],
-          tables: location[index]?.tables
-            ? [...location[index].tables, response?.data?.createTable]
+          ...locations[index],
+          tables: locations[index]?.tables
+            ? [...locations[index].tables, response?.data?.createTable]
             : [response?.data?.createTable],
         };
+        selectedLocation(locations[index]);
       }
       client.writeQuery({
         query: PUB_QUERY,
@@ -66,25 +68,48 @@ const AddTableModal = ({visible, onClose, locationId, position}) => {
       <View style={style.content}>
         <View style={{marginTop: 20}}>
           <Loader loading={loading} />
-          <Text>Location name</Text>
+          <Text style={{fontWeight: 'bold'}}>Waiter</Text>
+          <View
+            style={{
+              borderBottomColor: theme.red,
+              borderBottomWidth: 2,
+              marginVertical: 15,
+            }}>
+            <RNPickerSelect
+              onValueChange={(value) => onInputChange({key: 'waiterId', value})}
+              items={pub?.waiters?.map((waiter) => ({
+                value: waiter.id,
+                label: waiter.email,
+              }))}
+            />
+          </View>
+          <Text style={{fontWeight: 'bold'}}>Count</Text>
           <TextInput
+            style={{
+              borderBottomColor: theme.red,
+              borderBottomWidth: 2,
+              marginVertical: 15,
+            }}
+            value={values?.count}
+            placeholder={'Must be a number'}
+            placeholderTextColor={theme.grey}
             onChange={({nativeEvent: {text}}) =>
-              onInputChange({key: 'name', value: text})
+              ((Number(text) && text.length < 3) || text.length < 1) &&
+              onInputChange({key: 'count', value: text})
             }
           />
-
-          <RNPickerSelect
-            onValueChange={(value) => onInputChange({key: 'waiterId', value})}
-            items={pub?.waiters?.map((waiter) => ({
-              value: waiter.id,
-              label: waiter.email,
-            }))}
-          />
-
-          <Text>Count</Text>
+          <Text style={{fontWeight: 'bold'}}>Table name</Text>
           <TextInput
+            style={{
+              borderBottomColor: theme.red,
+              borderBottomWidth: 2,
+              marginVertical: 15,
+            }}
+            value={values?.name}
+            placeholder={'Table name'}
+            placeholderTextColor={theme.grey}
             onChange={({nativeEvent: {text}}) =>
-              onInputChange({key: 'count', value: text})
+              onInputChange({key: 'name', value: text})
             }
           />
           <Button title={'Add location'} onPress={addLocation} />
@@ -99,7 +124,7 @@ const style = StyleSheet.create({
     backgroundColor: theme.white,
     borderRadius: 20,
     padding: 20,
-    flex: 1,
+    flex: 0.5,
   },
   modal: {justifyContent: 'flex-end', margin: 0},
 });

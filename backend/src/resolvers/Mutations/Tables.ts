@@ -28,7 +28,7 @@ export const tables = extendType({
         const pub = await findPub(ctx, pubId)
         if (pub?.ownerId === ctx.userId) {
           try {
-            const table = await ctx.prisma.table.create({
+            return await ctx.prisma.table.create({
               data: {
                 count,
                 name,
@@ -43,15 +43,6 @@ export const tables = extendType({
                 location: true,
               }
             })
-            if(!blocked) {
-              await ctx.prisma.pub.update({
-                where: { id: pubId },
-                data: {
-                  freeTable: pub.freeTable + 1
-                }
-              })
-            }
-            return table
           } catch (e) {
             handleError(errors.locationNotFound)
           }

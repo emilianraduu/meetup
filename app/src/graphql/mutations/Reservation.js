@@ -5,19 +5,15 @@ export const CREATE_RESERVATION = gql`
     $pubId: Int!
     $tableId: Int!
     $locationId: Int!
-    $startHour: String!
     $date: String!
   ) {
     createReservation(
       pubId: $pubId
       tableId: $tableId
       locationId: $locationId
-      startHour: $startHour
       date: $date
     ) {
       id
-      startHour
-      endHour
       date
       tableId
       locationId

@@ -3,11 +3,11 @@ import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import {theme} from '../../helpers/constants';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
-import LottieView from 'lottie-react-native';
 import {useReactiveVar} from '@apollo/client';
 import {selectedPub} from '../../helpers/variables';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import StarRating from 'react-native-star-rating';
+import LottieView from 'lottie-react-native';
 
 const PubReviews = () => {
   const {bottom} = useSafeAreaInsets();
@@ -18,13 +18,16 @@ const PubReviews = () => {
   return (
     <View style={{flex: 1, backgroundColor: theme.white}}>
       <BottomSheetScrollView contentContainerStyle={container}>
-        {/*<LottieView*/}
-        {/*  source={require('../../assets/animations/empty-stores.json')}*/}
-        {/*  // loop={true}*/}
-        {/*  // autoPlay={true}*/}
-        {/*  style={empty}*/}
-        {/*/>*/}
-        {pub?.reviews?.length === 0 && <Text>No reviews yet!</Text>}
+        {pub?.reviews?.length === 0 && (
+          <View>
+            {/*<LottieView*/}
+            {/*  source={require('../../assets/animations/empty-stores.json')}*/}
+            {/*  style={empty}*/}
+            {/*/>*/}
+            <Text style={{fontWeight: 'bold'}}>No reviews yet!</Text>
+            <Text>Reviews will show up after people have seen your place</Text>
+          </View>
+        )}
         {pub?.reviews?.map((review) => (
           <View key={review.id}>
             <StarRating

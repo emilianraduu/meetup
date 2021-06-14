@@ -20,8 +20,10 @@ export const AboutRoute = 'About';
 
 export const ExploreRoute = 'Explore';
 export const MyPubsRoute = 'MyPubs';
+export const TablesRoute = 'Tables';
 export const HistoryRoute = 'History';
 export const AnalyticsRoute = 'Analytics';
+export const ScheduleRoute = 'Schedule';
 export const MainRoute = 'Main';
 export const MainAdminRoute = 'MainAdmin';
 export const AddPubRoute = 'AddPub';

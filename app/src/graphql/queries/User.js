@@ -8,12 +8,23 @@ export const ME_QUERY = gql`
       firstName
       id
       photo
-      maxDistance
       status
+      tables {
+        id
+        count
+        location {
+          id
+          name
+        }
+      }
       reservations {
         id
-        startHour
         date
+        table {
+          id
+          count
+        }
+        finished
         location {
           id
           name
@@ -21,7 +32,16 @@ export const ME_QUERY = gql`
         pub {
           id
           name
+          visible
+          latitude
+          longitude
           address
+          locations {
+            rows
+            columns
+            id
+            name
+          }
         }
       }
     }
@@ -32,7 +52,9 @@ export const EXIST_QUERY = gql`
   query($email: String!) {
     exists(email: $email) {
       exist
+      id
       email
+      hasPassword
       firstName
       lastName
       photo

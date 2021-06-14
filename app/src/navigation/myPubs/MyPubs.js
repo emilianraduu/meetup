@@ -60,6 +60,9 @@ const MyPubsScreen = ({navigation}) => {
   const addPress = () => {
     navigation.navigate(AddPubRoute);
   };
+  const sortedList = () => {
+    return pubList?.sort((a, b) => a.id > b.id);
+  };
   return (
     <View style={[style.content, {paddingTop: top}]}>
       <View style={style.section}>
@@ -70,7 +73,7 @@ const MyPubsScreen = ({navigation}) => {
           </View>
         </View>
         <FlatList
-          data={pubList}
+          data={sortedList()}
           refreshing={loading}
           style={style.flatList}
           contentContainerStyle={style.listContent}

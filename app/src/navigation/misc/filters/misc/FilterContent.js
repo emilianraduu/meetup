@@ -1,5 +1,5 @@
-import React, {useCallback, useMemo, useState} from 'react';
-import {Animated, StyleSheet, Text, View} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {Animated, Button, StyleSheet, Text, View} from 'react-native';
 import FilterTopBar from './FilterTopBar';
 import Slider from 'rn-range-slider';
 import Thumb from './Thumb';
@@ -10,18 +10,22 @@ import {useFocusEffect} from '@react-navigation/native';
 import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import MultipleCheckbox from '../../MultipleCheckbox';
 import MultipleRadio from '../../MultipleRadio';
-import ColorPicker from '../../ColorPicker';
+import RatingPicker from '../../RatingPicker';
 import {theme} from '../../../../helpers/constants';
+import {useReactiveVar} from '@apollo/client';
+import {selectedDistance} from '../../../../helpers/variables';
 
 export const FILTER_DATA = {
   COLORS: [
-    {name: '#D1CA13', selected: true},
-    {name: '#0C187E', selected: false},
-    {name: '#0C6875', selected: false},
+    {name: 1, selected: false},
+    {name: 2, selected: false},
+    {name: 3, selected: false},
+    {name: 4, selected: false},
   ],
   AVAILABILITY: [
-    {name: 'in stock', selected: false},
-    {name: 'supplier stock', selected: false},
+    {name: 'cheap', selected: false},
+    {name: 'medium', selected: false},
+    {name: 'expensive', selected: false},
   ],
   MATERIALS: [
     {name: 'wood', selected: false},
@@ -37,13 +41,13 @@ export const FILTER_DATA = {
 };
 
 const FilterContent = ({animation, onClose, index}) => {
-  const [low, setLow] = useState(FILTER_DATA.SLIDER.LOW_VALUE);
-  const [high, setHigh] = useState(FILTER_DATA.SLIDER.HIGH_VALUE);
   const [pristine, setPristine] = useState(true);
   const renderThumb = useCallback(() => <Thumb />, []);
   const renderRail = useCallback(() => <Rail />, []);
   const [materialOptions, setMaterialOptions] = useState(FILTER_DATA.MATERIALS);
   const [colorOptions, setColorOptions] = useState(FILTER_DATA.COLORS);
+  const maxDistance = useReactiveVar(selectedDistance);
+  const [low, setLow] = useState(maxDistance);
   const [availabilityOptions, setAvailabilityOptions] = useState(
     FILTER_DATA.AVAILABILITY,
   );
@@ -85,22 +89,29 @@ const FilterContent = ({animation, onClose, index}) => {
   };
 
   const renderRailSelected = useCallback(() => <RailSelected />, []);
-  const renderLabel = useCallback((value) => <Label text={`$${value}`} />, []);
+  const renderLabel = useCallback((value) => <Label text={`${value}m`} />, []);
   const renderNotch = useCallback(() => <View />, []);
-  const handleValueChange = useCallback((low, high) => {
-    setLow(low);
-    setHigh(high);
-    onValueChange();
-  }, []);
+  const handleValueChange = useCallback(
+    (value) => {
+      if (value !== low) {
+        setLow(value);
+      }
+      onValueChange();
+    },
+    [low],
+  );
 
   const {section, content, sectionTitle, valuesWrapper, sliderValues} = styles;
   const onPressReset = () => {
     setPristine(true);
     setAvailabilityOptions(FILTER_DATA.AVAILABILITY);
     setMaterialOptions(FILTER_DATA.MATERIALS);
-    setLow(FILTER_DATA.SLIDER.LOW_VALUE);
-    setHigh(FILTER_DATA.SLIDER.HIGH_VALUE);
+    setLow(5000);
     setColorOptions(FILTER_DATA.COLORS);
+  };
+  const submit = () => {
+    selectedDistance(low);
+    onClose();
   };
   return (
     <Animated.View
@@ -118,13 +129,13 @@ const FilterContent = ({animation, onClose, index}) => {
         focusHook={useFocusEffect}
         showsVerticalScrollIndicator={false}>
         <View style={section}>
-          <Text style={sectionTitle}>Price</Text>
+          <Text style={sectionTitle}>Distance</Text>
           <Slider
-            min={FILTER_DATA.SLIDER.MIN_VALUE}
-            max={FILTER_DATA.SLIDER.MAX_VALUE}
+            min={50}
+            disableRange={true}
+            max={10000}
             step={FILTER_DATA.SLIDER.STEP}
             low={low}
-            high={high}
             floatingLabel
             renderThumb={renderThumb}
             renderRail={renderRail}
@@ -134,13 +145,13 @@ const FilterContent = ({animation, onClose, index}) => {
             onValueChanged={handleValueChange}
           />
           <View style={valuesWrapper}>
-            <Text style={sliderValues}>{FILTER_DATA.SLIDER.MIN_VALUE}</Text>
-            <Text style={sliderValues}>{FILTER_DATA.SLIDER.MAX_VALUE}</Text>
+            <Text style={sliderValues}>50m</Text>
+            <Text style={sliderValues}>10000m</Text>
           </View>
         </View>
         <View style={section}>
-          <Text style={sectionTitle}>Colour</Text>
-          <ColorPicker colorOptions={colorOptions} onPress={onPressColor} />
+          <Text style={sectionTitle}>Reviews</Text>
+          <RatingPicker colorOptions={colorOptions} onPress={onPressColor} />
         </View>
         <View style={section}>
           <Text style={sectionTitle}>Material</Text>
@@ -150,12 +161,13 @@ const FilterContent = ({animation, onClose, index}) => {
           />
         </View>
         <View style={section}>
-          <Text style={sectionTitle}>Availability</Text>
+          <Text style={sectionTitle}>Price</Text>
           <MultipleRadio
             options={availabilityOptions}
             onPress={onPressAvailability}
           />
         </View>
+        <Button title={'Show filtered pubs'} onPress={submit} />
       </BottomSheetScrollView>
     </Animated.View>
   );

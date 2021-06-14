@@ -11,27 +11,20 @@ export const reservations = extendType({
         pubId: nonNull(intArg()),
         tableId: nonNull(intArg()),
         locationId: nonNull(intArg()),
-        startHour: nonNull(stringArg()),
         date: nonNull(stringArg()),
         endHour: stringArg()
       },
-      async resolve(_parent, { pubId, tableId, locationId, startHour, endHour, date }, ctx) {
+      async resolve(_parent, { pubId, tableId, locationId, endHour, date }, ctx) {
         const pub = await findPub(ctx, pubId)
         if (pub) {
           try {
-            const reservation = await ctx.prisma.reservation.create({
+            return await ctx.prisma.reservation.create({
               data: {
-                pubId, tableId, locationId, startHour, endHour, userId: ctx.userId, date
+                pubId, tableId, locationId, endHour, userId: ctx.userId, date
               }
             })
-            await ctx.prisma.pub.update({
-              where: {id: pubId},
-              data: {
-                freeTable: pub.freeTable - 1
-              }
-            })
-            return reservation
           } catch (e) {
+            console.log(e)
             handleError(errors.locationNotFound)
           }
         } else {

@@ -11,6 +11,9 @@ import {ApolloProvider} from '@apollo/client';
 import {client} from './src/graphql';
 import {token} from './src/helpers/variables';
 import {SiriShortcutsEvent} from 'react-native-siri-shortcut';
+import moment from 'moment';
+
+moment().locale('ro');
 
 LogBox.ignoreAllLogs();
 export const App = () => {
@@ -45,20 +48,7 @@ export const App = () => {
   return (
     <AppearanceProvider>
       <ApolloProvider client={client}>
-        <NavigationContainer
-          ref={navigationRef}
-          onStateChange={() => {
-            const previousRouteName = routeNameRef?.current;
-            const currentRouteName = navigationRef?.current?.getCurrentRoute?.()
-              .name;
-            if (previousRouteName !== currentRouteName) {
-              analytics().logScreenView({
-                screen_name: currentRouteName,
-                screen_class: currentRouteName,
-              });
-            }
-            routeNameRef.current = currentRouteName;
-          }}>
+        <NavigationContainer>
           <SafeAreaProvider>
             <StatusBar barStyle={'light-content'} />
             <MainNavigator setLoadedNav={setLoadedNav} />

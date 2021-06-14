@@ -25,6 +25,29 @@ export const user = extendType({
               status,
               firstName,
               lastName
+            },
+            include: {
+              notifications: true,
+              reservations: {
+                include: {
+                  table: true,
+                  pub: true,
+                  location: true,
+                  user: true
+                }
+              },
+              reviews: {
+                include: {
+                  pub: true
+                }
+              },
+              pub: { include: {locations: true} },
+              tables: {
+                include: {
+                  reservations: true,
+                  location: true
+                }
+              }
             }
           })
           const accessToken = generateAccessToken(user.id)
@@ -49,6 +72,29 @@ export const user = extendType({
           user = await ctx.prisma.user.findUnique({
             where: {
               email
+            },
+            include: {
+              notifications: true,
+              reservations: {
+                include: {
+                  table: true,
+                  pub: true,
+                  location: true,
+                  user: true
+                }
+              },
+              reviews: {
+                include: {
+                  pub: true
+                }
+              },
+              pub: { include: {locations: true} },
+              tables: {
+                include: {
+                  reservations: true,
+                  location: true
+                }
+              }
             }
           })
         } catch (e) {
@@ -73,17 +119,38 @@ export const user = extendType({
         lastName: stringArg(),
         photo: stringArg(),
         id: nonNull(intArg()),
-        maxDistance: intArg()
       },
-      async resolve(_parent, { firstName, lastName, photo, id, maxDistance }, ctx) {
+      async resolve(_parent, { firstName, lastName, photo, id }, ctx) {
         try {
           return await ctx.prisma.user.update({
             where: { id },
             data: {
               firstName,
               lastName,
-              maxDistance,
               photo
+            },
+            include: {
+              notifications: true,
+              reservations: {
+                include: {
+                  pub: true,
+                  location: true,
+                  user: true,
+                  table: true
+                }
+              },
+              reviews: {
+                include: {
+                  pub: true
+                }
+              },
+              pub: true,
+              tables: {
+                include: {
+                  reservations: true,
+                  location: true
+                }
+              }
             }
           })
         } catch (e) {
@@ -118,6 +185,40 @@ export const user = extendType({
                 pubId
               }
             })
+          }
+        } catch (e) {
+          handleError(errors.userAlreadyExists)
+        }
+      }
+    })
+    t.field('setWaiterPassword', {
+      type: 'AuthPayload',
+      args: {
+        id: nonNull(intArg()),
+        password: nonNull(stringArg())
+      },
+      async resolve(_parent, { id, password }, ctx) {
+        try {
+          const hashedPassword = await hash(password, 10)
+          const user = await ctx.prisma.user.update({
+            where: { id },
+            data: {
+              password: hashedPassword
+            },
+            include: {
+              pub: { include: {locations: true} },
+              tables: {
+                include: {
+                  reservations: true,
+                  location: true
+                }
+              }
+            }
+          })
+          const accessToken = generateAccessToken(user.id)
+          return {
+            accessToken,
+            user
           }
         } catch (e) {
           handleError(errors.userAlreadyExists)

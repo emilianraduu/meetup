@@ -10,7 +10,6 @@ export const User = objectType({
     t.string('createdAt')
     t.string('updatedAt')
     t.string('photo')
-    t.int('maxDistance')
     t.string('status')
     t.list.field('reservations', { type: 'Reservation' })
     t.list.field('notifications', { type: 'Notification' })
@@ -37,8 +36,10 @@ export const Exists = objectType({
   name: 'Exists',
   definition(t) {
     t.boolean('exist')
+    t.boolean('hasPassword')
     t.string('email')
     t.string('firstName')
+    t.string('id')
     t.string('lastName')
     t.string('photo')
   }
@@ -74,6 +75,7 @@ export const Pub = objectType({
     t.string('ownerId')
     t.field('owner', { type: 'User' })
     t.string('address')
+    t.boolean('visible')
     t.list.string('images')
     t.string('name')
     t.int('priceAvg')
@@ -81,7 +83,6 @@ export const Pub = objectType({
     t.float('avgRating')
     t.int('numberOfRatings')
     t.int('distance')
-    t.int('freeTable')
     t.float('latitude')
     t.float('longitude')
     t.list.field('schedule', { type: 'Schedule' })
@@ -90,6 +91,7 @@ export const Pub = objectType({
     t.list.field('reviews', { type: 'Review' })
     t.list.field('waiters', { type: 'User' })
     t.field('menu', { type: 'Menu' })
+    t.float('reservationTime')
   }
 })
 
@@ -149,9 +151,8 @@ export const Reservation = objectType({
     t.field('pub', { type: 'Pub' })
     t.int('pubId')
     t.string('date')
-    t.string('startHour')
-    t.string('endHour')
     t.int('userId')
+    t.boolean('finished')
     t.field('user', { type: 'User' })
     t.int('tableId')
     t.field('table', { type: 'Table' })

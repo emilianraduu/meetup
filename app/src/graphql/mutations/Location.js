@@ -20,6 +20,7 @@ export const CREATE_LOCATION = gql`
       }
       reservations {
         id
+        date
       }
     }
   }

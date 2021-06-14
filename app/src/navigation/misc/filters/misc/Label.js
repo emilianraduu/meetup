@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {theme} from '../../../../helpers/constants';
 
 const Label = ({text, colors, ...restProps}) => {

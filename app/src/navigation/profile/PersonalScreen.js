@@ -28,25 +28,17 @@ export const PersonalScreen = ({navigation}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [pristine, setPristine] = useState(true);
   const usr = useReactiveVar(user);
-  const [low, setLow] = useState(FILTER_DATA.SLIDER.LOW_VALUE);
-  const [high, setHigh] = useState(FILTER_DATA.SLIDER.HIGH_VALUE);
-  const renderThumb = useCallback(() => <Thumb />, []);
-  const renderRail = useCallback(() => <Rail />, []);
-  const renderRailSelected = useCallback(() => <RailSelected />, []);
-  const renderLabel = useCallback((value) => <Label text={value} />, []);
-  const renderNotch = useCallback(() => <View />, []);
   const [values, setValues] = useState({
     email: usr?.email,
     firstName: usr?.firstName,
     lastName: usr?.lastName,
-    maxDistance: usr?.maxDistance,
   });
   const [updateUserData, {loading, data, error}] = useMutation(
     UPDATE_DATA_MUTATION,
   );
   useEffect(() => {
     if (data?.updateUser) {
-      user(data.updateUser);
+      user({...usr, ...data.updateUser});
     }
     if (error) {
       alert(error);
@@ -67,13 +59,7 @@ export const PersonalScreen = ({navigation}) => {
     lightVibration();
     navigation.goBack();
   };
-  const handleValueChange = useCallback(
-    (h) => {
-      setHigh(h);
-      onInputChange({key: 'maxDistance', value: h});
-    },
-    [pristine],
-  );
+
   const onPress = () => {
     setIsEditing(!isEditing);
     if (isEditing) {
@@ -167,39 +153,6 @@ export const PersonalScreen = ({navigation}) => {
             <Text>{usr?.lastName ? usr?.lastName : '-'}</Text>
           )}
         </View>
-        {usr.status !== user_status.admin && (
-          <View style={style.row}>
-            <View style={style.section}>
-              <Ionicon
-                name={'ios-map-outline'}
-                color={theme.dark}
-                size={20}
-                style={style.rowIcon}
-              />
-              <Text>Max distance</Text>
-            </View>
-
-            <Text>{values?.maxDistance}m</Text>
-          </View>
-        )}
-        {isEditing && usr.status !== user_status.admin && (
-          <View style={style.slider}>
-            <Slider
-              min={50}
-              disableRange={true}
-              max={10000}
-              step={FILTER_DATA.SLIDER.STEP}
-              low={values?.maxDistance}
-              floatingLabel
-              renderThumb={renderThumb}
-              renderRail={renderRail}
-              renderRailSelected={renderRailSelected}
-              renderLabel={renderLabel}
-              renderNotch={renderNotch}
-              onValueChanged={handleValueChange}
-            />
-          </View>
-        )}
       </ScrollView>
     </View>
   );

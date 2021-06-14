@@ -9,9 +9,10 @@ import Map from '../misc/map/Map';
 import LottieView from 'lottie-react-native';
 import {useLazyQuery, useReactiveVar} from '@apollo/client';
 import {PUBS_QUERY} from '../../graphql/queries/Pubs';
-import {lat, long, pubs, user} from '../../helpers/variables';
+import {lat, long, pubs, selectedDistance, user} from '../../helpers/variables';
 import {Loader} from '../Loader';
-import dayjs from 'dayjs';
+import NextReservation from './NextReservation';
+import {getDistance} from 'geolib';
 
 export const MainScreen = ({navigation}) => {
   const latitude = useReactiveVar(lat);
@@ -21,6 +22,8 @@ export const MainScreen = ({navigation}) => {
   const [pubQuery, {loading, data, error}] = useLazyQuery(PUBS_QUERY, {
     fetchPolicy: 'no-cache',
   });
+  const maxDistance = useReactiveVar(selectedDistance);
+
   const pubList = useReactiveVar(pubs);
   useEffect(() => {
     Geolocation.watchPosition(
@@ -39,17 +42,13 @@ export const MainScreen = ({navigation}) => {
   });
 
   const getNextUserReservation = () => {
-    if (usr?.reservations && usr?.reservations.length > 0) {
+    if (usr?.reservations && usr?.reservations?.length > 0) {
       const today = new Date();
       return usr.reservations?.reduce?.((a, b) => {
-        return a.date - today < b.date - today ? a : b;
+        return !a.finished && !b.finished && a.date - today < b.date - today
+          ? a
+          : b;
       });
-      // const next = ((reservation) => {
-      //   if (reservation?.startHour) {
-      //
-      //     console.log(dayjs(reservation.date).hour(hours).minute(minutes));
-      //   }
-      // });
     }
   };
 
@@ -70,10 +69,10 @@ export const MainScreen = ({navigation}) => {
     );
   }, []);
   useEffect(() => {
-    if (latitude && longitude && usr?.maxDistance) {
-      pubQuery({variables: {lat: latitude, long: longitude}});
+    if (latitude && longitude && maxDistance) {
+      pubQuery({variables: {lat: latitude, long: longitude, maxDistance}});
     }
-  }, [latitude, longitude, pubQuery, usr]);
+  }, [maxDistance, latitude, longitude, pubQuery, usr]);
   const nextReservation = getNextUserReservation();
   const emptyList = () => {
     return (
@@ -100,12 +99,26 @@ export const MainScreen = ({navigation}) => {
       </View>
     );
   };
+  const sortedList = () => {
+    let list = pubList.map((pub) => {
+      const distance = getDistance(
+        {latitude, longitude},
+        {
+          latitude: pub.latitude,
+          longitude: pub.longitude,
+        },
+      );
+      return {...pub, distance};
+    });
+    return list.sort((a, b) => a.distance > b.distance);
+  };
   return (
     <View style={{flex: 1, paddingTop: top, backgroundColor: theme.white}}>
       <StatusBar barStyle={'dark-content'} />
       <View
         style={{
           flex: 1,
+          backgroundColor: theme.white,
         }}>
         <View
           style={{
@@ -118,20 +131,24 @@ export const MainScreen = ({navigation}) => {
           }}>
           <Text style={{fontSize: 34, fontWeight: 'bold'}}>Explore</Text>
           <View style={{flexDirection: 'row'}}>
-            <Map latitude={latitude} longitude={longitude} />
+            {latitude && longitude && (
+              <Map latitude={latitude} longitude={longitude} />
+            )}
             <Filters />
           </View>
         </View>
         <Loader loading={loading} />
         {pubList && (
           <FlatList
-            data={pubList}
+            data={sortedList()}
             refreshing={loading}
             style={{padding: 20}}
             contentContainerStyle={{paddingBottom: 20}}
             ListEmptyComponent={emptyList}
             onRefresh={() => {
-              pubQuery({variables: {lat: latitude, long: longitude}});
+              pubQuery({
+                variables: {lat: latitude, long: longitude, maxDistance},
+              });
             }}
             renderItem={({item: pub, index}) => (
               <PubCard
@@ -144,15 +161,7 @@ export const MainScreen = ({navigation}) => {
           />
         )}
         {nextReservation && (
-          <View style={{padding: 10}}>
-            <View style={{flexDirection: 'row'}}>
-              <Text>
-                Your next reservation is at {nextReservation.startHour} on{' '}
-                {dayjs(nextReservation.date).format('d')}
-              </Text>
-              <Text> </Text>
-            </View>
-          </View>
+          <NextReservation nextReservation={nextReservation} />
         )}
       </View>
     </View>

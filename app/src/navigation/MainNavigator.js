@@ -27,6 +27,7 @@ import {useQuery, useReactiveVar} from '@apollo/client';
 import {ME_QUERY} from '../graphql/queries/User';
 import PermissionsStack from '../auth/PermissionsStack';
 import AdminNavigator from './AdminNavigator';
+import WaiterNavigator from './WaiterNavigator';
 
 const MainNavigator = ({setLoadedNav}) => {
   const [progress] = useState(0);
@@ -35,7 +36,6 @@ const MainNavigator = ({setLoadedNav}) => {
   const usr = useReactiveVar(user);
   const isLogged = useReactiveVar(isLoggedIn);
   const {loading, data, error} = useQuery(ME_QUERY, {fetchPolicy: 'no-cache'});
-
   useEffect(() => {
     if (checkPerm) {
       const getPerms = async () => {
@@ -69,7 +69,7 @@ const MainNavigator = ({setLoadedNav}) => {
       case user_status.client:
         return <TabNavigator />;
       case user_status.waiter:
-        return <TabNavigator />;
+        return <WaiterNavigator />;
     }
   };
   return (

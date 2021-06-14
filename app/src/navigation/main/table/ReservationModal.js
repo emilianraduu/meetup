@@ -1,5 +1,5 @@
 import Modal from 'react-native-modal';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {theme} from '../../../helpers/constants';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';

@@ -6,7 +6,6 @@ import {GREY_COLOR} from '../helpers/constants';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
   AddPubRoute,
-  AnalyticsRoute,
   GalleryRoute,
   MainAdminRoute,
   MyPubsRoute,
@@ -17,7 +16,6 @@ import {MyTabBar} from './MyTabBar';
 import {ProfileStack} from './profile/ProfileStack';
 import PubScreen from './main/PubScreen';
 import {GalleryScreen} from './main/GalleryScreen';
-import PubAnalytics from './analytics/PubAnalytics';
 import MyPubsScreen from './myPubs/MyPubs';
 import AddPubScreen from './myPubs/AddPubScreen';
 
@@ -45,22 +43,6 @@ const AdminNavigator = () => {
             },
           }}
         />
-        {/*<Tab.Screen*/}
-        {/*  name={AnalyticsRoute}*/}
-        {/*  component={PubAnalytics}*/}
-        {/*  options={{*/}
-        {/*    tabBarIcon: ({focused}) => {*/}
-        {/*      return (*/}
-        {/*        <Icon*/}
-        {/*          name={'areachart'}*/}
-        {/*          style={{alignSelf: 'center'}}*/}
-        {/*          color={focused ? '#d10808' : GREY_COLOR}*/}
-        {/*          size={26}*/}
-        {/*        />*/}
-        {/*      );*/}
-        {/*    },*/}
-        {/*  }}*/}
-        {/*/>*/}
         <Tab.Screen
           name={ProfileRoute}
           component={ProfileStack}

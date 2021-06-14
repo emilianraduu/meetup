@@ -69,7 +69,11 @@ const Filters = () => {
           onAnimate={handleSheetAnimation}
           onChange={handleSheetChanges}
           backgroundComponent={({...props}) => (
-            <CustomBackground index={index} {...props} />
+            <CustomBackground
+              index={index}
+              {...props}
+              border={index === 0 || index === 1}
+            />
           )}
           animateOnMount={true}
           snapPoints={[-1, '75%', '100%']}>

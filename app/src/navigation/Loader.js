@@ -8,7 +8,7 @@ export const Loader = ({loading}) => {
       isVisible={loading}
       animationIn={'fadeIn'}
       animationOut={'fadeOut'}
-      style={{flex: 1, margin: 0}}>
+      style={{flex: 1, margin: 0, zIndex: 100}}>
       <LottieView
         source={require('../assets/animations/loading.json')}
         autoPlay

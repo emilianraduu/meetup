@@ -10,8 +10,8 @@ export const me = queryField('me', {
       include: {
         notifications: true,
         reservations: {
-          where: { finished: false },
           include: {
+            table: true,
             pub: true,
             location: true,
             user: true
@@ -22,7 +22,8 @@ export const me = queryField('me', {
             pub: true
           }
         },
-        pub: true,
+        pub: { include: {locations: true} },
+
         tables: {
           include: {
             reservations: true,
@@ -45,7 +46,7 @@ export const exists = queryField('exists', {
       where: { email: email }
     })
     if (user) {
-      return { exist: true, ...user }
+      return { exist: true, ...user, hasPassword: !!user.password }
     } else {
       return { exist: false, email: email }
     }

@@ -18,14 +18,18 @@ import {
 } from '../../helpers/variables';
 import {PUB_QUERY} from '../../graphql/queries/Pubs';
 import {Loader} from '../Loader';
+import Config from 'react-native-config';
 
-const PubScreen = ({navigation, route}) => {
+const PubScreen = ({navigation}) => {
   const images = useReactiveVar(pubImages);
   const {top} = useSafeAreaInsets();
   const pub = useReactiveVar(selectedPub);
   const latitude = useReactiveVar(lat);
   const longitude = useReactiveVar(long);
-  const [pubQuery, {loading, data, error, called}] = useLazyQuery(PUB_QUERY);
+  const [pubQuery, {loading, data, error, called, refetch}] = useLazyQuery(
+    PUB_QUERY,
+  );
+
   useEffect(() => {
     if (pub?.id && !called) {
       pubQuery({
@@ -77,7 +81,9 @@ const PubScreen = ({navigation, route}) => {
             }}
             onPress={() => {
               Share.share({
-                message: 'Check out this location!',
+                title: `Meetup`,
+                message: `Check out ${pub.name}!`,
+                url: `${Config.API_URL}/${pub.name}`,
               });
             }}>
             <Icon name={'share'} size={24} color={'#fff'} />

@@ -1,7 +1,6 @@
 import React from 'react';
-import {Text, View, Modal} from 'react-native';
+import {Modal, Text, View} from 'react-native';
 import LottieView from 'lottie-react-native';
-import * as Progress from 'react-native-progress';
 
 export const AppLoading = ({isLoading, progress, text}) => {
   return (

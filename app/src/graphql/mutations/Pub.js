@@ -7,25 +7,28 @@ export const CREATE_PUB = gql`
     $images: [String]
     $latitude: Float!
     $longitude: Float!
+    $currency: String!
   ) {
     createPub(
       name: $name
       address: $address
+      currency: $currency
       images: $images
       latitude: $latitude
       longitude: $longitude
     ) {
       address
+      visible
       id
       images
       name
       currency
+      reservationTime
       ownerId
       priceAvg
       avgRating
       numberOfRatings
       distance
-      freeTable
       latitude
       longitude
       schedule {
@@ -85,6 +88,7 @@ export const UPDATE_PUB = gql`
     $latitude: Float
     $longitude: Float
     $id: Int!
+    $visible: Boolean
   ) {
     updatePub(
       name: $name
@@ -93,18 +97,20 @@ export const UPDATE_PUB = gql`
       latitude: $latitude
       longitude: $longitude
       id: $id
+      visible: $visible
     ) {
       address
       id
       images
       name
+      visible
       currency
       ownerId
       priceAvg
+      reservationTime
       avgRating
       numberOfRatings
       distance
-      freeTable
       latitude
       longitude
       schedule {

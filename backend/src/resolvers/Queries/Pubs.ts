@@ -8,20 +8,36 @@ export const getPubs = queryField('pubs', {
   type: 'Pub',
   list: true,
   args: {
-    latitude: nonNull(floatArg()),
-    longitude: nonNull(floatArg())
+    latitude: floatArg(),
+    longitude: floatArg(),
+    maxDistance: intArg(),
+    avgRating: intArg()
   },
-  async resolve(_parent, { latitude, longitude }, ctx) {
+  async resolve(_parent, { latitude, longitude, maxDistance,avgRating }, ctx) {
     try {
-      const pubs = await ctx.prisma.pub.findMany()
-      const user = await ctx.prisma.user.findUnique(
-        { where: { id: ctx.userId } }
-      )
+      const pubs = await ctx.prisma.pub.findMany({
+        where: { visible: true },
+        include: {
+          reservations: true,
+          locations: {
+            include: {
+              tables: {
+                include: { reservations: true }
+              }
+            }
+          }
+        }
+      })
       const newPubs: Pub[] | PromiseLike<Pub[]> = []
       pubs.forEach((pub) => {
-        const distance = getDistance({ latitude, longitude }, { latitude: pub.latitude, longitude: pub.longitude })
-        if (user && distance < user.maxDistance) {
-          newPubs.push({ ...pub, distance })
+        if (latitude && longitude) {
+          const distance =
+            getDistance({ latitude, longitude }, { latitude: pub.latitude, longitude: pub.longitude })
+          if (distance < maxDistance) {
+            newPubs.push({ ...pub })
+          }
+        } else {
+          newPubs.push(pub)
         }
       })
       return newPubs
@@ -38,9 +54,20 @@ export const getMyPubs = queryField('myPubs', {
   async resolve(_parent, _args, ctx) {
     try {
       return await ctx.prisma.pub.findMany({
-        where: { ownerId: ctx.userId }
+        where: { ownerId: ctx.userId },
+        include: {
+          reservations: true,
+          locations: {
+            include: {
+              tables: {
+                include: { reservations: true }
+              }
+            }
+          }
+        }
       })
     } catch (e) {
+      console.log(e)
       handleError(errors.invalidUser)
     }
   }
@@ -58,6 +85,7 @@ export const getPub = queryField('pub', {
       const pub = await ctx.prisma.pub.findUnique({
         where: { id },
         include: {
+          reservations: true,
           reviews: {
             include: {
               user: true
@@ -84,7 +112,10 @@ export const getPub = queryField('pub', {
           waiters: true
         }
       })
-      const distance = latitude && longitude && getDistance({ latitude, longitude }, { latitude: pub.latitude, longitude: pub.longitude })
+      const distance = latitude && longitude && getDistance({ latitude, longitude }, {
+        latitude: pub.latitude,
+        longitude: pub.longitude
+      })
 
       return { ...pub, distance }
     } catch (e) {

@@ -5,12 +5,11 @@ import {
   AnalyticsRoute,
   MenuRoute,
   ReviewsRoute,
+  ScheduleRoute,
   TableRoute,
   WaitersRoute,
 } from '../../helpers/routes';
 import {TableScreen} from './table/TableScreen';
-import ProfileScreen from '../profile/ProfileScreen';
-import {ReviewScreen} from '../reviews/ReviewScreen';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {theme, user_status} from '../../helpers/constants';
 import PubReviews from './PubReviews';
@@ -20,6 +19,7 @@ import {useReactiveVar} from '@apollo/client';
 import {selectedPub, user} from '../../helpers/variables';
 import PubWaiters from './PubWaiters';
 import PubAnalytics from '../analytics/PubAnalytics';
+import PubSchedule from './PubSchedule';
 
 const Tabby = ({isFocused, options, onPress, label, onLongPress}) => {
   const ref = useRef();
@@ -155,6 +155,12 @@ function PubTabs() {
         Number(pub.ownerId) === Number(usr.id) &&
         usr.status === user_status.admin && (
           <Tab.Screen name={AnalyticsRoute} component={PubAnalytics} />
+        )}
+      {pub &&
+        usr &&
+        Number(pub.ownerId) === Number(usr.id) &&
+        usr.status === user_status.admin && (
+          <Tab.Screen name={ScheduleRoute} component={PubSchedule} />
         )}
       <Tab.Screen name={AboutRoute} component={PubAbout} />
     </Tab.Navigator>

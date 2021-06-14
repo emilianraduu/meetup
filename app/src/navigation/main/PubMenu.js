@@ -1,23 +1,31 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Button,
+  Alert,
   Dimensions,
+  Image,
   LayoutAnimation,
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {theme, user_status} from '../../helpers/constants';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
-import {useMutation, useReactiveVar} from '@apollo/client';
-import {selectedPub, user} from '../../helpers/variables';
+import {useLazyQuery, useMutation, useReactiveVar} from '@apollo/client';
+import {refetchPub, selectedPub, user} from '../../helpers/variables';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {CREATE_MENU, CREATE_MENU_SECTION} from '../../graphql/mutations/Pub';
 import {Loader} from '../Loader';
 import {PUB_QUERY} from '../../graphql/queries/Pubs';
 import {client} from '../../graphql';
+import {
+  REMOVE_MENU_ITEM,
+  UPDATE_MENU_SECTION,
+} from '../../graphql/mutations/Menu';
+import storage from '@react-native-firebase/storage';
+import AddItemModal from './AddTableItem';
 
 const PubMenu = () => {
   const pub = useReactiveVar(selectedPub);
@@ -29,11 +37,11 @@ const PubMenu = () => {
   );
   const [
     createSection,
-    {loading: loadingSection, data: menuSectionData, error: menuSectionError},
+    {data: menuSectionData, error: menuSectionError},
   ] = useMutation(CREATE_MENU_SECTION);
   const [sectionText, setSectionText] = useState('');
 
-  const {container, empty} = styles({
+  const {container} = styles({
     bottom,
   });
 
@@ -42,6 +50,7 @@ const PubMenu = () => {
       alert(menuError);
     }
     if (menuData?.createMenu) {
+      pub.menu = menuData?.data?.createMenu;
       client.writeQuery({
         query: PUB_QUERY,
         data: {pub: {...pub, menu: menuData?.createMenu}},
@@ -87,8 +96,35 @@ const PubMenu = () => {
       update: {type: LayoutAnimation.Types.easeInEaseOut},
     });
   }, []);
+  const createSec = async () => {
+    try {
+      const response = await createSection({
+        variables: {menuId: pub.menu.id, name: sectionText},
+      });
+      if (response?.data?.createMenuSection) {
+        setSectionText('');
+        client.writeQuery({
+          query: PUB_QUERY,
+          data: {
+            pub: {
+              ...pub,
+              menu: {
+                ...pub.menu,
+                sections:
+                  pub?.menu?.sections?.length > 0
+                    ? [...pub.menu.sections, response?.data?.createMenuSection]
+                    : [response?.data?.createMenuSection],
+              },
+            },
+          },
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
-    <View style={{flex: 1, backgroundColor: theme.white}}>
+    <View style={container}>
       <BottomSheetScrollView contentContainerStyle={container}>
         <Loader loading={loading} />
         {!pub?.menu &&
@@ -96,61 +132,292 @@ const PubMenu = () => {
           Number(pub.ownerId) === Number(usr.id) && (
             <View>
               <View>
-                <Text>You have no menu yet.</Text>
-                <Button
-                  title={'Create menu'}
+                <Text style={{fontWeight: 'bold', fontSize: 14}}>
+                  You have no menu yet.
+                </Text>
+                <Text style={{color: theme.grey, marginBottom: 20}}>
+                  To help your customers find what kind of products you provide
+                  it is highly recommended to setup a menu.
+                </Text>
+                <TouchableOpacity
                   onPress={() => {
                     create({variables: {id: pub.id}});
-                  }}
-                />
+                  }}>
+                  <Text
+                    style={{
+                      color: theme.red,
+                      fontWeight: 'bold',
+                      marginBottom: 20,
+                    }}>
+                    Create menu
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           )}
+        {usr?.status === user_status.admin &&
+          Number(pub.ownerId) === Number(usr.id) &&
+          pub?.menu && (
+            <>
+              <Text style={{fontWeight: 'bold', fontSize: 14}}>
+                You can edit and manage the menu anytime.
+              </Text>
+              <Text style={{color: theme.grey, marginBottom: 20}}>
+                It helps your customers into knowing your prices and offers.
+              </Text>
+            </>
+          )}
         {pub?.menu?.sections?.map((section) => (
-          <View key={section.id}>
-            <Text>{section.name}</Text>
-            <Ionicons name={section.image} size={20} color={theme.dark} />
-            {section.items?.map((item) => (
-              <MenuItem item={item} pub={pub} />
-            ))}
-          </View>
+          <MenuSection
+            isAdmin={
+              usr?.status === user_status.admin &&
+              Number(pub.ownerId) === Number(usr.id)
+            }
+            key={section.id}
+            section={section}
+            pub={pub}
+          />
         ))}
         {usr?.status === user_status.admin &&
-          Number(pub.ownerId) === Number(usr.id) && (
+          Number(pub.ownerId) === Number(usr.id) &&
+          pub?.menu && (
             <View>
-              <TextInput
-                onChange={({nativeEvent: {text}}) => setSectionText(text)}
-                placeholder={'Section name'}
-              />
-              <Button
-                title={'Create section'}
-                onPress={() => {
-                  createSection({
-                    variables: {menuId: pub.menu.id, name: sectionText},
-                  });
-                }}
-              />
+              <Text style={{fontWeight: 'bold', fontSize: 14}}>
+                Add a new section.
+              </Text>
+              <View style={{flexDirection: 'row'}}>
+                <TextInput
+                  value={sectionText}
+                  style={{
+                    shadowColor: '#000',
+                    shadowOffset: {
+                      width: 0,
+                      height: 1,
+                    },
+                    shadowOpacity: 0.18,
+                    shadowRadius: 5.0,
+                    elevation: 1,
+                    borderBottomColor: theme.grey,
+                    borderBottomWidth: 1,
+                    flex: 1,
+                  }}
+                  onChange={({nativeEvent: {text}}) => setSectionText(text)}
+                  placeholderTextColor={theme.grey}
+                  placeholder={'Section name'}
+                />
+                <TouchableOpacity title={'Create section'} onPress={createSec}>
+                  <Ionicons name={'add-circle'} size={24} />
+                </TouchableOpacity>
+              </View>
             </View>
           )}
       </BottomSheetScrollView>
     </View>
   );
 };
-const MenuItem = ({item, pub}) => {
+const MenuSection = ({section, pub, isAdmin}) => {
+  const [editing, setEditing] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [update] = useMutation(UPDATE_MENU_SECTION);
+  const [sectionName, setSectionName] = useState(section.name);
+  useEffect(() => {
+    if (editing) {
+      update({variables: {name: sectionName}});
+    }
+  }, [editing]);
+
   return (
-    <View>
-      <Text> {item.name}</Text>
-      <Text> {item.description}</Text>
-      <Text>
-        {item.price} {pub.currency}
-      </Text>
+    <View style={{marginBottom: 20}}>
+      <View
+        style={{
+          backgroundColor: theme.black,
+          borderRadius: 20,
+          alignItems: 'center',
+          paddingHorizontal: 20,
+          paddingVertical: 10,
+          borderBottomLeftRadius: 0,
+          borderBottomRightRadius: 0,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}>
+        <TextInput
+          value={sectionName}
+          editable={editing}
+          style={{
+            flex: 1,
+            color: theme.white,
+          }}
+          onChange={({nativeEvent: {text}}) => setSectionName(text)}
+          placeholderTextColor={theme.grey}
+          placeholder={'Section name'}
+        />
+        {isAdmin && (
+          <TouchableOpacity
+            onPress={() => {
+              setEditing(!editing);
+            }}>
+            <Ionicons
+              name={!editing ? 'pencil' : 'checkmark-circle'}
+              size={20}
+              color={theme.white}
+            />
+          </TouchableOpacity>
+        )}
+      </View>
+      {section.items?.map((item) => (
+        <MenuItem item={item} pub={pub} isAdmin={isAdmin} section={section} />
+      ))}
+      {isAdmin && (
+        <>
+          <TouchableOpacity
+            style={{
+              alignSelf: 'center',
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginVertical: 20,
+            }}
+            onPress={() => setIsVisible(true)}>
+            <Text style={{color: theme.red, fontWeight: 'bold'}}>
+              Add another item
+            </Text>
+            <Ionicons
+              name={'add-circle'}
+              size={20}
+              color={theme.red}
+              style={{marginLeft: 5}}
+            />
+          </TouchableOpacity>
+          <AddItemModal
+            setIsVisible={setIsVisible}
+            isVisible={isVisible}
+            pub={pub}
+            section={section}
+          />
+        </>
+      )}
     </View>
+  );
+};
+
+const MenuItem = ({item, isAdmin, section}) => {
+  const pub = useReactiveVar(selectedPub);
+  const [image, setImage] = useState(undefined);
+  const [removedItem, setRemovedItem] = useState(undefined);
+  const [remove] = useMutation(REMOVE_MENU_ITEM);
+  useEffect(() => {
+    if (item.image) {
+      const getUrl = async () => {
+        return await storage().ref(item.image).getDownloadURL();
+      };
+      getUrl().then((url) => {
+        setImage(url);
+      });
+    }
+  }, [item]);
+  const removeMenuItem = async () => {
+    const response = await remove({variables: {id: item.id}});
+    if (response) {
+      const menu = pub.menu;
+      const index = menu.sections.findIndex((sec) => sec.id === section.id);
+      const menuItem = menu.sections[index].items.findIndex(
+        (itm) => itm.id === item.id,
+      );
+      menu.sections[index].items = menu.sections[index].items.splice(
+        menuItem,
+        1,
+      );
+      client.writeQuery({
+        query: PUB_QUERY,
+        data: {
+          pub: {...pub, menu},
+        },
+      });
+      setRemovedItem(item);
+    }
+  };
+  return (
+    removedItem?.id !== item.id && (
+      <View
+        style={{
+          overflow: 'hidden',
+          borderColor: theme.grey,
+          borderWidth: 1,
+          borderTopWidth: 0,
+        }}>
+        {isAdmin && (
+          <TouchableOpacity
+            onPress={() => {
+              Alert.alert(
+                'Alert Title',
+                'My Alert Msg',
+                [
+                  {
+                    text: 'Cancel',
+                    onPress: () => {},
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'Delete',
+                    onPress: () => removeMenuItem(),
+                    style: 'destructive',
+                  },
+                ],
+                {
+                  cancelable: false,
+                },
+              );
+            }}
+            style={{
+              position: 'absolute',
+              right: 10,
+              top: 10,
+              zIndex: 20,
+              backgroundColor: theme.white,
+              borderRadius: 30,
+              padding: 5,
+            }}>
+            <Ionicons name={'trash'} size={22} color={theme.red} />
+          </TouchableOpacity>
+        )}
+        <Image style={{height: 200}} source={{uri: image}} />
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            padding: 20,
+            backgroundColor: theme.white,
+            left: 0,
+            right: 0,
+            width: '100%',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <View>
+              <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+                {item.name}
+              </Text>
+              <Text style={{fontSize: 11, color: theme.grey}}>
+                {item.description}
+              </Text>
+            </View>
+            <Text style={{color: theme.red, fontWeight: 'bold'}}>
+              {item.price} {pub.currency}
+            </Text>
+          </View>
+        </View>
+      </View>
+    )
   );
 };
 const styles = ({bottom}) =>
   StyleSheet.create({
     container: {
-      padding: 20,
+      padding: 10,
+      backgroundColor: theme.white,
       flexGrow: 1,
       paddingBottom: bottom + 30,
     },

@@ -12,6 +12,8 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {theme} from '../../helpers/constants';
 import {PubDetails} from './PubCard';
+import {useReactiveVar} from '@apollo/client';
+import {selectedPub} from '../../helpers/variables';
 
 const Sheet = ({children, pub}) => {
   const [index, setIndex] = useState(0);
@@ -42,9 +44,9 @@ const Sheet = ({children, pub}) => {
   );
   return (
     <BottomSheet
-      handleComponent={null}
       ref={bottomSheetRef}
       index={0}
+      handleComponent={null}
       onChange={handleSheetChanges}
       snapPoints={['70%', '100%']}>
       <Animated.View
@@ -60,8 +62,9 @@ const Sheet = ({children, pub}) => {
   );
 };
 
-const TopBar = ({onClose, pub, index}) => {
+const TopBar = ({onClose, index}) => {
   const [expanded, setExpanded] = useState(false);
+  const pub = useReactiveVar(selectedPub);
   useEffect(() => {
     if (Platform.OS === 'android') {
       if (UIManager.setLayoutAnimationEnabledExperimental) {

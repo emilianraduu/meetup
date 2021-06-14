@@ -23,7 +23,6 @@ model User {
   lastName      String?
   firstName     String?
   photo         String?
-  maxDistance   Int            @default(5000)
   pubs          Pub[]          @relation("Owner")
   reviews       Review[]       @relation("Reviewer")
   status        String         @default("CLIENT")
@@ -45,10 +44,11 @@ model Pub {
   address         String        @unique
   latitude        Float
   longitude       Float
-  freeTable       Int?          @default(0)
   description     String?
+  visible         Boolean       @default(true)
   avgRating       Float         @default(0)
   numberOfRatings Int           @default(0)
+  reservationTime Float         @default(2.0)
   priceAvg        Int           @default(0)
   images          String[]
   name            String        @unique
@@ -111,7 +111,6 @@ model Reservation {
   pub        Pub      @relation(name: "PubReservation", fields: [pubId], references: [id])
   pubId      Int
   date       DateTime
-  startHour  String
   finished   Boolean  @default(false)
   endHour    String?
   userId     Int

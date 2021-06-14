@@ -1,21 +1,22 @@
-import {Dimensions, Text, TouchableOpacity, View} from 'react-native';
+import {Dimensions, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useReactiveVar} from '@apollo/client';
-import {selectedLocation, selectedPub, user} from '../../../helpers/variables';
-import {theme} from '../../../helpers/constants';
-import Icon from 'react-native-vector-icons/Entypo';
+import {
+  date,
+  selectedLocation,
+  selectedPub,
+  user,
+} from '../../../helpers/variables';
 import AddTableModal from './AddTableModal';
-import ReservationModal from './ReservationModal';
+import Table from './Table';
+import DummyTable from './DummyTable';
+import {theme} from '../../../helpers/constants';
 
-const TableTab = ({locId, selected, setSelected}) => {
+const TableTab = ({locId, selected, setSelected, values}) => {
   const location = useReactiveVar(selectedLocation);
   const pub = useReactiveVar(selectedPub);
-  const usr = useReactiveVar(user);
   const [modalTable, setModalTable] = useState(false);
   const [pos, setPos] = useState(undefined);
-  useEffect(() => {
-    location?.tables?.forEach((table) => {});
-  }, [location, selected, setSelected]);
 
   const addTable = (position) => {
     setModalTable(true);
@@ -26,108 +27,101 @@ const TableTab = ({locId, selected, setSelected}) => {
     (Dimensions.get('window').width - 40 - 9 * Number(location?.columns)) /
     location?.columns;
   return (
-    locId === location?.id && (
-      <View
-        style={{
-          backgroundColor: '#fff',
-          marginBottom: 20,
-          flexGrow: 1,
-        }}>
+    <View>
+      {locId === location?.id && (
         <View
           style={{
-            flexDirection: 'row',
-            flexWrap: 'wrap',
+            backgroundColor: '#fff',
+            marginBottom: 20,
+            flexGrow: 1,
           }}>
-          {[...Array.from(Array(location.rows + location.columns).keys())].map(
-            (number, index) => {
-              const table = location?.tables?.find(
-                (tb) => tb.position === number,
-              );
-              if (table) {
-                return (
-                  <TouchableOpacity
-                    key={index}
-                    disabled={table?.blocked}
-                    style={{
-                      opacity: table?.blocked ? 0.5 : 1,
-                      borderRadius: 20,
-                      margin: 3,
-                      backgroundColor: table
-                        ? selected === table?.id
-                          ? theme.black
-                          : theme.grey
-                        : 'transparent',
-                      width: size,
-                      height: size,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                    onPress={() => setSelected(table?.id)}>
-                    {table?.blocked ? (
-                      <Icon name={'block'} size={40} color={theme.red} />
-                    ) : (
-                      table && (
-                        <>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              alignItems: 'center',
-                            }}>
-                            <Text
-                              style={{
-                                color: theme.white,
-                                fontWeight: 'bold',
-                              }}>
-                              {table?.count}
-                            </Text>
-                            <Icon name={'user'} color={theme.white} />
-                          </View>
-                        </>
-                      )
-                    )}
-                  </TouchableOpacity>
+          <View
+            style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+            }}>
+            {location.rows &&
+              location.columns &&
+              [
+                ...Array.from(Array(location.rows * location.columns).keys()),
+              ].map((number, index) => {
+                const table = location?.tables?.find(
+                  (tb) => tb.position === number,
                 );
-              } else {
-                return Number(pub.ownerId) === Number(usr.id) ? (
-                  <TouchableOpacity
-                    key={index}
-                    onPress={() => addTable(index)}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      margin: 3,
-                      width: size,
-                      height: size,
-                    }}>
-                    <View>
-                      <Text>Add table</Text>
-                    </View>
-                  </TouchableOpacity>
-                ) : (
-                  <View
-                    key={index}
-                    style={{
-                      width: size,
-                      margin: 3,
-                      borderRadius: 5,
-                      height: size,
-                      backgroundColor: theme.black,
-                      opacity: 0.02,
-                    }}
-                  />
-                );
-              }
-            },
-          )}
+
+                if (table) {
+                  return (
+                    <Table
+                      key={index}
+                      size={size}
+                      setSelected={setSelected}
+                      selected={selected}
+                      table={table}
+                      index={index}
+                      pub={pub}
+                    />
+                  );
+                } else {
+                  return (
+                    <DummyTable
+                      key={index}
+                      size={size}
+                      index={index}
+                      addTable={addTable}
+                    />
+                  );
+                }
+              })}
+          </View>
+          <View>
+            <Text style={{fontWeight: 'bold'}}>Legend</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+              }}>
+              <View
+                style={{
+                  height: 20,
+                  width: 20,
+                  borderRadius: 5,
+                  backgroundColor: 'grey',
+                  marginRight: 10,
+                }}
+              />
+              <Text style={{marginRight: 20}}>Free</Text>
+              <View
+                style={{
+                  height: 20,
+                  width: 20,
+                  borderRadius: 5,
+                  backgroundColor: 'orange',
+                  marginRight: 10,
+                }}
+              />
+              <Text style={{marginRight: 20}}>Is reserved soon</Text>
+              <View
+                style={{
+                  height: 20,
+                  width: 20,
+                  borderRadius: 5,
+                  backgroundColor: theme.red,
+                  marginRight: 10,
+                }}
+              />
+              <Text style={{marginRight: 20}}>Reserved</Text>
+            </View>
+          </View>
+          <AddTableModal
+            position={pos}
+            visible={modalTable}
+            onClose={() => setModalTable(false)}
+            locationId={location?.id}
+          />
         </View>
-        <AddTableModal
-          position={pos}
-          visible={modalTable}
-          onClose={() => setModalTable(false)}
-          locationId={location?.id}
-        />
-      </View>
-    )
+      )}
+    </View>
   );
 };
 export default TableTab;

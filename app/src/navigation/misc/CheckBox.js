@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import {theme} from '../../helpers/constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 

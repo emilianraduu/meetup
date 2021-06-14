@@ -1,5 +1,12 @@
 import Modal from 'react-native-modal';
-import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import {theme} from '../../../helpers/constants';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -13,7 +20,7 @@ import {Loader} from '../../Loader';
 const AddLocationModal = ({visible, onClose}) => {
   const {top} = useSafeAreaInsets();
   const pub = useReactiveVar(selectedPub);
-  const [values, setValues] = useState({});
+  const [values, setValues] = useState({rows: 1, columns: 1, name: ''});
   const [create, {data, loading, error}] = useMutation(CREATE_LOCATION);
   const onInputChange = ({key, value}) => {
     setValues({...values, [key]: value});
@@ -52,26 +59,64 @@ const AddLocationModal = ({visible, onClose}) => {
       <View style={style.content}>
         <View style={{marginTop: 20}}>
           <Loader loading={loading} />
-          <Text>Location name</Text>
+          <Text style={{fontWeight: 'bold'}}>Location name</Text>
           <TextInput
+            style={{
+              borderBottomColor: theme.red,
+              borderBottomWidth: 2,
+              marginVertical: 15,
+            }}
+            placeholder={'Location name can be outside/inside'}
+            placeholderTextColor={theme.grey}
             onChange={({nativeEvent: {text}}) =>
               onInputChange({key: 'name', value: text})
             }
           />
-          <Text>Rows</Text>
+          <Text style={{fontWeight: 'bold'}}>Rows</Text>
           <TextInput
+            style={{
+              borderBottomColor: theme.red,
+              borderBottomWidth: 2,
+              marginVertical: 15,
+            }}
+            value={values?.rows}
+            placeholder={'Must be a number'}
+            placeholderTextColor={theme.grey}
             onChange={({nativeEvent: {text}}) =>
+              ((Number(text) && text.length < 2) || text.length < 1) &&
               onInputChange({key: 'rows', value: text})
             }
           />
 
-          <Text>Columns</Text>
+          <Text style={{fontWeight: 'bold'}}>Columns</Text>
           <TextInput
+            style={{
+              borderBottomColor: theme.red,
+              borderBottomWidth: 2,
+              marginVertical: 15,
+            }}
+            value={values?.columns}
+            placeholder={'Must be a number'}
+            placeholderTextColor={theme.grey}
             onChange={({nativeEvent: {text}}) =>
+              ((Number(text) && text.length < 2) || text.length < 1) &&
               onInputChange({key: 'columns', value: text})
             }
           />
-          <Button title={'Add location'} onPress={addLocation} />
+          <TouchableOpacity
+            onPress={addLocation}
+            style={{
+              alignSelf: 'center',
+              backgroundColor: theme.red,
+              paddingVertical: 12,
+              paddingHorizontal: 20,
+              borderRadius: 8,
+              marginBottom: 50,
+            }}>
+            <Text style={{fontWeight: 'bold', color: theme.white}}>
+              Add location
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </Modal>
@@ -83,7 +128,7 @@ const style = StyleSheet.create({
     backgroundColor: theme.white,
     borderRadius: 20,
     padding: 20,
-    flex: 1,
+    flex: 0.5,
   },
   modal: {justifyContent: 'flex-end', margin: 0},
 });

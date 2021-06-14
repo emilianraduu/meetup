@@ -1,12 +1,12 @@
 import React from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet, Switch, Text, View} from 'react-native';
 import {theme} from '../../helpers/constants';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
-import LottieView from 'lottie-react-native';
 import MapView, {Marker} from 'react-native-maps';
 import {useReactiveVar} from '@apollo/client';
 import {selectedPub} from '../../helpers/variables';
+import CurrencyPicker from 'react-native-currency-picker';
 
 const PubAbout = () => {
   const {bottom} = useSafeAreaInsets();
@@ -24,6 +24,8 @@ const PubAbout = () => {
         {/*  autoPlay={true}*/}
         {/*  style={empty}*/}
         {/*/>*/}
+
+        <Text style={{fontWeight: 'bold'}}>Map location</Text>
         <MapView
           scrollEnabled={false}
           pitchEnabled={false}
@@ -38,6 +40,36 @@ const PubAbout = () => {
             coordinate={{latitude: pub.latitude, longitude: pub.longitude}}
           />
         </MapView>
+        <Text style={{fontWeight: 'bold', marginTop: 20}}>Address</Text>
+        <Text style={{color: theme.red}}>{pub.address}</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+          <Text style={{fontWeight: 'bold', marginTop: 20}}>Visibility</Text>
+          <Switch />
+        </View>
+        <Text style={{fontWeight: 'bold', marginTop: 20}}>Currency</Text>
+        {console.log(pub.currency)}
+        <CurrencyPicker
+          enable={true}
+          darkMode={false}
+          currencyCode={pub.currency}
+          showFlag={true}
+          showCurrencyName={true}
+          showCurrencyCode={true}
+          showNativeSymbol={true}
+          showSymbol={false}
+          containerStyle={{
+            currencyCodeStyle: {marginLeft: 0},
+          }}
+          title={'Currency'}
+          searchPlaceholder={'Search'}
+          showCloseButton={true}
+          showModalTitle={true}
+        />
       </BottomSheetScrollView>
     </View>
   );

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {theme} from '../../helpers/constants';
@@ -16,34 +17,48 @@ import {Loader} from '../Loader';
 import {CREATE_WAITER} from '../../graphql/mutations/User';
 import {client} from '../../graphql';
 import {PUB_QUERY} from '../../graphql/queries/Pubs';
+import {validateEmail} from '../../helpers/validators';
 
 const PubWaiters = () => {
   const pub = useReactiveVar(selectedPub);
   const {bottom} = useSafeAreaInsets();
-  const usr = useReactiveVar(user);
 
   const [create, {loading, error}] = useMutation(CREATE_WAITER);
 
   const [email, setEmail] = useState('');
+  const [errorString, setError] = useState('');
+  const onInputChange = ({key, value}) => {
+    if (errorString !== '') {
+      setError('');
+    }
+    setEmail(value);
+  };
 
   const {container} = styles({
     bottom,
   });
 
   const addWaiter = async () => {
-    const response = await create({variables: {pubId: pub.id, email: email}});
-    if (response?.data?.createWaiter) {
-      client.writeQuery({
-        query: PUB_QUERY,
-        data: {
-          pub: {
-            ...pub,
-            waiters: pub.waiters
-              ? [...pub.waiters, response?.data?.createWaiter]
-              : [response?.data?.createWaiter],
-          },
-        },
-      });
+    if (validateEmail(email)) {
+      const response = await create({variables: {pubId: pub.id, email: email}});
+      if (response?.data?.createWaiter && pub.waiters) {
+        try {
+          client.writeQuery({
+            query: PUB_QUERY,
+            data: {
+              pub: {
+                ...pub,
+                waiters: [...pub.waiters, response?.data?.createWaiter],
+              },
+            },
+          });
+          pub.waiters = [...pub.waiters, response?.data?.createWaiter];
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    } else {
+      setError('Invalid email.');
     }
   };
 
@@ -53,35 +68,41 @@ const PubWaiters = () => {
         <Loader loading={loading} />
         {pub?.waiters?.length === 0 ? (
           <View>
-            <Text>No waiters added. To use the app please add waiters</Text>
+            <Text style={{fontWeight: 'bold', textAlign: 'center'}}>
+              No waiters added.{'\n'}To use the app please add waiters
+            </Text>
           </View>
         ) : (
           pub?.waiters?.map((waiter, index) => (
             <View key={index}>
-              <Text>{waiter.email}</Text>
+              <Text style={{fontWeight: 'bold'}}>Waiter</Text>
+              <Text style={{fontWeight: 'bold', color: theme.red}}>
+                {waiter.email}
+              </Text>
             </View>
           ))
         )}
         <TextInput
           autoCompleteType={'email'}
           textContentType={'emailAddress'}
+          placeholder={'example@waiter.com'}
           autoCapitalize={'none'}
           keyboardType={'email-address'}
-          onChange={({nativeEvent: {text}}) => setEmail(text)}
+          placeholderTextColor={theme.grey}
+          style={{
+            borderBottomWidth: 2,
+            borderBottomColor: theme.red,
+            marginVertical: 20,
+          }}
+          onChange={({nativeEvent: {text}}) => onInputChange({value: text})}
         />
-        <Button title={'Create watier'} onPress={addWaiter} />
+        {!!errorString && <Text style={{color: theme.red}}>{errorString}</Text>}
+        <TouchableOpacity onPress={addWaiter} style={{alignSelf: 'center'}}>
+          <Text style={{fontWeight: 'bold', color: theme.red, fontSize: 16}}>
+            Add waiter
+          </Text>
+        </TouchableOpacity>
       </BottomSheetScrollView>
-    </View>
-  );
-};
-const MenuItem = ({item, pub}) => {
-  return (
-    <View>
-      <Text> {item.name}</Text>
-      <Text> {item.description}</Text>
-      <Text>
-        {item.price} {pub.currency}
-      </Text>
     </View>
   );
 };

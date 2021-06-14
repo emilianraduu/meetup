@@ -18,7 +18,7 @@ export const getReservations = queryField('reservations', {
         include: {
           pub: true,
           location: true,
-          user: true
+          user: true,
         }
       })
     } catch (e) {
