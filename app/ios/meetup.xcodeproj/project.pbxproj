@@ -386,7 +386,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.meetup;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fii.meetup;
 				PRODUCT_NAME = meetup;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -415,7 +415,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.meetup;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fii.meetup;
 				PRODUCT_NAME = meetup;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

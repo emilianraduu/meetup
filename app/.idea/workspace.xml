@@ -6,42 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="33e3479a-477f-4991-b415-f82aaa59210d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/auth/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/auth/LoginScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/auth/PasswordScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/auth/PasswordScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/auth/WelcomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/auth/WelcomeScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/mutations/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/mutations/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/queries/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/queries/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/history/HistoryScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/history/HistoryScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/AddTableItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/AddTableItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/GalleryScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/GalleryScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/MainScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/MainScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/NextReservation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/NextReservation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/PubAbout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/PubAbout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/PubCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/PubCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/PubMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/PubMenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/PubSchedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/PubSchedule.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/PubScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/PubScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/PubWaiters.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/PubWaiters.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/Tabs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/Tabs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/WaiterScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/WaiterScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/table/AddLocationModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/table/AddLocationModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/table/AddTableModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/table/AddTableModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/table/DummyTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/table/DummyTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/table/Table.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/table/Table.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/table/TableScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/table/TableScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/table/TableTab.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/table/TableTab.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/misc/RatingPicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/misc/RatingPicker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/misc/filters/misc/FilterTopBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/misc/filters/misc/FilterTopBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/myPubs/AddPubScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/myPubs/AddPubScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/resolvers/Mutations/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/resolvers/Mutations/User.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/resolvers/Mutations/Tables.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/resolvers/Mutations/Tables.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/src/resolvers/Queries/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/resolvers/Queries/User.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../meetup-register/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../meetup-register/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../meetup-register/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../meetup-register/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../meetup-register/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/../meetup-register/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../meetup-register/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../meetup-register/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/resolvers/models.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/resolvers/models.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
