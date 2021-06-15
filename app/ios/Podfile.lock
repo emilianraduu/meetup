@@ -171,6 +171,8 @@ PODS:
     - nanopb/encode (= 2.30906.0)
   - nanopb/decode (2.30906.0)
   - nanopb/encode (2.30906.0)
+  - OneSignal (3.5.2)
+  - OneSignalXCFramework (3.4.4)
   - Permission-AppTrackingTransparency (3.0.3):
     - RNPermissions
   - Permission-BluetoothPeripheral (3.0.3):
@@ -444,6 +446,9 @@ PODS:
     - React-Core
   - react-native-maps (0.27.1):
     - React
+  - react-native-onesignal (4.1.1):
+    - OneSignalXCFramework (= 3.4.4)
+    - React (< 1.0.0, >= 0.13.0)
   - react-native-safe-area-context (3.1.9):
     - React-Core
   - react-native-splash-screen (3.2.0):
@@ -590,6 +595,7 @@ DEPENDENCIES:
   - GoogleMaps
   - lottie-ios (from `../node_modules/lottie-ios`)
   - lottie-react-native (from `../node_modules/lottie-react-native`)
+  - OneSignal (< 4.0, >= 3.0)
   - Permission-AppTrackingTransparency (from `../node_modules/react-native-permissions/ios/AppTrackingTransparency`)
   - Permission-BluetoothPeripheral (from `../node_modules/react-native-permissions/ios/BluetoothPeripheral`)
   - Permission-Calendars (from `../node_modules/react-native-permissions/ios/Calendars`)
@@ -631,6 +637,7 @@ DEPENDENCIES:
   - react-native-google-maps (from `../node_modules/react-native-maps`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-maps (from `../node_modules/react-native-maps`)
+  - react-native-onesignal (from `../node_modules/react-native-onesignal`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -696,6 +703,8 @@ SPEC REPOS:
     - GTMSessionFetcher
     - libwebp
     - nanopb
+    - OneSignal
+    - OneSignalXCFramework
     - PromisesObjC
     - SDWebImage
     - SDWebImageWebPCoder
@@ -793,6 +802,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-picker"
   react-native-maps:
     :path: "../node_modules/react-native-maps"
+  react-native-onesignal:
+    :path: "../node_modules/react-native-onesignal"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-splash-screen:
@@ -900,6 +911,8 @@ SPEC CHECKSUMS:
   lottie-ios: 48fac6be217c76937e36e340e2d09cf7b10b7f5f
   lottie-react-native: 4dff8fe8d10ddef9e7880e770080f4a56121397e
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
+  OneSignal: 055f4c94ee8af87417777ad33fb807cea70df320
+  OneSignalXCFramework: eaf286b7438aa1f030f03e5fa9f1c79ede5d8f04
   Permission-AppTrackingTransparency: 7e4612104f43441744dc472d5b258daee5b71f7b
   Permission-BluetoothPeripheral: e0268f61c81449ad0957185e12fd249a8defa1ab
   Permission-Calendars: 2dc601fb00b78f4aea9a7ea00d251e79619f787c
@@ -940,6 +953,7 @@ SPEC CHECKSUMS:
   react-native-google-maps: 0a989abda71059db2caa98b9dacca7a8f38a47d0
   react-native-image-picker: 474cf2c33c2b6671da53d293a16c97995f0aec15
   react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
+  react-native-onesignal: 2a7c3a5f2aa1c599d94cda6cc583205e1548828d
   react-native-safe-area-context: b6e0e284002381d2ff29fa4fff42b4d8282e3c94
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   React-perflogger: 9c547d8f06b9bf00cb447f2b75e8d7f19b7e02af
@@ -979,6 +993,6 @@ SPEC CHECKSUMS:
   SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
   Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf
 
-PODFILE CHECKSUM: 5d14679334d88ca852ad4d398bdda29f728fd8ea
+PODFILE CHECKSUM: 89f60d1285a758ffab65c02ae73a522d12173d24
 
 COCOAPODS: 1.10.1

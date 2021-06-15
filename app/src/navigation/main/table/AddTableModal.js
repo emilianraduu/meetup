@@ -1,5 +1,13 @@
 import Modal from 'react-native-modal';
-import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  Button,
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import {theme} from '../../../helpers/constants';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -65,7 +73,7 @@ const AddTableModal = ({visible, onClose, locationId, position}) => {
       swipeDirection={'down'}
       onBackButtonPress={onClose}
       onBackdropPress={onClose}>
-      <View style={style.content}>
+      <KeyboardAvoidingView behavior={'padding'} enabled style={style.content}>
         <View style={{marginTop: 20}}>
           <Loader loading={loading} />
           <Text style={{fontWeight: 'bold'}}>Waiter</Text>
@@ -112,9 +120,22 @@ const AddTableModal = ({visible, onClose, locationId, position}) => {
               onInputChange({key: 'name', value: text})
             }
           />
-          <Button title={'Add location'} onPress={addLocation} />
+          <TouchableOpacity
+            onPress={addLocation}
+            style={{
+              alignSelf: 'center',
+              backgroundColor: theme.red,
+              paddingVertical: 12,
+              paddingHorizontal: 20,
+              borderRadius: 8,
+              marginBottom: 50,
+            }}>
+            <Text style={{fontWeight: 'bold', color: theme.white}}>
+              Add Table
+            </Text>
+          </TouchableOpacity>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };

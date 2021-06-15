@@ -101,17 +101,16 @@ export const MainScreen = ({navigation}) => {
   };
   const sortedList = () => {
     let list = pubList.map((pub) => {
-      const distance =
-        pub?.latitude &&
-        pub?.longitude &&
-        getDistance(
+      if (pub?.latitude && pub?.longitude && latitude && longitude) {
+        const distance = getDistance(
           {latitude, longitude},
           {
             latitude: pub.latitude,
             longitude: pub.longitude,
           },
         );
-      return {...pub, distance};
+        return {...pub, distance};
+      }
     });
     return list.sort((a, b) => a.distance > b.distance);
   };
@@ -140,7 +139,6 @@ export const MainScreen = ({navigation}) => {
             <Filters />
           </View>
         </View>
-        <Loader loading={loading} />
         {pubList && (
           <FlatList
             data={sortedList()}

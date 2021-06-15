@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {
   Alert,
   Dimensions,
+  KeyboardAvoidingView,
   LayoutAnimation,
   StyleSheet,
   Text,
@@ -181,27 +182,31 @@ const PubMenu = () => {
         {usr?.status === user_status.admin &&
           Number(pub?.ownerId) === Number(usr.id) &&
           pub?.menu && (
-            <View>
-              <Text style={{fontWeight: 'bold', fontSize: 14}}>
-                Add a new section.
-              </Text>
-              <View style={{flexDirection: 'row'}}>
-                <TextInput
-                  value={sectionText}
-                  style={{
-                    borderBottomColor: theme.grey,
-                    borderBottomWidth: 1,
-                    flex: 1,
-                  }}
-                  onChange={({nativeEvent: {text}}) => setSectionText(text)}
-                  placeholderTextColor={theme.darkGrey}
-                  placeholder={'Section name'}
-                />
-                <TouchableOpacity title={'Create section'} onPress={createSec}>
-                  <Ionicons name={'add-circle'} size={24} />
-                </TouchableOpacity>
+            <KeyboardAvoidingView behavior={'padding'}>
+              <View>
+                <Text style={{fontWeight: 'bold', fontSize: 14}}>
+                  Add a new section.
+                </Text>
+                <View style={{flexDirection: 'row'}}>
+                  <TextInput
+                    value={sectionText}
+                    style={{
+                      borderBottomColor: theme.grey,
+                      borderBottomWidth: 1,
+                      flex: 1,
+                    }}
+                    onChange={({nativeEvent: {text}}) => setSectionText(text)}
+                    placeholderTextColor={theme.darkGrey}
+                    placeholder={'Section name'}
+                  />
+                  <TouchableOpacity
+                    title={'Create section'}
+                    onPress={createSec}>
+                    <Ionicons name={'add-circle'} size={24} />
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
+            </KeyboardAvoidingView>
           )}
       </BottomSheetScrollView>
     </View>

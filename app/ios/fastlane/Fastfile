@@ -16,8 +16,26 @@
 default_platform(:ios)
 
 platform :ios do
-  desc "Description of what the lane does"
-  lane :custom_lane do
-    # add actions here: https://docs.fastlane.tools/actions
-  end
+    desc "Push a new beta build to TestFlight"
+    lane :testflight do
+        get_certificates( # Create or get certificate, and install it
+          output_path: "./builds" # Download certificate in the build folder (you don't need to create the folder)
+        )
+        get_provisioning_profile( # Create or get provisioning profile
+          output_path: "./builds",  # Download provisioning profile in the build folder
+          filename: "provisioning.mobileprovision" # Rename the local provisioning profile
+        )
+        update_project_provisioning( # Set the project provisioning profile (related in Xcode to the General > Signing Release section)
+          xcodeproj: "meetup.xcodeproj",
+          target_filter: "Boilerplate", # Name of your project
+          profile: "./builds/provisioning.mobileprovision",
+          build_configuration: "Release"
+        )
+        update_project_team( # Set the right team on your project
+          teamid: CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
+        )
+        sync_code_signing(type: "appstore")
+        build_app()
+        upload_to_testflight
+    end
 end

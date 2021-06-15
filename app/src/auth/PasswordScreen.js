@@ -50,7 +50,7 @@ const PasswordScreen = ({navigation, route}) => {
       try {
         const response = await register({
           variables: {
-            email: route?.params?.email,
+            email: route?.params?.user?.email,
             password: values.password,
           },
         });
@@ -65,6 +65,7 @@ const PasswordScreen = ({navigation, route}) => {
       } catch (e) {
         setError();
         alert(e);
+        console.log(JSON.stringify(e));
         setLoading(false);
       }
     } else {
@@ -77,7 +78,7 @@ const PasswordScreen = ({navigation, route}) => {
       try {
         const response = await registerWaiter({
           variables: {
-            id: Number(route?.params?.id),
+            id: Number(route?.params?.user?.id),
             password: values.password,
           },
         });
@@ -104,7 +105,7 @@ const PasswordScreen = ({navigation, route}) => {
       try {
         const response = await login({
           variables: {
-            email: route?.params?.email,
+            email: route?.params?.user?.email,
             password: values.password,
           },
         });
@@ -165,7 +166,7 @@ const PasswordScreen = ({navigation, route}) => {
             />
           )}
           <View>
-            <Text style={style.label}>{route?.params?.email}</Text>
+            <Text style={style.label}>{route?.params?.user?.email}</Text>
           </View>
         </View>
         <Text style={style.label}>Password</Text>

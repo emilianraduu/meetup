@@ -12,7 +12,6 @@ import {Image} from 'react-native-elements';
 import {date, lat, long, pubImages, selectedPub} from '../../helpers/variables';
 import {useReactiveVar} from '@apollo/client';
 import moment from 'moment';
-import {getDistance} from 'geolib';
 
 const PubCard = ({index, navigation, onSelectPub, pub}) => {
   const images = useReactiveVar(pubImages);
@@ -90,7 +89,9 @@ export const PubDetails = ({pub, wrapperStyle}) => {
   const currentDate = useReactiveVar(date);
   let freeTables = 0;
   for (const item in pub?.locations) {
-    freeTables += pub?.locations?.[item]?.tables?.length;
+    if (pub?.locations?.[item]?.tables) {
+      freeTables += pub?.locations?.[item]?.tables?.length;
+    }
   }
   if (pub?.reservations?.length > 0 && pub) {
     for (const it in pub?.reservations) {
@@ -102,7 +103,7 @@ export const PubDetails = ({pub, wrapperStyle}) => {
         'hours',
       );
       if (day.isBetween(reservation, reservationEnd, null, '[]')) {
-        freeTables -= 1;
+        // freeTables -= 1;
       }
     }
   }

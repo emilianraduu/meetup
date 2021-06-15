@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>373085034119-qk52t36490hemmls6pjs34t8p9hlr4j1.apps.googleusercontent.com</string>
+	<string>373085034119-lob5p57a9npe9bmgbqp7u3glpmnc7koe.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.373085034119-qk52t36490hemmls6pjs34t8p9hlr4j1</string>
+	<string>com.googleusercontent.apps.373085034119-lob5p57a9npe9bmgbqp7u3glpmnc7koe</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAklNSPZ7rTsOSaGXMFcoLYPjwk1-ZF5Ws</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.uaic.steppers</string>
+	<string>com.fii.meetup</string>
 	<key>PROJECT_ID</key>
 	<string>steppers-uaic</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:373085034119:ios:d7a7aad26e43fb57d30a22</string>
+	<string>1:373085034119:ios:c58a3245c0ff0104d30a22</string>
 </dict>
 </plist>

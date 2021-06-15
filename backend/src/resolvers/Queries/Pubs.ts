@@ -1,12 +1,11 @@
-import { floatArg, intArg, nonNull, queryField } from 'nexus'
+import { floatArg, intArg, list, nonNull, queryField } from 'nexus'
 import { getDistance } from 'geolib'
 import { errors } from '../../utils/constants'
 import { Pub } from '.prisma/client'
 import { handleError } from '../../utils/helpers'
 
 export const getPubs = queryField('pubs', {
-  type: 'Pub',
-  list: true,
+  type: list('Pub'),
   args: {
     latitude: floatArg(),
     longitude: floatArg(),
@@ -29,7 +28,7 @@ export const getPubs = queryField('pubs', {
         }
       })
       const newPubs: Pub[] | PromiseLike<Pub[]> = []
-      pubs.forEach((pub) => {
+      pubs.forEach((pub: Pub) => {
         if (latitude && longitude) {
           const distance =
             getDistance({ latitude, longitude }, { latitude: pub.latitude, longitude: pub.longitude })
@@ -42,6 +41,7 @@ export const getPubs = queryField('pubs', {
       })
       return newPubs
     } catch (e) {
+      console.log(e)
       handleError(errors.invalidUser)
     }
   }
@@ -49,8 +49,7 @@ export const getPubs = queryField('pubs', {
 
 
 export const getMyPubs = queryField('myPubs', {
-  type: 'Pub',
-  list: true,
+  type: list('Pub'),
   async resolve(_parent, _args, ctx) {
     try {
       return await ctx.prisma.pub.findMany({

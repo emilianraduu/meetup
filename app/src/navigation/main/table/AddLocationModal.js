@@ -1,6 +1,7 @@
 import Modal from 'react-native-modal';
 import {
   Button,
+  KeyboardAvoidingView,
   StyleSheet,
   Text,
   TextInput,
@@ -56,7 +57,7 @@ const AddLocationModal = ({visible, onClose}) => {
       swipeDirection={'down'}
       onBackButtonPress={onClose}
       onBackdropPress={onClose}>
-      <View style={style.content}>
+      <KeyboardAvoidingView behavior={'padding'} enabled style={style.content}>
         <View style={{marginTop: 20}}>
           <Loader loading={loading} />
           <Text style={{fontWeight: 'bold'}}>Location name</Text>
@@ -118,7 +119,7 @@ const AddLocationModal = ({visible, onClose}) => {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };

@@ -35,6 +35,7 @@ const NextReservation = ({nextReservation}) => {
 
   const distance =
     nextReservation &&
+    nextReservation?.pub &&
     latitude &&
     longitude &&
     nextReservation?.pub?.latitude &&

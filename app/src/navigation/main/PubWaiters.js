@@ -53,6 +53,7 @@ const PubWaiters = () => {
             },
           });
           pub.waiters = [...pub.waiters, response?.data?.createWaiter];
+          setEmail('');
         } catch (e) {
           console.log(e);
         }
@@ -86,6 +87,7 @@ const PubWaiters = () => {
           autoCompleteType={'email'}
           textContentType={'emailAddress'}
           placeholder={'example@waiter.com'}
+          value={email}
           autoCapitalize={'none'}
           keyboardType={'email-address'}
           placeholderTextColor={theme.darkGrey}
