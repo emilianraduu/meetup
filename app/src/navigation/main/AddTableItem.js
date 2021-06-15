@@ -7,7 +7,8 @@ import {PUB_QUERY} from '../../graphql/queries/Pubs';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Modal from 'react-native-modal';
 import {Loader} from '../Loader';
-import {Image, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Image} from 'react-native-elements';
 import {theme} from '../../helpers/constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -95,7 +96,7 @@ const AddItemModal = ({isVisible, setIsVisible, pub, section}) => {
           style={{
             height: 200,
             width: '100%',
-            backgroundColor: theme.grey,
+            backgroundColor: theme.darkGrey,
             alignItems: 'center',
             justifyContent: 'center',
           }}>
@@ -123,7 +124,7 @@ const AddItemModal = ({isVisible, setIsVisible, pub, section}) => {
             onChange={({nativeEvent: {text}}) =>
               onInputChange({key: 'name', value: text})
             }
-            placeholderTextColor={theme.grey}
+            placeholderTextColor={theme.darkGrey}
             placeholder={'Eg: Carbonara'}
           />
           <Text style={{fontWeight: 'bold'}}>Ingredients</Text>
@@ -136,7 +137,7 @@ const AddItemModal = ({isVisible, setIsVisible, pub, section}) => {
             onChange={({nativeEvent: {text}}) =>
               onInputChange({value: text, key: 'description'})
             }
-            placeholderTextColor={theme.grey}
+            placeholderTextColor={theme.darkGrey}
             placeholder={'Ingredients'}
           />
           <Text style={{fontWeight: 'bold'}}>Price</Text>
@@ -150,7 +151,7 @@ const AddItemModal = ({isVisible, setIsVisible, pub, section}) => {
               (Number(text) || text.length < 1) &&
               onInputChange({value: text, key: 'price'})
             }
-            placeholderTextColor={theme.grey}
+            placeholderTextColor={theme.darkGrey}
             placeholder={'Ingredients'}
           />
           <TouchableOpacity style={{alignSelf: 'center'}} onPress={createMenu}>

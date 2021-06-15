@@ -92,7 +92,7 @@ const AddTableModal = ({visible, onClose, locationId, position}) => {
             }}
             value={values?.count}
             placeholder={'Must be a number'}
-            placeholderTextColor={theme.grey}
+            placeholderTextColor={theme.darkGrey}
             onChange={({nativeEvent: {text}}) =>
               ((Number(text) && text.length < 3) || text.length < 1) &&
               onInputChange({key: 'count', value: text})
@@ -107,7 +107,7 @@ const AddTableModal = ({visible, onClose, locationId, position}) => {
             }}
             value={values?.name}
             placeholder={'Table name'}
-            placeholderTextColor={theme.grey}
+            placeholderTextColor={theme.darkGrey}
             onChange={({nativeEvent: {text}}) =>
               onInputChange({key: 'name', value: text})
             }

@@ -20,7 +20,7 @@ import {
 import {isLoggedIn, token, user} from '../helpers/variables';
 import {useMutation} from '@apollo/client';
 import {Loader} from '../navigation/Loader';
-import FastImage from 'react-native-fast-image';
+import {Image} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {validatePassword} from '../helpers/validators';
 import storage from '@react-native-firebase/storage';
@@ -152,7 +152,7 @@ const PasswordScreen = ({navigation, route}) => {
       <View style={style.inputWrapper}>
         <View style={style.section}>
           {photo ? (
-            <FastImage
+            <Image
               source={{uri: photo}}
               style={{width: 50, height: 50, borderRadius: 50, marginRight: 5}}
             />
@@ -171,7 +171,7 @@ const PasswordScreen = ({navigation, route}) => {
         <Text style={style.label}>Password</Text>
         <TextInput
           placeholder={'examplepass12'}
-          placeholderTextColor={theme.grey}
+          placeholderTextColor={theme.darkGrey}
           style={style.input}
           onSubmitEditing={
             route?.params?.exist
@@ -254,7 +254,7 @@ const style = StyleSheet.create({
     flex: 1,
   },
   label: {
-    color: theme.grey,
+    color: theme.darkGrey,
     marginBottom: 5,
   },
   buttonWrapper: {

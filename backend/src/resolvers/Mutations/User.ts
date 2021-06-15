@@ -1,7 +1,8 @@
 import { extendType, intArg, nonNull, stringArg } from 'nexus'
 import { compare, hash } from 'bcrypt'
 import { findPub, generateAccessToken, handleError } from '../../utils/helpers'
-import { errors, user_status } from '../../utils/constants'
+import { APP_SECRET, errors, user_status } from '../../utils/constants'
+import { verify } from 'jsonwebtoken'
 
 export const user = extendType({
   type: 'Mutation',
@@ -13,11 +14,18 @@ export const user = extendType({
         password: nonNull(stringArg()),
         status: stringArg({ default: user_status.client }),
         firstName: stringArg(),
-        lastName: stringArg()
+        lastName: stringArg(),
+        secret: stringArg()
       },
-      async resolve(_parent, { email, password, status, firstName, lastName }, ctx) {
+      async resolve(_parent, { email, password, status, firstName, lastName, secret }, ctx) {
         try {
           const hashedPassword = await hash(password, 10)
+          if (secret && status === user_status.admin) {
+            const secretStatus = verify(secret, APP_SECRET)
+            if (!secretStatus) {
+              handleError(errors.userAlreadyExists)
+            }
+          }
           const user = await ctx.prisma.user.create({
             data: {
               email,
@@ -41,7 +49,7 @@ export const user = extendType({
                   pub: true
                 }
               },
-              pub: { include: {locations: true} },
+              pub: { include: { locations: true } },
               tables: {
                 include: {
                   reservations: true,
@@ -88,7 +96,7 @@ export const user = extendType({
                   pub: true
                 }
               },
-              pub: { include: {locations: true} },
+              pub: { include: { locations: true } },
               tables: {
                 include: {
                   reservations: true,
@@ -118,7 +126,7 @@ export const user = extendType({
         firstName: stringArg(),
         lastName: stringArg(),
         photo: stringArg(),
-        id: nonNull(intArg()),
+        id: nonNull(intArg())
       },
       async resolve(_parent, { firstName, lastName, photo, id }, ctx) {
         try {
@@ -206,7 +214,7 @@ export const user = extendType({
               password: hashedPassword
             },
             include: {
-              pub: { include: {locations: true} },
+              pub: { include: { locations: true } },
               tables: {
                 include: {
                   reservations: true,

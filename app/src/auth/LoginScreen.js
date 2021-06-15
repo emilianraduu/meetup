@@ -151,7 +151,7 @@ const LoginScreen = ({navigation}) => {
           placeholder={'example@email.com'}
           style={style.input}
           autoCapitalize={'none'}
-          placeholderTextColor={theme.grey}
+          placeholderTextColor={theme.darkGrey}
           autoCorrect={false}
           onChange={(e) =>
             onInputChange({key: 'email', value: e.nativeEvent.text})
@@ -237,7 +237,7 @@ const style = StyleSheet.create({
     flex: 1,
   },
   label: {
-    color: theme.grey,
+    color: theme.darkGrey,
     marginBottom: 5,
   },
   buttonWrapper: {

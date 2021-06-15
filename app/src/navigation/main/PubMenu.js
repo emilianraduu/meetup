@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {
   Alert,
   Dimensions,
-  Image,
   LayoutAnimation,
   StyleSheet,
   Text,
@@ -10,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {Image} from 'react-native-elements';
 import {theme, user_status} from '../../helpers/constants';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
@@ -45,18 +45,7 @@ const PubMenu = () => {
     bottom,
   });
 
-  useEffect(() => {
-    if (menuError) {
-      alert(menuError);
-    }
-    if (menuData?.createMenu) {
-      pub.menu = menuData?.data?.createMenu;
-      client.writeQuery({
-        query: PUB_QUERY,
-        data: {pub: {...pub, menu: menuData?.createMenu}},
-      });
-    }
-  }, [menuData, menuError, pub]);
+  useEffect(() => {}, [menuData, menuError, pub]);
   useEffect(() => {
     if (menuSectionError) {
       alert(menuSectionError);
@@ -129,19 +118,30 @@ const PubMenu = () => {
         <Loader loading={loading} />
         {!pub?.menu &&
           usr?.status === user_status.admin &&
-          Number(pub.ownerId) === Number(usr.id) && (
+          Number(pub?.ownerId) === Number(usr.id) && (
             <View>
               <View>
                 <Text style={{fontWeight: 'bold', fontSize: 14}}>
                   You have no menu yet.
                 </Text>
-                <Text style={{color: theme.grey, marginBottom: 20}}>
+                <Text style={{color: theme.darkGrey, marginBottom: 20}}>
                   To help your customers find what kind of products you provide
                   it is highly recommended to setup a menu.
                 </Text>
                 <TouchableOpacity
-                  onPress={() => {
-                    create({variables: {id: pub.id}});
+                  onPress={async () => {
+                    const response = await create({variables: {id: pub.id}});
+                    if (response?.data?.createMenu) {
+                      client.writeQuery({
+                        query: PUB_QUERY,
+                        data: {
+                          pub: {
+                            ...pub,
+                            menu: response?.data?.createMenu,
+                          },
+                        },
+                      });
+                    }
                   }}>
                   <Text
                     style={{
@@ -156,13 +156,13 @@ const PubMenu = () => {
             </View>
           )}
         {usr?.status === user_status.admin &&
-          Number(pub.ownerId) === Number(usr.id) &&
+          Number(pub?.ownerId) === Number(usr.id) &&
           pub?.menu && (
             <>
               <Text style={{fontWeight: 'bold', fontSize: 14}}>
                 You can edit and manage the menu anytime.
               </Text>
-              <Text style={{color: theme.grey, marginBottom: 20}}>
+              <Text style={{color: theme.darkGrey, marginBottom: 20}}>
                 It helps your customers into knowing your prices and offers.
               </Text>
             </>
@@ -171,7 +171,7 @@ const PubMenu = () => {
           <MenuSection
             isAdmin={
               usr?.status === user_status.admin &&
-              Number(pub.ownerId) === Number(usr.id)
+              Number(pub?.ownerId) === Number(usr.id)
             }
             key={section.id}
             section={section}
@@ -179,7 +179,7 @@ const PubMenu = () => {
           />
         ))}
         {usr?.status === user_status.admin &&
-          Number(pub.ownerId) === Number(usr.id) &&
+          Number(pub?.ownerId) === Number(usr.id) &&
           pub?.menu && (
             <View>
               <Text style={{fontWeight: 'bold', fontSize: 14}}>
@@ -189,20 +189,12 @@ const PubMenu = () => {
                 <TextInput
                   value={sectionText}
                   style={{
-                    shadowColor: '#000',
-                    shadowOffset: {
-                      width: 0,
-                      height: 1,
-                    },
-                    shadowOpacity: 0.18,
-                    shadowRadius: 5.0,
-                    elevation: 1,
                     borderBottomColor: theme.grey,
                     borderBottomWidth: 1,
                     flex: 1,
                   }}
                   onChange={({nativeEvent: {text}}) => setSectionText(text)}
-                  placeholderTextColor={theme.grey}
+                  placeholderTextColor={theme.darkGrey}
                   placeholder={'Section name'}
                 />
                 <TouchableOpacity title={'Create section'} onPress={createSec}>
@@ -248,7 +240,7 @@ const MenuSection = ({section, pub, isAdmin}) => {
             color: theme.white,
           }}
           onChange={({nativeEvent: {text}}) => setSectionName(text)}
-          placeholderTextColor={theme.grey}
+          placeholderTextColor={theme.darkGrey}
           placeholder={'Section name'}
         />
         {isAdmin && (
@@ -400,7 +392,7 @@ const MenuItem = ({item, isAdmin, section}) => {
               <Text style={{fontSize: 16, fontWeight: 'bold'}}>
                 {item.name}
               </Text>
-              <Text style={{fontSize: 11, color: theme.grey}}>
+              <Text style={{fontSize: 11, color: theme.darkGrey}}>
                 {item.description}
               </Text>
             </View>

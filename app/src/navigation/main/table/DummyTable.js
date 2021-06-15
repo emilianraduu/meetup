@@ -8,7 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const DummyTable = ({index, size, addTable}) => {
   const pub = useReactiveVar(selectedPub);
   const usr = useReactiveVar(user);
-  return Number(pub.ownerId) === Number(usr.id) ? (
+  return Number(pub?.ownerId) === Number(usr.id) ? (
     <TouchableOpacity
       key={index}
       onPress={() => addTable(index)}

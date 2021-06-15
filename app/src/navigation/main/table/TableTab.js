@@ -1,18 +1,13 @@
 import {Dimensions, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useReactiveVar} from '@apollo/client';
-import {
-  date,
-  selectedLocation,
-  selectedPub,
-  user,
-} from '../../../helpers/variables';
+import {selectedLocation, selectedPub} from '../../../helpers/variables';
 import AddTableModal from './AddTableModal';
 import Table from './Table';
 import DummyTable from './DummyTable';
 import {theme} from '../../../helpers/constants';
 
-const TableTab = ({locId, selected, setSelected, values}) => {
+const TableTab = ({locId, selected, setSelected}) => {
   const location = useReactiveVar(selectedLocation);
   const pub = useReactiveVar(selectedPub);
   const [modalTable, setModalTable] = useState(false);

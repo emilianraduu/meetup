@@ -52,7 +52,6 @@ const PubAbout = () => {
           <Switch />
         </View>
         <Text style={{fontWeight: 'bold', marginTop: 20}}>Currency</Text>
-        {console.log(pub.currency)}
         <CurrencyPicker
           enable={true}
           darkMode={false}

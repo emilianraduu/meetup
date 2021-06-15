@@ -12,10 +12,17 @@ export const ME_QUERY = gql`
       tables {
         id
         count
+        position
         location {
           id
           name
+          rows
+          columns
         }
+      }
+      pub {
+        id
+        name
       }
       reservations {
         id

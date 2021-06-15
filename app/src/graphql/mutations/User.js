@@ -17,14 +17,24 @@ export const LOGIN_MUTATION = gql`
           locations {
             id
             name
+            rows
+            columns
           }
         }
         tables {
           id
           name
+          position
+          count
+          reservations {
+            id
+            date
+          }
           location {
             id
             name
+            rows
+            columns
           }
         }
         reservations {
@@ -71,6 +81,8 @@ export const REGISTER_MUTATION = gql`
           location {
             id
             name
+            rows
+            columns
           }
           table {
             id

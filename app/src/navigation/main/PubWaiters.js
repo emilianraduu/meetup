@@ -88,7 +88,7 @@ const PubWaiters = () => {
           placeholder={'example@waiter.com'}
           autoCapitalize={'none'}
           keyboardType={'email-address'}
-          placeholderTextColor={theme.grey}
+          placeholderTextColor={theme.darkGrey}
           style={{
             borderBottomWidth: 2,
             borderBottomColor: theme.red,

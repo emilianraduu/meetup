@@ -2,7 +2,7 @@ import {Share, StatusBar, TouchableOpacity, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Swiper from 'react-native-swiper';
-import FastImage from 'react-native-fast-image';
+import {Image} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {GalleryRoute} from '../../helpers/routes';
 import {theme} from '../../helpers/constants';
@@ -108,7 +108,7 @@ const PubScreen = ({navigation}) => {
                         gallery: pub.photos,
                       });
                     }}>
-                    <FastImage
+                    <Image
                       style={{height: 200 + top, width: '100%'}}
                       source={{uri: photo.uri}}
                     />

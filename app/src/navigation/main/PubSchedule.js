@@ -93,7 +93,7 @@ const PubSchedule = () => {
         <Loader loading={loading} />
         {!pub?.menu &&
           usr?.status === user_status.admin &&
-          Number(pub.ownerId) === Number(usr.id) && (
+          Number(pub?.ownerId) === Number(usr.id) && (
             <View>
               <View>
                 <Text>You have no menu yet.</Text>
@@ -116,7 +116,7 @@ const PubSchedule = () => {
           </View>
         ))}
         {usr?.status === user_status.admin &&
-          Number(pub.ownerId) === Number(usr.id) && (
+          Number(pub?.ownerId) === Number(usr.id) && (
             <View>
               <TextInput
                 onChange={({nativeEvent: {text}}) => setSectionText(text)}

@@ -84,7 +84,7 @@ const style = StyleSheet.create({
   },
   secondButtonText: {
     fontSize: 12,
-    color: theme.grey,
+    color: theme.darkGrey,
   },
 });
 

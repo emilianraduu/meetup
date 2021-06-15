@@ -12,7 +12,7 @@ import React, {useEffect, useState} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {theme, user_status} from '../../helpers/constants';
-import FastImage from 'react-native-fast-image';
+import {Image} from 'react-native-elements';
 import ImageView from 'react-native-image-viewing';
 import {useMutation, useReactiveVar} from '@apollo/client';
 import {pubImages, selectedPub, user} from '../../helpers/variables';
@@ -115,7 +115,7 @@ export const GalleryScreen = ({navigation}) => {
           <Text style={style.titleText}>Gallery</Text>
         </View>
         {usr.status === user_status.admin &&
-          Number(pub.ownerId) === Number(usr.id) && (
+          Number(pub?.ownerId) === Number(usr.id) && (
             <TouchableOpacity style={style.back} onPress={onEdit}>
               <Text>{editing ? 'Done' : 'Edit'}</Text>
             </TouchableOpacity>
@@ -139,7 +139,7 @@ export const GalleryScreen = ({navigation}) => {
                   setVisible(true);
                 }}
                 style={style.wrapper}>
-                <FastImage
+                <Image
                   source={{uri: image.uri}}
                   style={style.image}
                   resizeMode={'cover'}
@@ -155,7 +155,7 @@ export const GalleryScreen = ({navigation}) => {
                 style.wrapper,
                 style.image,
                 {
-                  borderColor: theme.grey,
+                  borderColor: theme.darkGrey,
                   borderWidth: 2,
                   borderRadius: 6,
                   justifyContent: 'center',
@@ -166,7 +166,7 @@ export const GalleryScreen = ({navigation}) => {
                 name={'plus'}
                 resizeMode={'cover'}
                 size={30}
-                color={theme.grey}
+                color={theme.darkGrey}
               />
             </TouchableOpacity>
           </View>

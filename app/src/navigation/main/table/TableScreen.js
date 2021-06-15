@@ -23,6 +23,7 @@ import RNDateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import {client} from '../../../graphql';
 import {PUB_QUERY} from '../../../graphql/queries/Pubs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export const TableScreen = ({navigation}) => {
   const pub = useReactiveVar(selectedPub);
@@ -113,25 +114,34 @@ export const TableScreen = ({navigation}) => {
         )}
         <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
           <View style={section}>
-            {pub?.locations?.map((loc, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => selectedLocation(loc)}
-                style={[
-                  button,
-                  {
-                    backgroundColor:
-                      loc.id === location?.id ? theme.red : theme.grey,
-                  },
-                ]}>
-                <Text style={text}>{loc.name}</Text>
-              </TouchableOpacity>
-            ))}
+            <View
+              style={{
+                flexDirection: 'row',
+                backgroundColor: theme.grey,
+                padding: 3,
+                borderRadius: 6,
+                marginRight: 10,
+              }}>
+              {pub?.locations?.map((loc, index) => (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => selectedLocation(loc)}
+                  style={[
+                    button,
+                    {
+                      backgroundColor:
+                        loc.id === location?.id ? theme.white : theme.grey,
+                    },
+                  ]}>
+                  <Text style={text}>{loc.name}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
             {Number(usr?.id) === Number(pub?.ownerId) && (
               <TouchableOpacity
                 onPress={openAddLocation}
-                style={[button, {borderWidth: 1, borderColor: theme.red}]}>
-                <Text style={[text, {color: theme.red}]}>Add location</Text>
+                style={{alignItems: 'center', justifyContent: 'center'}}>
+                <Ionicons name={'add-circle'} size={20} />
               </TouchableOpacity>
             )}
           </View>
@@ -145,6 +155,7 @@ export const TableScreen = ({navigation}) => {
                 value={new Date(currentDate)}
                 minuteInterval={5}
                 mode={'datetime'}
+                minimumDate={new Date()}
                 style={{flex: 1, alignSelf: 'flex-start'}}
                 themeVariant={'light'}
                 display="default"
@@ -185,7 +196,7 @@ export const TableScreen = ({navigation}) => {
               disabled={!selected || hasReservation}
               style={cta}
               onPress={completeReservation}>
-              <Text style={text}>Make reservation</Text>
+              <Text style={{color: theme.white}}>Make reservation</Text>
             </TouchableOpacity>
           </>
         )}
@@ -217,11 +228,10 @@ const styles = ({bottom, selected, hasReservation}) =>
     },
     button: {
       padding: 5,
-      borderRadius: 20,
+      borderRadius: 5,
       paddingHorizontal: 20,
-      marginRight: 10,
     },
-    text: {color: theme.white},
+    text: {color: theme.black, fontSize: 12},
     cta: {
       backgroundColor: selected && !hasReservation ? theme.red : theme.black,
       paddingVertical: 12,

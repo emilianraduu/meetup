@@ -101,13 +101,16 @@ export const MainScreen = ({navigation}) => {
   };
   const sortedList = () => {
     let list = pubList.map((pub) => {
-      const distance = getDistance(
-        {latitude, longitude},
-        {
-          latitude: pub.latitude,
-          longitude: pub.longitude,
-        },
-      );
+      const distance =
+        pub?.latitude &&
+        pub?.longitude &&
+        getDistance(
+          {latitude, longitude},
+          {
+            latitude: pub.latitude,
+            longitude: pub.longitude,
+          },
+        );
       return {...pub, distance};
     });
     return list.sort((a, b) => a.distance > b.distance);

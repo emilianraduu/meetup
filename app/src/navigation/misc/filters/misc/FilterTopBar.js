@@ -41,7 +41,7 @@ const FilterTopBar = ({onClose, colors, index, pristine, onPress}) => {
         {expanded && (
           <View style={backButton}>
             <TouchableOpacity onPress={onClose}>
-              <Icon name={'arrow-back'} size={20} color={theme.grey} />
+              <Icon name={'arrow-back'} size={20} color={theme.darkGrey} />
             </TouchableOpacity>
           </View>
         )}

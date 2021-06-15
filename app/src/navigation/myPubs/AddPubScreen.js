@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
-  Image,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
+import {Image} from 'react-native-elements';
 import {theme} from '../../helpers/constants';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Ripple from 'react-native-material-ripple';

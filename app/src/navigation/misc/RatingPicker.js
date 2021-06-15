@@ -14,9 +14,9 @@ const RatingPicker = ({colorOptions, onPress}) => {
             style={style({option}).button}>
             <StarRating
               disabled={true}
-              fullStarColor={option.selected ? theme.red : theme.grey}
-              emptyStarColor={option.selected ? theme.red : theme.grey}
-              halfStarColor={option.selected ? theme.red : theme.grey}
+              fullStarColor={option.selected ? theme.red : theme.darkGrey}
+              emptyStarColor={option.selected ? theme.red : theme.darkGrey}
+              halfStarColor={option.selected ? theme.red : theme.darkGrey}
               maxStars={5}
               rating={option.name}
               starSize={16}

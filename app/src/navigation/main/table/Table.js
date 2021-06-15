@@ -1,12 +1,14 @@
 import {theme} from '../../../helpers/constants';
 import Icon from 'react-native-vector-icons/Entypo';
 import {Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import moment from 'moment';
 import {useReactiveVar} from '@apollo/client';
 import {date} from '../../../helpers/variables';
+import Modal from 'react-native-modal';
 
-const Table = ({index, pub, table, selected, size, setSelected}) => {
+const Table = ({index, pub, table, selected, size, setSelected, waiter}) => {
+  const [waiterModal, setWaiterModal] = useState(false);
   const currentDate = useReactiveVar(date);
   const isSame = table?.reservations?.find?.((res) => {
     const day = moment(currentDate);
@@ -27,53 +29,75 @@ const Table = ({index, pub, table, selected, size, setSelected}) => {
     return day.isBetween(reservation, reservationEnd, null, '[]');
   });
   return (
-    <TouchableOpacity
-      key={index}
-      disabled={table?.blocked}
-      style={{
-        opacity: table?.blocked ? 0.5 : 1,
-        borderRadius: 6,
-        margin: 3,
-        borderWidth: 2,
-        borderColor:
-          isSoon && !isSame
-            ? 'orange'
-            : isSame
-            ? 'red'
-            : table
-            ? selected?.id === table?.id
-              ? theme.green
-              : theme.grey
-            : 'transparent',
-        width: size,
-        height: size,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-      onPress={() => setSelected(table)}>
-      {table?.blocked ? (
-        <Icon name={'block'} size={40} color={theme.red} />
-      ) : (
-        table && (
-          <>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <Text
+    <>
+      <TouchableOpacity
+        key={index}
+        disabled={table?.blocked}
+        style={{
+          opacity: table?.blocked ? 0.5 : 1,
+          borderRadius: 6,
+          margin: 3,
+          borderWidth: 2,
+          borderColor:
+            isSoon && !isSame
+              ? 'orange'
+              : isSame
+              ? 'red'
+              : table
+              ? selected?.id === table?.id
+                ? theme.green
+                : theme.darkGrey
+              : 'transparent',
+          width: size,
+          height: size,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        onPress={
+          waiter ? () => setWaiterModal(true) : () => setSelected(table)
+        }>
+        {table?.blocked ? (
+          <Icon name={'block'} size={40} color={theme.red} />
+        ) : (
+          table && (
+            <>
+              <View
                 style={{
-                  color: theme.grey,
-                  fontWeight: 'bold',
+                  flexDirection: 'row',
+                  alignItems: 'center',
                 }}>
-                {table?.count}
-              </Text>
-              <Icon name={'user'} color={theme.grey} />
-            </View>
-          </>
-        )
-      )}
-    </TouchableOpacity>
+                <Text
+                  style={{
+                    color: theme.darkGrey,
+                    fontWeight: 'bold',
+                  }}>
+                  {table?.count}
+                </Text>
+                <Icon name={'user'} color={theme.darkGrey} />
+              </View>
+            </>
+          )
+        )}
+      </TouchableOpacity>
+      <Modal
+        onBackdropPress={() => setWaiterModal(false)}
+        onBackButtonPress={() => setWaiterModal(false)}
+        onSwipeComplete={() => setWaiterModal(false)}
+        swipeDirection={'down'}
+        propagateSwipe={true}
+        style={{margin: 0, flex: 1}}
+        isVisible={waiterModal}>
+        <View
+          style={{
+            backgroundColor: theme.white,
+            padding: 20,
+            margin: 20,
+            height: 200,
+            borderRadius: 20,
+          }}
+        />
+      </Modal>
+    </>
   );
 };
 

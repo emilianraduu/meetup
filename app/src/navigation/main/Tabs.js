@@ -146,19 +146,19 @@ function PubTabs() {
       <Tab.Screen name={ReviewsRoute} component={PubReviews} />
       {pub &&
         usr &&
-        Number(pub.ownerId) === Number(usr.id) &&
+        Number(pub?.ownerId) === Number(usr.id) &&
         usr.status === user_status.admin && (
           <Tab.Screen name={WaitersRoute} component={PubWaiters} />
         )}
       {pub &&
         usr &&
-        Number(pub.ownerId) === Number(usr.id) &&
+        Number(pub?.ownerId) === Number(usr.id) &&
         usr.status === user_status.admin && (
           <Tab.Screen name={AnalyticsRoute} component={PubAnalytics} />
         )}
       {pub &&
         usr &&
-        Number(pub.ownerId) === Number(usr.id) &&
+        Number(pub?.ownerId) === Number(usr.id) &&
         usr.status === user_status.admin && (
           <Tab.Screen name={ScheduleRoute} component={PubSchedule} />
         )}

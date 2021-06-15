@@ -67,7 +67,7 @@ const AddLocationModal = ({visible, onClose}) => {
               marginVertical: 15,
             }}
             placeholder={'Location name can be outside/inside'}
-            placeholderTextColor={theme.grey}
+            placeholderTextColor={theme.darkGrey}
             onChange={({nativeEvent: {text}}) =>
               onInputChange({key: 'name', value: text})
             }
@@ -81,7 +81,7 @@ const AddLocationModal = ({visible, onClose}) => {
             }}
             value={values?.rows}
             placeholder={'Must be a number'}
-            placeholderTextColor={theme.grey}
+            placeholderTextColor={theme.darkGrey}
             onChange={({nativeEvent: {text}}) =>
               ((Number(text) && text.length < 2) || text.length < 1) &&
               onInputChange({key: 'rows', value: text})
@@ -97,7 +97,7 @@ const AddLocationModal = ({visible, onClose}) => {
             }}
             value={values?.columns}
             placeholder={'Must be a number'}
-            placeholderTextColor={theme.grey}
+            placeholderTextColor={theme.darkGrey}
             onChange={({nativeEvent: {text}}) =>
               ((Number(text) && text.length < 2) || text.length < 1) &&
               onInputChange({key: 'columns', value: text})

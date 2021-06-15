@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import StarRating from 'react-native-star-rating';
 import storage from '@react-native-firebase/storage';
 import Swiper from 'react-native-swiper';
-import FastImage from 'react-native-fast-image';
+import {Image} from 'react-native-elements';
 import {date, lat, long, pubImages, selectedPub} from '../../helpers/variables';
 import {useReactiveVar} from '@apollo/client';
 import moment from 'moment';
@@ -63,7 +63,7 @@ const PubCard = ({index, navigation, onSelectPub, pub}) => {
                     selectedPub(pub);
                     onSelectPub?.();
                   }}>
-                  <FastImage
+                  <Image
                     style={{height: 200, width: '100%'}}
                     source={{uri: photo.uri}}
                   />
@@ -131,7 +131,7 @@ export const PubDetails = ({pub, wrapperStyle}) => {
           {[1, 2, 3].map((i) => (
             <DollarIcon
               key={i}
-              color={pub?.priceAvg < i - 1 ? theme.grey : theme.red}
+              color={pub?.priceAvg < i - 1 ? theme.darkGrey : theme.red}
               size={15}
               name={'dollar'}
               style={{marginRight: 5}}
@@ -189,7 +189,7 @@ const style = StyleSheet.create({
   },
   title: {fontSize: 24, fontWeight: 'bold'},
   address: {
-    color: theme.grey,
+    color: theme.darkGrey,
     fontSize: 12,
     fontWeight: 'normal',
   },

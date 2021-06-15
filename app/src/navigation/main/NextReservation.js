@@ -37,6 +37,8 @@ const NextReservation = ({nextReservation}) => {
     nextReservation &&
     latitude &&
     longitude &&
+    nextReservation?.pub?.latitude &&
+    nextReservation?.pub?.latitude &&
     getDistance(
       {latitude, longitude},
       {
@@ -53,7 +55,7 @@ const NextReservation = ({nextReservation}) => {
           <CustomBackground index={index} {...props} border={true} />
         )}
         onChange={handleSheetChanges}
-        snapPoints={['10%', '70%']}>
+        snapPoints={['7%', '70%']}>
         <View
           style={{
             padding: 10,
