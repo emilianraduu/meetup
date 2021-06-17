@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {GREY_COLOR} from '../helpers/constants';
@@ -9,7 +9,10 @@ import WaiterScreen from './main/WaiterScreen';
 
 const Tab = createBottomTabNavigator();
 
-const WaiterNavigator = () => {
+const WaiterNavigator = ({setLoadedNav}) => {
+  useEffect(() => {
+    setLoadedNav(true);
+  }, []);
   return (
     <>
       <Tab.Navigator

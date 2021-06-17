@@ -13,6 +13,7 @@ import {EXIST_QUERY} from '../graphql/queries/User';
 import {PasswordRoute} from '../helpers/routes';
 import {validateEmail} from '../helpers/validators';
 import {Loader} from '../navigation/Loader';
+import {user} from '../helpers/variables';
 
 const LoginScreen = ({navigation}) => {
   const [values, setValues] = useState({});
@@ -21,7 +22,6 @@ const LoginScreen = ({navigation}) => {
   const [existQuery, {called, loading, data, error: errorAPI}] = useLazyQuery(
     EXIST_QUERY,
     {
-      variables: {email: values.email},
       fetchPolicy: 'no-cache',
     },
   );
@@ -29,7 +29,7 @@ const LoginScreen = ({navigation}) => {
     if (validateEmail(values.email)) {
       setSubmitted(true);
       try {
-        existQuery();
+        existQuery({variables: {email: values.email}});
       } catch (e) {
         console.log(e);
       }
@@ -41,6 +41,7 @@ const LoginScreen = ({navigation}) => {
     if (data && !loading && !errorAPI && called && submitted) {
       setSubmitted(false);
       navigation.navigate(PasswordRoute, {...data?.exists});
+      user(data?.exists?.user);
     }
   }, [data, loading, errorAPI, called, navigation, submitted]);
   useEffect(() => {

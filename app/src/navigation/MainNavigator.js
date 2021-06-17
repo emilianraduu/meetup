@@ -3,7 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {MainScreen} from './main/MainScreen';
 import {ProfileStack} from './profile/ProfileStack';
 import {AppLoading} from './AppLoading';
-import {AsyncStorage, StatusBar, View} from 'react-native';
+import {AsyncStorage, StatusBar} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {GREY_COLOR, user_status} from '../helpers/constants';
 import {MyTabBar} from './MyTabBar';
@@ -28,8 +28,10 @@ import {ME_QUERY} from '../graphql/queries/User';
 import PermissionsStack from '../auth/PermissionsStack';
 import AdminNavigator from './AdminNavigator';
 import WaiterNavigator from './WaiterNavigator';
+import SplashScreen from 'react-native-splash-screen';
+import OneSignal from 'react-native-onesignal';
 
-const MainNavigator = ({setLoadedNav}) => {
+const MainNavigator = ({setLoadedNav, loadedNav, loaded}) => {
   const [progress] = useState(0);
   const [permissions, setPermissions] = useState(undefined);
   const [checkPerm, setCheckPerm] = useState(true);
@@ -51,6 +53,12 @@ const MainNavigator = ({setLoadedNav}) => {
   }, [checkPerm]);
 
   useEffect(() => {
+    if (usr?.email) {
+      OneSignal.setEmail(usr.email);
+    }
+  }, [usr]);
+
+  useEffect(() => {
     if (data?.me) {
       isLoggedIn(true);
       user(data.me);
@@ -58,39 +66,47 @@ const MainNavigator = ({setLoadedNav}) => {
     if (error) {
     }
   }, [data, error]);
-
-  useEffect(() => {
-    setLoadedNav(true);
-  }, []);
   const renderNav = () => {
     switch (usr?.status) {
       case user_status.admin:
-        return <AdminNavigator />;
+        return <AdminNavigator setLoadedNav={setLoadedNav} />;
       case user_status.client:
-        return <TabNavigator />;
+        return <TabNavigator setLoadedNav={setLoadedNav} />;
       case user_status.waiter:
-        return <WaiterNavigator />;
+        return <WaiterNavigator setLoadedNav={setLoadedNav} />;
     }
   };
+  useEffect(() => {
+    if (loadedNav && loaded && !loading) {
+      SplashScreen.hide();
+    }
+  }, [loadedNav, loaded, loading]);
+  const show = loaded && loadedNav && !loading;
   return (
     <>
-      <AppLoading isLoading={loading} progress={progress} />
       {isLogged ? (
         permissions?.some((el) => !el) ? (
-          <PermissionsStack setCheckPerm={setCheckPerm} />
+          <PermissionsStack
+            setCheckPerm={setCheckPerm}
+            setLoadedNav={setLoadedNav}
+          />
         ) : (
           renderNav()
         )
       ) : (
-        <AuthStack />
+        !loading && <AuthStack setLoadedNav={setLoadedNav} />
       )}
+      <AppLoading isLoading={!show} progress={progress} />
     </>
   );
 };
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = () => {
+const TabNavigator = ({setLoadedNav}) => {
+  useEffect(() => {
+    setLoadedNav(true);
+  }, []);
   return (
     <>
       <Tab.Navigator

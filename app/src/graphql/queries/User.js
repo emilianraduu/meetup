@@ -11,6 +11,7 @@ export const ME_QUERY = gql`
       status
       tables {
         id
+        locationId
         count
         position
         location {

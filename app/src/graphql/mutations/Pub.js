@@ -43,6 +43,7 @@ export const CREATE_PUB = gql`
         columns
         tables {
           id
+          locationId
           count
           blocked
           reason
@@ -89,6 +90,7 @@ export const UPDATE_PUB = gql`
     $longitude: Float
     $id: Int!
     $visible: Boolean
+    $currency: String
   ) {
     updatePub(
       name: $name
@@ -98,6 +100,7 @@ export const UPDATE_PUB = gql`
       longitude: $longitude
       id: $id
       visible: $visible
+      currency: $currency
     ) {
       address
       id
@@ -125,6 +128,7 @@ export const UPDATE_PUB = gql`
         columns
         tables {
           id
+          locationId
           count
           blocked
           reason
@@ -180,6 +184,14 @@ export const CREATE_MENU_SECTION = gql`
       items {
         id
       }
+    }
+  }
+`;
+
+export const DELETE_PUB = gql`
+  mutation deletePub($id: Int!) {
+    deletePub(id: $id) {
+      id
     }
   }
 `;

@@ -22,11 +22,6 @@ OneSignal.setLogLevel(6, 0);
 OneSignal.setAppId(Config.ONE_SIGNAL_APP_ID);
 //END OneSignal Init Code
 
-//Prompt for push on iOS
-OneSignal.promptForPushNotificationsWithUserResponse((response) => {
-  console.log('Prompt response:', response);
-});
-
 //Method for handling notifications received while app in foreground
 OneSignal.setNotificationWillShowInForegroundHandler(
   (notificationReceivedEvent) => {
@@ -50,13 +45,10 @@ OneSignal.setNotificationOpenedHandler((notification) => {
 
 LogBox.ignoreAllLogs();
 export const App = () => {
-  const routeNameRef = useRef();
-  const navigationRef = useRef();
   const [loaded, setLoaded] = useState(false);
   const [loadedNav, setLoadedNav] = useState(false);
 
   useEffect(() => {
-    // Socket.instance.connect();
     SiriShortcutsEvent.addListener(
       'SiriShortcutListener',
       ({userInfo, activityType}) => {
@@ -72,19 +64,17 @@ export const App = () => {
     });
   }, []);
 
-  useEffect(() => {
-    if (loadedNav && loaded) {
-      SplashScreen.hide();
-    }
-  }, [loadedNav, loaded]);
-
   return (
     <AppearanceProvider>
       <ApolloProvider client={client}>
         <NavigationContainer>
           <SafeAreaProvider>
             <StatusBar barStyle={'light-content'} />
-            <MainNavigator setLoadedNav={setLoadedNav} />
+            <MainNavigator
+              setLoadedNav={setLoadedNav}
+              loaded={loaded}
+              loadedNav={loadedNav}
+            />
           </SafeAreaProvider>
         </NavigationContainer>
       </ApolloProvider>

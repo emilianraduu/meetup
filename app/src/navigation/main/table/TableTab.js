@@ -7,7 +7,7 @@ import Table from './Table';
 import DummyTable from './DummyTable';
 import {theme} from '../../../helpers/constants';
 
-const TableTab = ({locId, selected, setSelected}) => {
+const TableTab = ({locId, selected, setSelected, isAdmin}) => {
   const location = useReactiveVar(selectedLocation);
   const pub = useReactiveVar(selectedPub);
   const [modalTable, setModalTable] = useState(false);
@@ -54,6 +54,7 @@ const TableTab = ({locId, selected, setSelected}) => {
                       table={table}
                       index={index}
                       pub={pub}
+                      waiter={isAdmin}
                     />
                   );
                 } else {

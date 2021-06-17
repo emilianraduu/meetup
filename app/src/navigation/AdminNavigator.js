@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {StatusBar} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -21,7 +21,10 @@ import AddPubScreen from './myPubs/AddPubScreen';
 
 const Tab = createBottomTabNavigator();
 
-const AdminNavigator = () => {
+const AdminNavigator = ({setLoadedNav}) => {
+  useEffect(() => {
+    setLoadedNav(true);
+  }, []);
   return (
     <>
       <Tab.Navigator

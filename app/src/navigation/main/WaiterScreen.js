@@ -1,36 +1,39 @@
 import {
   Dimensions,
-  ScrollView,
+  FlatList,
   StatusBar,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {theme} from '../../helpers/constants';
-import {useReactiveVar} from '@apollo/client';
+import {useLazyQuery, useReactiveVar} from '@apollo/client';
 import {selectedLocation, user} from '../../helpers/variables';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Table from './table/Table';
-import DummyTable from './table/DummyTable';
-import TableTab from './table/TableTab';
+import {GET_WAITER_TABLES} from '../../graphql/queries/Tables';
+import WaiterHeader from './WaiterHeader';
+import WaiterEmpty from './WaiterEmpty';
+import WaiterTableList from './WaiterTableList';
 
 const WaiterScreen = ({navigation, route}) => {
   const usr = useReactiveVar(user);
   const [locations, setLocations] = useState([]);
   const [missingLocation, setMissingLocation] = useState(undefined);
+  const [tables, setTables] = useState(undefined);
+  const [showNotifications, setShowNotifications] = useState(false);
   const [selected, setSelected] = useState(undefined);
   const location = useReactiveVar(selectedLocation);
-  const {tables} = usr;
+  const [fetch, {loading, data}] = useLazyQuery(GET_WAITER_TABLES);
 
   useEffect(() => {
-    tables.map((table) => {
-      if (table.location) {
-        setMissingLocation(table.location);
+    for (let i = 0; i < tables?.length; i++) {
+      if (tables[i].location && !locations.includes(tables[i].location)) {
+        setLocations([...locations, tables[i].location]);
       }
-    });
-  }, [usr]);
+    }
+  }, [tables, locations]);
 
   useEffect(() => {
     if (!location && locations?.[0]) {
@@ -40,17 +43,28 @@ const WaiterScreen = ({navigation, route}) => {
 
   const {top} = useSafeAreaInsets();
 
-  useEffect(() => {
-    if (
-      missingLocation &&
-      !locations.find((loc) => loc.id === missingLocation.id)
-    ) {
-      setLocations([...locations, missingLocation]);
-    }
-  }, [locations, missingLocation]);
+  // useEffect(() => {
+  //   if (
+  //     missingLocation &&
+  //     !locations.find((loc) => loc.id === missingLocation.id)
+  //   ) {
+  //     setLocations([...locations, missingLocation]);
+  //   }
+  // }, [locations, missingLocation]);
   const size =
     (Dimensions.get('window').width - 40 - 9 * Number(location?.columns)) /
     location?.columns;
+
+  useEffect(() => {
+    fetch();
+  }, []);
+
+  useEffect(() => {
+    if (data?.waiterTables) {
+      setTables(data?.waiterTables);
+    }
+  }, [data]);
+
   return (
     <View style={{flex: 1, backgroundColor: theme.white, paddingTop: top}}>
       <StatusBar barStyle={'dark-content'} />
@@ -63,73 +77,45 @@ const WaiterScreen = ({navigation, route}) => {
           padding: 20,
         }}>
         <Text style={{fontSize: 34, fontWeight: 'bold'}}>{usr?.pub?.name}</Text>
-        <TouchableOpacity>
-          <Ionicons name={'notifications'} size={25} />
+        <TouchableOpacity onPress={() => setShowNotifications(true)}>
+          <Ionicons name={'notifications-outline'} size={25} />
+          <View
+            style={{
+              position: 'absolute',
+              right: 0,
+              top: 0,
+              height: 5,
+              width: 5,
+              backgroundColor: theme.red,
+              borderRadius: 5,
+            }}
+          />
         </TouchableOpacity>
       </View>
-      <ScrollView
+      <FlatList
         style={{flex: 1}}
+        data={locations}
+        ListHeaderComponent={
+          <WaiterHeader locations={locations} location={location} />
+        }
+        ListEmptyComponent={<WaiterEmpty />}
+        refreshing={loading}
+        onRefresh={() => fetch()}
+        renderItem={({item, index}) => (
+          <WaiterTableList
+            item={item}
+            key={index}
+            location={location}
+            size={size}
+            setSelected={setSelected}
+            selected={selected}
+            tables={tables}
+          />
+        )}
         contentContainerStyle={{
           padding: 20,
-        }}>
-        <View style={{alignItems: 'flex-start', marginBottom: 20}}>
-          {locations?.map((loc, index) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() => selectedLocation(loc)}
-              style={{
-                padding: 5,
-                borderRadius: 20,
-                paddingHorizontal: 20,
-                backgroundColor:
-                  loc.id === location?.id ? theme.red : theme.darkGrey,
-                marginRight: 10,
-              }}>
-              <Text style={{color: theme.white}}>{loc.name}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-          }}>
-          {location &&
-            location.rows &&
-            location.columns &&
-            [...Array.from(Array(location.rows * location.columns).keys())].map(
-              (number, index) => {
-                const table = tables?.find((tb) => tb.position === number);
-
-                if (table) {
-                  return (
-                    <Table
-                      key={index}
-                      size={size}
-                      setSelected={setSelected}
-                      selected={selected}
-                      table={table}
-                      index={index}
-                      waiter={true}
-                      // pub={pub}
-                    />
-                  );
-                } else {
-                  return (
-                    <DummyTable
-                      key={index}
-                      size={size}
-                      index={index}
-                      // addTable={addTable}
-                    />
-                  );
-                }
-              },
-            )}
-        </View>
-      </ScrollView>
+        }}
+      />
     </View>
   );
 };

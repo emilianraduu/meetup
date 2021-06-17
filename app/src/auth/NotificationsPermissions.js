@@ -14,21 +14,19 @@ import LottieView from 'lottie-react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
 import {lightVibration} from '../helpers/vibrations';
+import OneSignal from 'react-native-onesignal';
+import {useReactiveVar} from '@apollo/client';
+import {user} from '../helpers/variables';
 
 export const NotificationsPermissions = ({navigation, setCheckPerm}) => {
   const [showModal, setShowModal] = useState(false);
+  const usr = useReactiveVar(user);
   const onPress = () => {
-    async function requestUserPermission() {
-      const authorizationStatus = await messaging().requestPermission();
-      if (authorizationStatus) {
-        setCheckPerm?.(true);
+    OneSignal.promptForPushNotificationsWithUserResponse((response) => {
+      if (response && usr?.email) {
         AsyncStorage.setItem('notificationPerm', 'true');
-      } else {
-        alert('Notifications should be enabled');
       }
-    }
-
-    requestUserPermission();
+    });
   };
   return (
     <View style={{backgroundColor: theme.white, flex: 1}}>

@@ -1,26 +1,14 @@
 import React from 'react';
 import {ScrollView, Text, View} from 'react-native';
-import messaging from '@react-native-firebase/messaging';
 import {DARK_COLOR, GREEN_COLOR} from '../../helpers/constants';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Ripple from 'react-native-material-ripple';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ToggleSwitch from 'toggle-switch-react-native';
 import {lightVibration} from '../../helpers/vibrations';
+import OneSignal from 'react-native-onesignal';
 
 export const NotificationsScreen = ({navigation}) => {
-  const onPress = () => {
-    async function requestUserPermission() {
-      const authorizationStatus = await messaging().requestPermission();
-
-      if (authorizationStatus) {
-        console.log('Permission status:', authorizationStatus);
-      }
-    }
-
-    requestUserPermission();
-  };
-
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <View

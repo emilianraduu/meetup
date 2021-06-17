@@ -24,6 +24,7 @@ export const LOGIN_MUTATION = gql`
         tables {
           id
           name
+          locationId
           position
           count
           reservations {
@@ -147,9 +148,18 @@ export const REGISTER_WAITER = gql`
         id
         email
         photo
+        status
         firstName
         lastName
       }
+    }
+  }
+`;
+
+export const DELETE_WAITER = gql`
+  mutation deleteWaiter($pubId: Int!, $id: Int!) {
+    deleteWaiter(pubId: $pubId, id: $id) {
+      id
     }
   }
 `;

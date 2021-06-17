@@ -144,6 +144,7 @@ export const MainScreen = ({navigation}) => {
             data={sortedList()}
             refreshing={loading}
             style={{padding: 20}}
+            keyExtractor={(item, index) => index}
             contentContainerStyle={{paddingBottom: 20}}
             ListEmptyComponent={emptyList}
             onRefresh={() => {

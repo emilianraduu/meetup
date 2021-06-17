@@ -2,6 +2,7 @@ import {
   Animated,
   LayoutAnimation,
   Platform,
+  SafeAreaView,
   TouchableOpacity,
   UIManager,
   View,
@@ -47,17 +48,28 @@ const Sheet = ({children, pub}) => {
       ref={bottomSheetRef}
       index={0}
       handleComponent={null}
+      style={{
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowOpacity: 0.18,
+        shadowRadius: 5.0,
+        elevation: 1,
+      }}
       onChange={handleSheetChanges}
       snapPoints={['70%', '100%']}>
-      <Animated.View
-        style={{
-          flex: 1,
-          transform: [{translateY: animation}],
-          paddingTop: 20,
-        }}>
-        <TopBar index={index} onClose={onClose} pub={pub} />
-        {children}
-      </Animated.View>
+      <SafeAreaView style={{flex: 1}}>
+        <Animated.View
+          style={{
+            flex: 1,
+            paddingTop: 20,
+          }}>
+          <TopBar index={index} onClose={onClose} pub={pub} />
+          {children}
+        </Animated.View>
+      </SafeAreaView>
     </BottomSheet>
   );
 };

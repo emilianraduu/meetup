@@ -16,6 +16,7 @@ const LocationModal = ({
   setMarker,
   marker,
   onChangeInput,
+  onPress = () => {},
 }) => {
   const onMapPress = ({
     nativeEvent: {
@@ -65,6 +66,7 @@ const LocationModal = ({
             onPress={() => {
               if (marker) {
                 setShowModal(false);
+                onPress();
               } else {
                 alert('Please select location on the map');
               }

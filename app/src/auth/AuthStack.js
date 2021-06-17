@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import WelcomeScreen from './WelcomeScreen';
 import LoginScreen from './LoginScreen';
@@ -6,7 +6,10 @@ import {LoginRoute, PasswordRoute, WelcomeRoute} from '../helpers/routes';
 import PasswordScreen from './PasswordScreen';
 
 const Stack = createStackNavigator();
-export const AuthStack = () => {
+export const AuthStack = ({setLoadedNav}) => {
+  useEffect(() => {
+    setLoadedNav(true);
+  }, []);
   return (
     <Stack.Navigator>
       <Stack.Screen

@@ -27,6 +27,7 @@ import {
 } from '../../graphql/mutations/Menu';
 import storage from '@react-native-firebase/storage';
 import AddItemModal from './AddTableItem';
+import LottieView from 'lottie-react-native';
 
 const PubMenu = () => {
   const pub = useReactiveVar(selectedPub);
@@ -117,72 +118,82 @@ const PubMenu = () => {
     <View style={container}>
       <BottomSheetScrollView contentContainerStyle={container}>
         <Loader loading={loading} />
-        {!pub?.menu &&
-          usr?.status === user_status.admin &&
-          Number(pub?.ownerId) === Number(usr.id) && (
-            <View>
-              <View>
-                <Text style={{fontWeight: 'bold', fontSize: 14}}>
-                  You have no menu yet.
-                </Text>
-                <Text style={{color: theme.darkGrey, marginBottom: 20}}>
-                  To help your customers find what kind of products you provide
-                  it is highly recommended to setup a menu.
-                </Text>
-                <TouchableOpacity
-                  onPress={async () => {
-                    const response = await create({variables: {id: pub.id}});
-                    if (response?.data?.createMenu) {
-                      client.writeQuery({
-                        query: PUB_QUERY,
-                        data: {
-                          pub: {
-                            ...pub,
-                            menu: response?.data?.createMenu,
-                          },
-                        },
-                      });
-                    }
-                  }}>
-                  <Text
-                    style={{
-                      color: theme.red,
-                      fontWeight: 'bold',
-                      marginBottom: 20,
-                    }}>
-                    Create menu
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          )}
-        {usr?.status === user_status.admin &&
-          Number(pub?.ownerId) === Number(usr.id) &&
-          pub?.menu && (
+        <KeyboardAvoidingView
+          behavior={'position'}
+          keyboardVerticalOffset={100}
+          enabled>
+          {!pub?.menu && Number(pub?.ownerId) !== Number(usr.id) && (
             <>
               <Text style={{fontWeight: 'bold', fontSize: 14}}>
-                You can edit and manage the menu anytime.
-              </Text>
-              <Text style={{color: theme.darkGrey, marginBottom: 20}}>
-                It helps your customers into knowing your prices and offers.
+                This location has no menu yet.
               </Text>
             </>
           )}
-        {pub?.menu?.sections?.map((section) => (
-          <MenuSection
-            isAdmin={
-              usr?.status === user_status.admin &&
-              Number(pub?.ownerId) === Number(usr.id)
-            }
-            key={section.id}
-            section={section}
-            pub={pub}
-          />
-        ))}
-        {usr?.status === user_status.admin &&
-          Number(pub?.ownerId) === Number(usr.id) &&
-          pub?.menu && (
-            <KeyboardAvoidingView behavior={'padding'}>
+          {!pub?.menu &&
+            usr?.status === user_status.admin &&
+            Number(pub?.ownerId) === Number(usr.id) && (
+              <View>
+                <View>
+                  <Text style={{fontWeight: 'bold', fontSize: 14}}>
+                    You have no menu yet.
+                  </Text>
+                  <Text style={{color: theme.darkGrey, marginBottom: 20}}>
+                    To help your customers find what kind of products you
+                    provide it is highly recommended to setup a menu.
+                  </Text>
+                  <TouchableOpacity
+                    onPress={async () => {
+                      const response = await create({variables: {id: pub.id}});
+                      if (response?.data?.createMenu) {
+                        client.writeQuery({
+                          query: PUB_QUERY,
+                          data: {
+                            pub: {
+                              ...pub,
+                              menu: response?.data?.createMenu,
+                            },
+                          },
+                        });
+                      }
+                    }}>
+                    <Text
+                      style={{
+                        color: theme.red,
+                        fontWeight: 'bold',
+                        marginBottom: 20,
+                      }}>
+                      Create menu
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+          {usr?.status === user_status.admin &&
+            Number(pub?.ownerId) === Number(usr.id) &&
+            pub?.menu && (
+              <>
+                <Text style={{fontWeight: 'bold', fontSize: 14}}>
+                  You can edit and manage the menu anytime.
+                </Text>
+                <Text style={{color: theme.darkGrey, marginBottom: 20}}>
+                  It helps your customers into knowing your prices and offers.
+                </Text>
+              </>
+            )}
+          {pub?.menu?.sections?.map((section) => (
+            <MenuSection
+              isAdmin={
+                usr?.status === user_status.admin &&
+                Number(pub?.ownerId) === Number(usr.id)
+              }
+              key={section.id}
+              section={section}
+              pub={pub}
+            />
+          ))}
+          {usr?.status === user_status.admin &&
+            Number(pub?.ownerId) === Number(usr.id) &&
+            pub?.menu && (
               <View>
                 <Text style={{fontWeight: 'bold', fontSize: 14}}>
                   Add a new section.
@@ -206,8 +217,8 @@ const PubMenu = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-            </KeyboardAvoidingView>
-          )}
+            )}
+        </KeyboardAvoidingView>
       </BottomSheetScrollView>
     </View>
   );
@@ -345,8 +356,8 @@ const MenuItem = ({item, isAdmin, section}) => {
           <TouchableOpacity
             onPress={() => {
               Alert.alert(
-                'Alert Title',
-                'My Alert Msg',
+                'Are you sure?',
+                'If you delete this it you will need to insert it again.',
                 [
                   {
                     text: 'Cancel',
@@ -416,7 +427,6 @@ const styles = ({bottom}) =>
       padding: 10,
       backgroundColor: theme.white,
       flexGrow: 1,
-      paddingBottom: bottom + 30,
     },
     empty: {
       width: Dimensions.get('window').width - 40,

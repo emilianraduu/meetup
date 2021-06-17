@@ -1,5 +1,12 @@
 import React, {useCallback, useState} from 'react';
-import {Animated, Button, StyleSheet, Text, View} from 'react-native';
+import {
+  Animated,
+  Button,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import FilterTopBar from './FilterTopBar';
 import Slider from 'rn-range-slider';
 import Thumb from './Thumb';
@@ -154,20 +161,24 @@ const FilterContent = ({animation, onClose, index}) => {
           <RatingPicker colorOptions={colorOptions} onPress={onPressColor} />
         </View>
         <View style={section}>
-          <Text style={sectionTitle}>Material</Text>
-          <MultipleCheckbox
-            options={materialOptions}
-            onPress={onPressMaterial}
-          />
-        </View>
-        <View style={section}>
           <Text style={sectionTitle}>Price</Text>
           <MultipleRadio
             options={availabilityOptions}
             onPress={onPressAvailability}
           />
         </View>
-        <Button title={'Show filtered pubs'} onPress={submit} />
+        <TouchableOpacity
+          onPress={submit}
+          style={{
+            alignSelf: 'center',
+            backgroundColor: theme.red,
+            paddingVertical: 12,
+            paddingHorizontal: 20,
+            borderRadius: 8,
+            marginBottom: 50,
+          }}>
+          <Text style={{color: theme.white}}>Show filtered pubs</Text>
+        </TouchableOpacity>
       </BottomSheetScrollView>
     </Animated.View>
   );

@@ -29,6 +29,7 @@ export const TableScreen = ({navigation}) => {
   const pub = useReactiveVar(selectedPub);
   const usr = useReactiveVar(user);
   const [selected, setSelected] = useState(undefined);
+  const [edit, setEdit] = useState(false);
   const [showLocationModal, setShowLocationModal] = useState(false);
   const location = useReactiveVar(selectedLocation);
   const [create] = useMutation(CREATE_RESERVATION);
@@ -42,6 +43,8 @@ export const TableScreen = ({navigation}) => {
     selected,
     hasReservation,
   });
+
+  useEffect(() => {}, []);
   const onInputChange = ({key, value}) => {
     date(value);
   };
@@ -100,6 +103,13 @@ export const TableScreen = ({navigation}) => {
       navigation.goBack();
     }
   };
+  const editLocation = (loc) => {
+    selectedLocation(loc);
+    if (Number(usr?.id) === Number(pub?.ownerId)) {
+      setShowLocationModal(true);
+      setEdit(true);
+    }
+  };
   return (
     <View style={{flex: 1, backgroundColor: theme.white}}>
       <BottomSheetScrollView contentContainerStyle={container}>
@@ -126,6 +136,7 @@ export const TableScreen = ({navigation}) => {
                 <TouchableOpacity
                   key={index}
                   onPress={() => selectedLocation(loc)}
+                  onLongPress={() => editLocation(loc)}
                   style={[
                     button,
                     {
@@ -175,6 +186,7 @@ export const TableScreen = ({navigation}) => {
             locId={loc.id}
             selected={selected}
             setSelected={setSelected}
+            isAdmin={Number(usr?.id) === Number(pub?.ownerId)}
           />
         ))}
 
@@ -201,10 +213,16 @@ export const TableScreen = ({navigation}) => {
           </>
         )}
 
-        <AddLocationModal
-          onClose={() => setShowLocationModal(false)}
-          visible={showLocationModal}
-        />
+        {showLocationModal && (
+          <AddLocationModal
+            onClose={() => {
+              setShowLocationModal(false);
+              setEdit(false);
+            }}
+            edit={edit}
+            visible={showLocationModal}
+          />
+        )}
       </BottomSheetScrollView>
     </View>
   );

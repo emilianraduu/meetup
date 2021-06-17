@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {LocationScreen} from './LocationScreen';
 import {NotificationsPermissions} from './NotificationsPermissions';
 import {LocationRoute, NotificationRoute} from '../helpers/routes';
 
 const Stack = createStackNavigator();
-const PermissionsStack = ({setCheckPerm}) => {
+const PermissionsStack = ({setCheckPerm, setLoadedNav}) => {
+  useEffect(() => {
+    setLoadedNav(true);
+  }, []);
   return (
     <Stack.Navigator>
       <Stack.Screen

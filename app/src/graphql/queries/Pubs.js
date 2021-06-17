@@ -36,6 +36,7 @@ export const PUBS_QUERY = gql`
           reason
           position
           name
+          locationId
           reservations {
             id
             date
@@ -78,6 +79,7 @@ export const MY_PUBS_QUERY = gql`
         columns
         tables {
           id
+          locationId
           count
           blocked
           reason
@@ -119,7 +121,11 @@ export const PUB_QUERY = gql`
       reservations {
         id
         date
-        tableId
+        finished
+        user {
+          email
+          photo
+        }
       }
       locations {
         name
@@ -128,6 +134,7 @@ export const PUB_QUERY = gql`
         columns
         tables {
           id
+          locationId
           count
           blocked
           reason
@@ -136,7 +143,11 @@ export const PUB_QUERY = gql`
           reservations {
             id
             date
-            tableId
+            finished
+            user {
+              email
+              photo
+            }
           }
         }
       }

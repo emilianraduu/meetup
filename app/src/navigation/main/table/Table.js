@@ -5,7 +5,7 @@ import React, {useState} from 'react';
 import moment from 'moment';
 import {useReactiveVar} from '@apollo/client';
 import {date} from '../../../helpers/variables';
-import Modal from 'react-native-modal';
+import AdminModal from './AdminModal';
 
 const Table = ({index, pub, table, selected, size, setSelected, waiter}) => {
   const [waiterModal, setWaiterModal] = useState(false);
@@ -14,20 +14,27 @@ const Table = ({index, pub, table, selected, size, setSelected, waiter}) => {
     const day = moment(currentDate);
     const reservation = moment(Number(res?.date));
     const reservationEnd = moment(Number(res?.date)).add(
-      pub.reservationTime,
+      pub?.reservationTime,
       'hours',
     );
     return day.isBetween(reservation, reservationEnd, null, '[]');
   });
   const isSoon = table?.reservations?.find?.((res) => {
-    const day = moment(currentDate).add(pub.reservationTime, 'hours');
+    const day = moment(currentDate).add(pub?.reservationTime, 'hours');
     const reservation = moment(Number(res?.date));
     const reservationEnd = moment(Number(res?.date)).add(
-      pub.reservationTime,
+      pub?.reservationTime,
       'hours',
     );
     return day.isBetween(reservation, reservationEnd, null, '[]');
   });
+  const onPress = () => {
+    if (waiter) {
+      setWaiterModal(true);
+    } else {
+      setSelected(table);
+    }
+  };
   return (
     <>
       <TouchableOpacity
@@ -53,9 +60,7 @@ const Table = ({index, pub, table, selected, size, setSelected, waiter}) => {
           alignItems: 'center',
           justifyContent: 'center',
         }}
-        onPress={
-          waiter ? () => setWaiterModal(true) : () => setSelected(table)
-        }>
+        onPress={onPress}>
         {table?.blocked ? (
           <Icon name={'block'} size={40} color={theme.red} />
         ) : (
@@ -79,24 +84,11 @@ const Table = ({index, pub, table, selected, size, setSelected, waiter}) => {
           )
         )}
       </TouchableOpacity>
-      <Modal
-        onBackdropPress={() => setWaiterModal(false)}
-        onBackButtonPress={() => setWaiterModal(false)}
-        onSwipeComplete={() => setWaiterModal(false)}
-        swipeDirection={'down'}
-        propagateSwipe={true}
-        style={{margin: 0, flex: 1}}
-        isVisible={waiterModal}>
-        <View
-          style={{
-            backgroundColor: theme.white,
-            padding: 20,
-            margin: 20,
-            height: 200,
-            borderRadius: 20,
-          }}
-        />
-      </Modal>
+      <AdminModal
+        onClose={() => setWaiterModal(false)}
+        table={table}
+        isVisible={waiterModal}
+      />
     </>
   );
 };

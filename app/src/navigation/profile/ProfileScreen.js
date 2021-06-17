@@ -28,6 +28,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import {UPDATE_PHOTO_MUTATION} from '../../graphql/mutations/User';
 import {supportsSiriButton} from 'react-native-siri-shortcut/AddToSiriButton';
+import {client} from '../../graphql';
 
 const ProfileScreen = ({navigation}) => {
   const [showLogout, setShowLogout] = useState(false);
@@ -61,6 +62,7 @@ const ProfileScreen = ({navigation}) => {
     await AsyncStorage.removeItem('accessToken');
     token(undefined);
     setShowLogout(false);
+    client.resetStore();
   };
   const goTo = (page, options) => {
     navigation.navigate(page, options);

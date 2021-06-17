@@ -1,162 +1,152 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Button,
-  Dimensions,
-  LayoutAnimation,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {theme, user_status} from '../../helpers/constants';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {useMutation, useReactiveVar} from '@apollo/client';
 import {selectedPub, user} from '../../helpers/variables';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {CREATE_MENU, CREATE_MENU_SECTION} from '../../graphql/mutations/Pub';
 import {Loader} from '../Loader';
-import {PUB_QUERY} from '../../graphql/queries/Pubs';
-import {client} from '../../graphql';
+import moment from 'moment';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
+import {
+  CREATE_SCHEDULE,
+  UPDATE_SCHEDULE,
+} from '../../graphql/mutations/Schedule';
 
 const PubSchedule = () => {
   const pub = useReactiveVar(selectedPub);
-  const {bottom} = useSafeAreaInsets();
   const usr = useReactiveVar(user);
-
-  const [create, {loading, data: menuData, error: menuError}] = useMutation(
-    CREATE_MENU,
+  const [selectedDay, setSelectedDay] = useState(moment.weekdays()[0]);
+  const [create, {loading}] = useMutation(CREATE_SCHEDULE);
+  const [update, {loading: loadingUpdate, error}] = useMutation(
+    UPDATE_SCHEDULE,
   );
-  const [
-    createSection,
-    {loading: loadingSection, data: menuSectionData, error: menuSectionError},
-  ] = useMutation(CREATE_MENU_SECTION);
-  const [sectionText, setSectionText] = useState('');
-
-  const {container, empty} = styles({
-    bottom,
+  const [values, setValues] = useState({
+    timeStart: new Date(),
+    timeEnd: new Date(),
   });
-
-  useEffect(() => {
-    if (menuError) {
-      alert(menuError);
-    }
-    if (menuData?.createMenu) {
-      client.writeQuery({
-        query: PUB_QUERY,
-        data: {pub: {...pub, menu: menuData?.createMenu}},
+  useEffect(() => {}, [selectedDay]);
+  const isAdmin =
+    usr?.status === user_status.admin &&
+    Number(pub?.ownerId) === Number(usr.id);
+  const onInputChange = ({key, value}) => {
+    setValues({...values, [key]: value});
+  };
+  const onPress = async () => {
+    const schedules = pub.schedule;
+    if (schedules.find((sc) => sc.dayOfWeek === selectedDay)) {
+      const index = schedules.findIndex((sc) => sc.dayOfWeek === selectedDay);
+      const response = await update({
+        variables: {
+          dayOfWeek: selectedDay,
+          timeStart: moment(values.timeStart).format('HH:mm'),
+          timeEnd: moment(values.timeStart).format('HH:mm'),
+          pubId: pub.id,
+          id: schedules[index]?.id,
+        },
       });
-    }
-  }, [menuData, menuError, pub]);
-  useEffect(() => {
-    if (menuSectionError) {
-      alert(menuSectionError);
-    }
-    if (menuSectionData?.createMenuSection && pub && pub.menu) {
-      if (
-        pub.menu.sections &&
-        !pub.menu.sections.find(
-          (section) => section.id === menuSectionData?.createMenuSection.id,
-        )
-      ) {
-        client.writeQuery({
-          query: PUB_QUERY,
-          data: {
-            pub: {
-              ...pub,
-              menu: {
-                ...pub.menu,
-                sections: pub.menu.sections
-                  ? [...pub.menu.sections, menuSectionData?.createMenuSection]
-                  : [menuSectionData?.createMenuSection],
-              },
-            },
-          },
+      const newSchedules = pub.schedule;
+      if (response?.data?.updateSchedule) {
+        newSchedules[index] = response?.data?.updateSchedule;
+        selectedPub({
+          ...pub,
+          schedule: newSchedules,
+        });
+      }
+    } else {
+      const response = await create({
+        variables: {
+          dayOfWeek: selectedDay,
+          timeStart: moment(values.timeStart).format('HH:mm'),
+          timeEnd: moment(values.timeStart).format('HH:mm'),
+          pubId: pub.id,
+        },
+      });
+      if (response?.data?.createSchedule) {
+        selectedPub({
+          ...pub,
+          schedule: [...pub.schedule, response?.data?.createSchedule],
         });
       }
     }
-  }, [menuSectionData, menuSectionError, pub]);
-  useEffect(() => {
-    LayoutAnimation.configureNext({
-      duration: 150,
-      create: {
-        type: LayoutAnimation.Types.easeInEaseOut,
-        property: LayoutAnimation.Properties.scaleXY,
-      },
-      useNativeDriver: true,
-      update: {type: LayoutAnimation.Types.easeInEaseOut},
-    });
-  }, []);
+  };
   return (
     <View style={{flex: 1, backgroundColor: theme.white}}>
-      <BottomSheetScrollView contentContainerStyle={container}>
-        <Loader loading={loading} />
-        {!pub?.menu &&
-          usr?.status === user_status.admin &&
-          Number(pub?.ownerId) === Number(usr.id) && (
-            <View>
-              <View>
-                <Text>You have no menu yet.</Text>
-                <Button
-                  title={'Create menu'}
-                  onPress={() => {
-                    create({variables: {id: pub.id}});
-                  }}
-                />
-              </View>
-            </View>
-          )}
-        {pub?.menu?.sections?.map((section) => (
-          <View key={section.id}>
-            <Text>{section.name}</Text>
-            <Ionicons name={section.image} size={20} color={theme.dark} />
-            {section.items?.map((item) => (
-              <MenuItem item={item} pub={pub} />
-            ))}
-          </View>
-        ))}
-        {usr?.status === user_status.admin &&
-          Number(pub?.ownerId) === Number(usr.id) && (
-            <View>
-              <TextInput
-                onChange={({nativeEvent: {text}}) => setSectionText(text)}
-                placeholder={'Section name'}
-              />
-              <Button
-                title={'Create section'}
-                onPress={() => {
-                  createSection({
-                    variables: {menuId: pub.menu.id, name: sectionText},
-                  });
-                }}
-              />
-            </View>
-          )}
+      <BottomSheetScrollView style={{paddingTop: 20, backgroundColor: 'black'}}>
+        <Loader loading={false} />
+        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+          {moment.weekdays().map((day, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => setSelectedDay(day)}
+              style={{
+                backgroundColor: selectedDay === day ? theme.red : theme.dark,
+                width: 50,
+                height: 50,
+                borderRadius: 60,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text style={{color: theme.white}}>{day.slice(0, 2)}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: 20,
+          }}>
+          <Text style={{color: theme.white, marginLeft: 10}}>Time start</Text>
+          <RNDateTimePicker
+            disabled={!isAdmin}
+            value={values.timeStart}
+            minuteInterval={5}
+            style={{flex: 1, justifyContent: 'flex-end'}}
+            mode={'time'}
+            onChange={(e) => {
+              onInputChange({
+                key: 'timeStart',
+                value: new Date(e.nativeEvent.timestamp),
+              });
+            }}
+          />
+          <Text style={{color: theme.white, marginLeft: 10}}>Time end</Text>
+          <RNDateTimePicker
+            disabled={!isAdmin}
+            value={values.timeEnd}
+            minuteInterval={5}
+            onChange={(e) => {
+              onInputChange({
+                key: 'timeEnd',
+                value: new Date(e.nativeEvent.timestamp),
+              });
+            }}
+            mode={'time'}
+            style={{
+              flex: 1,
+              alignSelf: 'flex-start',
+              justifyContent: 'flex-start',
+            }}
+          />
+        </View>
+        {isAdmin && (
+          <TouchableOpacity
+            onPress={onPress}
+            style={{
+              marginTop: 40,
+              backgroundColor: theme.red,
+              padding: 10,
+              alignSelf: 'center',
+              paddingHorizontal: 50,
+              borderRadius: 8,
+            }}>
+            <Text style={{color: theme.white}}>Save schedule</Text>
+          </TouchableOpacity>
+        )}
+        <Loader loading={loading || loadingUpdate} />
       </BottomSheetScrollView>
     </View>
   );
 };
-const MenuItem = ({item, pub}) => {
-  return (
-    <View>
-      <Text> {item.name}</Text>
-      <Text> {item.description}</Text>
-      <Text>
-        {item.price} {pub.currency}
-      </Text>
-    </View>
-  );
-};
-const styles = ({bottom}) =>
-  StyleSheet.create({
-    container: {
-      padding: 20,
-      flexGrow: 1,
-      paddingBottom: bottom + 30,
-    },
-    empty: {
-      width: Dimensions.get('window').width - 40,
-      alignSelf: 'center',
-    },
-  });
+
 export default PubSchedule;

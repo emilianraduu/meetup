@@ -99,7 +99,7 @@ export const PubDetails = ({pub, wrapperStyle}) => {
       const day = moment(currentDate);
       const reservation = moment(Number(res?.date));
       const reservationEnd = moment(Number(res?.date)).add(
-        pub.reservationTime,
+        pub?.reservationTime,
         'hours',
       );
       if (day.isBetween(reservation, reservationEnd, null, '[]')) {

@@ -7,8 +7,14 @@ import {PUB_QUERY} from '../../graphql/queries/Pubs';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Modal from 'react-native-modal';
 import {Loader} from '../Loader';
-import {Text, TextInput, TouchableOpacity, View} from 'react-native';
-import {Image} from 'react-native-elements';
+import {
+  KeyboardAvoidingView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {theme} from '../../helpers/constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -69,15 +75,21 @@ const AddItemModal = ({isVisible, setIsVisible, pub, section}) => {
   const onInputChange = ({key, value}) => {
     setValues({...values, [key]: value});
   };
+  const onClose = () => {
+    setIsVisible(false);
+    setImage(undefined);
+    setValues({description: '', price: 0, name: ''});
+  };
   return (
     <Modal
       isVisible={isVisible}
       swipeDirection={'down'}
-      onBackdropPress={() => setIsVisible(false)}
+      onBackdropPress={onClose}
       propagateSwipe={true}
-      onSwipeComplete={() => setIsVisible(false)}>
-      <Loader loading={loading} />
-      <View
+      onSwipeComplete={onClose}>
+      <KeyboardAvoidingView
+        enabled
+        behavior={'position'}
         style={{
           shadowColor: '#000',
           shadowOffset: {
@@ -90,6 +102,7 @@ const AddItemModal = ({isVisible, setIsVisible, pub, section}) => {
           shadowRadius: 5.0,
           overflow: 'hidden',
           elevation: 1,
+          flex: 1,
         }}>
         <TouchableOpacity
           onPress={onPhotoPress}
@@ -101,7 +114,7 @@ const AddItemModal = ({isVisible, setIsVisible, pub, section}) => {
             justifyContent: 'center',
           }}>
           {image ? (
-            <Image
+            <FastImage
               source={{uri: image.uri}}
               resizeMode={'cover'}
               style={{flex: 1, height: 200, width: '100%'}}
@@ -160,7 +173,8 @@ const AddItemModal = ({isVisible, setIsVisible, pub, section}) => {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+        <Loader loading={loading} />
+      </KeyboardAvoidingView>
     </Modal>
   );
 };

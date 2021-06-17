@@ -14,16 +14,17 @@ import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {useMutation, useReactiveVar} from '@apollo/client';
 import {selectedPub, user} from '../../helpers/variables';
 import {Loader} from '../Loader';
-import {CREATE_WAITER} from '../../graphql/mutations/User';
+import {CREATE_WAITER, DELETE_WAITER} from '../../graphql/mutations/User';
 import {client} from '../../graphql';
 import {PUB_QUERY} from '../../graphql/queries/Pubs';
 import {validateEmail} from '../../helpers/validators';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const PubWaiters = () => {
   const pub = useReactiveVar(selectedPub);
   const {bottom} = useSafeAreaInsets();
-
-  const [create, {loading, error}] = useMutation(CREATE_WAITER);
+  const [deleteWaiter, {error: waiterError}] = useMutation(DELETE_WAITER);
+  const [create, {loading}] = useMutation(CREATE_WAITER);
 
   const [email, setEmail] = useState('');
   const [errorString, setError] = useState('');
@@ -62,7 +63,19 @@ const PubWaiters = () => {
       setError('Invalid email.');
     }
   };
-
+  const onPressDelete = async ({id}) => {
+    const response = await deleteWaiter({variables: {pubId: pub.id, id}});
+    if (response?.data?.deleteWaiter) {
+      let waiters = pub.waiters;
+      const indexWaiter = waiters.findIndex(
+        (waiter) => waiter.id === Number(id),
+      );
+      waiters.splice(indexWaiter, 1);
+      client.writeQuery({query: PUB_QUERY, data: {pub: {...pub, waiters}}});
+      setEmail(' ');
+      setEmail('');
+    }
+  };
   return (
     <View style={{flex: 1, backgroundColor: theme.white}}>
       <BottomSheetScrollView contentContainerStyle={container}>
@@ -77,9 +90,20 @@ const PubWaiters = () => {
           pub?.waiters?.map((waiter, index) => (
             <View key={index}>
               <Text style={{fontWeight: 'bold'}}>Waiter</Text>
-              <Text style={{fontWeight: 'bold', color: theme.red}}>
-                {waiter.email}
-              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                <Text style={{fontWeight: 'bold', color: theme.red}}>
+                  {waiter.email}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => onPressDelete({id: waiter.id})}>
+                  <Ionicons name={'close'} size={20} />
+                </TouchableOpacity>
+              </View>
             </View>
           ))
         )}

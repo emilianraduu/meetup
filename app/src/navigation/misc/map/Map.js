@@ -55,7 +55,7 @@ const Map = ({latitude, longitude}) => {
           <MapView
             style={{flex: 1}}
             showsUserLocation={true}
-            followsUserLocation={true}
+            followsUserLocation={false}
             initialRegion={{
               latitude,
               longitude,

@@ -26,9 +26,7 @@ const PubScreen = ({navigation}) => {
   const pub = useReactiveVar(selectedPub);
   const latitude = useReactiveVar(lat);
   const longitude = useReactiveVar(long);
-  const [pubQuery, {loading, data, error, called, refetch}] = useLazyQuery(
-    PUB_QUERY,
-  );
+  const [pubQuery, {loading, data, error, called}] = useLazyQuery(PUB_QUERY);
 
   useEffect(() => {
     if (pub?.id && !called) {
@@ -82,7 +80,6 @@ const PubScreen = ({navigation}) => {
             onPress={() => {
               Share.share({
                 title: `Meetup`,
-                message: `Check out ${pub.name}!`,
                 url: `${Config.API_URL}/${pub.name}`,
               });
             }}>

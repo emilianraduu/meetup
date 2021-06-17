@@ -25,6 +25,7 @@ import {client} from '../../graphql';
 import {MY_PUBS_QUERY} from '../../graphql/queries/Pubs';
 import LocationModal from './LocationModal';
 import {Loader} from '../Loader';
+import Config from 'react-native-config';
 
 const AddPubScreen = ({navigation}) => {
   const latitude = useReactiveVar(lat);
@@ -53,7 +54,7 @@ const AddPubScreen = ({navigation}) => {
   useEffect(() => {
     if (marker && marker.latitude && marker.longitude) {
       fetch(
-        `https://eu1.locationiq.com/v1/reverse.php?key=pk.4ffc58640549bc475e052bdc44168b7f&lat=${marker.latitude}&lon=${marker.longitude}&format=json`,
+        `https://eu1.locationiq.com/v1/reverse.php?key=${Config.LOCATION_KEY}&lat=${marker.latitude}&lon=${marker.longitude}&format=json`,
       ).then((e) =>
         e
           .json()
@@ -148,7 +149,7 @@ const AddPubScreen = ({navigation}) => {
             <TextInput
               style={style.input}
               placeholder={'Insert location name'}
-              placeholderTextColor={theme.grey}
+              placeholderTextColor={theme.darkGrey}
               onChange={(e) =>
                 onInputChange({key: 'name', value: e.nativeEvent.text})
               }
@@ -165,7 +166,7 @@ const AddPubScreen = ({navigation}) => {
               keyboardType={'numeric'}
               placeholder={'Insert reservation time'}
               value={values?.reservationTime}
-              placeholderTextColor={theme.grey}
+              placeholderTextColor={theme.darkGrey}
               onChange={({nativeEvent: {text}}) => {
                 if (Number(text) || text.length === 0) {
                   onInputChange({
@@ -275,7 +276,7 @@ const style = {
   field: {marginBottom: 20},
   fieldTitle: {fontWeight: '600'},
   input: {
-    borderBottomColor: theme.grey,
+    borderBottomColor: theme.darkGrey,
     borderBottomWidth: 2,
     paddingVertical: 10,
   },
@@ -312,7 +313,7 @@ const style = {
   },
   fieldSubtitle: {
     fontSize: 11,
-    color: theme.grey,
+    color: theme.darkGrey,
   },
 };
 

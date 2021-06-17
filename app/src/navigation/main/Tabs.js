@@ -156,12 +156,8 @@ function PubTabs() {
         usr.status === user_status.admin && (
           <Tab.Screen name={AnalyticsRoute} component={PubAnalytics} />
         )}
-      {pub &&
-        usr &&
-        Number(pub?.ownerId) === Number(usr.id) &&
-        usr.status === user_status.admin && (
-          <Tab.Screen name={ScheduleRoute} component={PubSchedule} />
-        )}
+
+      <Tab.Screen name={ScheduleRoute} component={PubSchedule} />
       <Tab.Screen name={AboutRoute} component={PubAbout} />
     </Tab.Navigator>
   );
