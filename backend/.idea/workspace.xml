@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd3e0659-fbfa-4cc6-b2f0-3363ec8571a9" name="Default Changelist" comment="" />
+    <list default="true" id="cd3e0659-fbfa-4cc6-b2f0-3363ec8571a9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../meetup-register/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../app/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/navigation/profile/NotificationsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/navigation/profile/NotificationsScreen.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -69,6 +75,8 @@
       <workItem from="1623591810893" duration="9529000" />
       <workItem from="1623684710203" duration="628000" />
       <workItem from="1623687520122" duration="10331000" />
+      <workItem from="1623780841994" duration="14000" />
+      <workItem from="1623780870365" duration="24000" />
     </task>
     <servers />
   </component>
