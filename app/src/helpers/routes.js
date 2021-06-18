@@ -15,6 +15,7 @@ export const ProfileNotificationsRoute = 'ProfileNotifications';
 export const TableRoute = 'Tables';
 export const MenuRoute = 'Menu';
 export const ReviewsRoute = 'Reviews';
+export const FriendsRoute = 'Friends';
 export const WaitersRoute = 'Waiters';
 export const AboutRoute = 'About';
 

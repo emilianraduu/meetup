@@ -14,11 +14,26 @@ export const LOGIN_MUTATION = gql`
         pub {
           id
           name
+          reservationTime
           locations {
             id
             name
             rows
             columns
+          }
+        }
+        reviews {
+          id
+          rating
+          createdAt
+          comment
+          user {
+            email
+          }
+          pub {
+            name
+            address
+            id
           }
         }
         tables {
@@ -27,6 +42,7 @@ export const LOGIN_MUTATION = gql`
           locationId
           position
           count
+          waiterId
           reservations {
             id
             date
@@ -38,9 +54,19 @@ export const LOGIN_MUTATION = gql`
             columns
           }
         }
+        friends {
+          friend {
+            id
+            email
+            photo
+            firstName
+            lastName
+          }
+        }
         reservations {
           id
           date
+          confirmed
           finished
           location {
             id
@@ -56,6 +82,7 @@ export const LOGIN_MUTATION = gql`
             longitude
             name
             latitude
+            reservationTime
             longitude
             address
           }
@@ -78,6 +105,7 @@ export const REGISTER_MUTATION = gql`
         reservations {
           id
           date
+          confirmed
           finished
           location {
             id
@@ -91,6 +119,7 @@ export const REGISTER_MUTATION = gql`
           }
           pub {
             id
+            reservationTime
             name
             latitude
             longitude
@@ -160,6 +189,22 @@ export const DELETE_WAITER = gql`
   mutation deleteWaiter($pubId: Int!, $id: Int!) {
     deleteWaiter(pubId: $pubId, id: $id) {
       id
+    }
+  }
+`;
+
+export const ADD_FRIEND = gql`
+  mutation addFriend($userId: Int!, $friendId: Int!) {
+    addFriend(userId: $userId, friendId: $friendId) {
+      id
+      createdAt
+      friend {
+        email
+        id
+        firstName
+        lastName
+        photo
+      }
     }
   }
 `;

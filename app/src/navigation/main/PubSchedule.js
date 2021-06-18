@@ -24,7 +24,6 @@ const PubSchedule = () => {
     timeStart: new Date(),
     timeEnd: new Date(),
   });
-  useEffect(() => {}, [selectedDay]);
   const isAdmin =
     usr?.status === user_status.admin &&
     Number(pub?.ownerId) === Number(usr.id);

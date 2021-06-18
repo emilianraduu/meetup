@@ -12,5 +12,6 @@ export const long = makeVar(undefined);
 export const selectedLocation = makeVar(undefined);
 export const date = makeVar(new Date());
 export const selectedDistance = makeVar(5000);
+export const userFriends = makeVar([]);
 
 export const showError = makeVar(false);

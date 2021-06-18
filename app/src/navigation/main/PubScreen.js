@@ -52,7 +52,7 @@ const PubScreen = ({navigation}) => {
           <TouchableOpacity
             style={{
               position: 'absolute',
-              top: top,
+              top: top + 20,
               elevation: 1,
               zIndex: 100,
               padding: 10,
@@ -69,7 +69,7 @@ const PubScreen = ({navigation}) => {
           <TouchableOpacity
             style={{
               position: 'absolute',
-              top: top,
+              top: top + 20,
               elevation: 1,
               zIndex: 100,
               padding: 10,

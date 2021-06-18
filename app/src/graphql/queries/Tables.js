@@ -8,11 +8,13 @@ export const GET_WAITER_TABLES = gql`
       blocked
       reason
       locationId
+      waiterId
       position
       name
       reservations {
         id
         date
+        confirmed
         finished
         user {
           email

@@ -44,6 +44,7 @@ export const CREATE_PUB = gql`
         tables {
           id
           locationId
+          waiterId
           count
           blocked
           reason
@@ -130,6 +131,7 @@ export const UPDATE_PUB = gql`
           id
           locationId
           count
+          waiterId
           blocked
           reason
           position

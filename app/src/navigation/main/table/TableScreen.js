@@ -16,6 +16,7 @@ import {
   selectedLocation,
   selectedPub,
   user,
+  userFriends,
 } from '../../../helpers/variables';
 import AddLocationModal from './AddLocationModal';
 import {CREATE_RESERVATION} from '../../../graphql/mutations/Reservation';
@@ -24,6 +25,8 @@ import moment from 'moment';
 import {client} from '../../../graphql';
 import {PUB_QUERY} from '../../../graphql/queries/Pubs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import RNPickerSelect from 'react-native-picker-select';
+import {Loader} from '../../Loader';
 
 export const TableScreen = ({navigation}) => {
   const pub = useReactiveVar(selectedPub);
@@ -31,13 +34,12 @@ export const TableScreen = ({navigation}) => {
   const [selected, setSelected] = useState(undefined);
   const [edit, setEdit] = useState(false);
   const [showLocationModal, setShowLocationModal] = useState(false);
+  const [friendIds, setFriendIds] = useState([]);
   const location = useReactiveVar(selectedLocation);
-  const [create] = useMutation(CREATE_RESERVATION);
+  const [create, {loading, error}] = useMutation(CREATE_RESERVATION);
   const currentDate = useReactiveVar(date);
-
   const {bottom} = useSafeAreaInsets();
   const hasReservation = usr?.reservations?.find((res) => !res.finished);
-
   const {container, spaceText, section, button, text, cta} = styles({
     bottom,
     selected,
@@ -70,6 +72,7 @@ export const TableScreen = ({navigation}) => {
         locationId: location.id,
         date: moment(currentDate),
         tableId: selected.id,
+        waiterId: selected.waiterId,
       },
     });
     if (response?.data.createReservation) {
@@ -110,6 +113,20 @@ export const TableScreen = ({navigation}) => {
       setEdit(true);
     }
   };
+
+  const onSelectFriend = (value) => {
+    if (!friendIds.includes(value)) {
+      setFriendIds([...friendIds, value]);
+    }
+  };
+  const friends = useReactiveVar(userFriends);
+
+  const friendOptions = friends?.map((fr) => {
+    return {
+      value: fr.friend.id,
+      label: fr.friend.email,
+    };
+  });
   return (
     <View style={{flex: 1, backgroundColor: theme.white}}>
       <BottomSheetScrollView contentContainerStyle={container}>
@@ -204,6 +221,29 @@ export const TableScreen = ({navigation}) => {
                 finished
               </Text>
             )}
+            {!hasReservation && selected && (
+              <>
+                <Text style={{marginTop: 10, fontWeight: 'bold'}}>
+                  You can add your friends to this reservation.
+                </Text>
+                {[...Array.from(Array(selected?.count - 1).keys())].map(
+                  (val) => (
+                    <View style={{marginVertical: 15}} key={val}>
+                      <Text style={{fontWeight: 'bold'}}>Select friend</Text>
+                      <RNPickerSelect
+                        key={val}
+                        onValueChange={(value) => onSelectFriend(value)}
+                        placeholder={{
+                          value: '',
+                          label: 'Be joined by a friend',
+                        }}
+                        items={friendOptions}
+                      />
+                    </View>
+                  ),
+                )}
+              </>
+            )}
             <TouchableOpacity
               disabled={!selected || hasReservation}
               style={cta}
@@ -212,7 +252,7 @@ export const TableScreen = ({navigation}) => {
             </TouchableOpacity>
           </>
         )}
-
+        <Loader loading={loading} />
         {showLocationModal && (
           <AddLocationModal
             onClose={() => {

@@ -93,6 +93,7 @@ const PasswordScreen = ({navigation, route}) => {
       } catch (e) {
         setError();
         alert(e);
+        console.log(JSON.stringify(e));
         setLoading(false);
       }
     } else {

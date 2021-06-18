@@ -10,7 +10,7 @@ import React, {useEffect, useState} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {theme} from '../../helpers/constants';
 import {useLazyQuery, useReactiveVar} from '@apollo/client';
-import {selectedLocation, user} from '../../helpers/variables';
+import {selectedLocation, selectedPub, user} from '../../helpers/variables';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {GET_WAITER_TABLES} from '../../graphql/queries/Tables';
 import WaiterHeader from './WaiterHeader';
@@ -20,13 +20,11 @@ import WaiterTableList from './WaiterTableList';
 const WaiterScreen = ({navigation, route}) => {
   const usr = useReactiveVar(user);
   const [locations, setLocations] = useState([]);
-  const [missingLocation, setMissingLocation] = useState(undefined);
   const [tables, setTables] = useState(undefined);
   const [showNotifications, setShowNotifications] = useState(false);
   const [selected, setSelected] = useState(undefined);
   const location = useReactiveVar(selectedLocation);
   const [fetch, {loading, data}] = useLazyQuery(GET_WAITER_TABLES);
-
   useEffect(() => {
     for (let i = 0; i < tables?.length; i++) {
       if (tables[i].location && !locations.includes(tables[i].location)) {
@@ -57,6 +55,7 @@ const WaiterScreen = ({navigation, route}) => {
 
   useEffect(() => {
     fetch();
+    selectedPub(usr.pub);
   }, []);
 
   useEffect(() => {
@@ -104,6 +103,7 @@ const WaiterScreen = ({navigation, route}) => {
         renderItem={({item, index}) => (
           <WaiterTableList
             item={item}
+            pub={usr.pub}
             key={index}
             location={location}
             size={size}

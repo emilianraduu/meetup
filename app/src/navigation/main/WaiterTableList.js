@@ -10,6 +10,7 @@ const WaiterTableList = ({
   selected,
   setSelected,
   item,
+  pub,
 }) => (
   <View
     style={{
@@ -37,7 +38,7 @@ const WaiterTableList = ({
                 table={table}
                 index={index}
                 waiter={true}
-                // pub={pub}
+                pub={pub}
               />
             );
           } else {

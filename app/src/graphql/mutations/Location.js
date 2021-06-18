@@ -18,6 +18,7 @@ export const CREATE_LOCATION = gql`
       tables {
         id
         locationId
+        waiterId
         count
         blocked
         reason
@@ -57,6 +58,7 @@ export const UPDATE_LOCATION = gql`
       tables {
         id
         count
+        waiterId
         blocked
         reason
         locationId

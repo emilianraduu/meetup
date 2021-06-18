@@ -42,18 +42,18 @@ const PubWaiters = () => {
   const addWaiter = async () => {
     if (validateEmail(email)) {
       const response = await create({variables: {pubId: pub.id, email: email}});
-      if (response?.data?.createWaiter && pub.waiters) {
+      if (response?.data?.createWaiter && pub?.waiters) {
         try {
           client.writeQuery({
             query: PUB_QUERY,
             data: {
               pub: {
                 ...pub,
-                waiters: [...pub.waiters, response?.data?.createWaiter],
+                waiters: [...pub?.waiters, response?.data?.createWaiter],
               },
             },
           });
-          pub.waiters = [...pub.waiters, response?.data?.createWaiter];
+          pub.waiters = [...pub?.waiters, response?.data?.createWaiter];
           setEmail('');
         } catch (e) {
           console.log(e);
@@ -66,7 +66,7 @@ const PubWaiters = () => {
   const onPressDelete = async ({id}) => {
     const response = await deleteWaiter({variables: {pubId: pub.id, id}});
     if (response?.data?.deleteWaiter) {
-      let waiters = pub.waiters;
+      let waiters = pub?.waiters;
       const indexWaiter = waiters.findIndex(
         (waiter) => waiter.id === Number(id),
       );

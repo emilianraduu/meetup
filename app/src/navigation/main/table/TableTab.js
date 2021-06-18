@@ -12,6 +12,7 @@ const TableTab = ({locId, selected, setSelected, isAdmin}) => {
   const pub = useReactiveVar(selectedPub);
   const [modalTable, setModalTable] = useState(false);
   const [pos, setPos] = useState(undefined);
+  const [render, setRender] = useState(false);
 
   const addTable = (position) => {
     setModalTable(true);
@@ -49,6 +50,8 @@ const TableTab = ({locId, selected, setSelected, isAdmin}) => {
                     <Table
                       key={index}
                       size={size}
+                      render={render}
+                      setRender={setRender}
                       setSelected={setSelected}
                       selected={selected}
                       table={table}

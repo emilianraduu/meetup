@@ -180,13 +180,13 @@ const PubMenu = () => {
                 </Text>
               </>
             )}
-          {pub?.menu?.sections?.map((section) => (
+          {pub?.menu?.sections?.map((section, index) => (
             <MenuSection
               isAdmin={
                 usr?.status === user_status.admin &&
                 Number(pub?.ownerId) === Number(usr.id)
               }
-              key={section.id}
+              key={index}
               section={section}
               pub={pub}
             />

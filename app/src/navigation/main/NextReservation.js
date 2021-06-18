@@ -7,6 +7,7 @@ import CustomBackground from '../misc/filters/misc/CustomBackground';
 import {getDistance} from 'geolib';
 import {useReactiveVar} from '@apollo/client';
 import {lat, long} from '../../helpers/variables';
+import MapView, {Marker} from 'react-native-maps';
 
 const NextReservation = ({nextReservation}) => {
   const [index, setIndex] = useState(0);
@@ -68,18 +69,44 @@ const NextReservation = ({nextReservation}) => {
                 ? `Your next reservation is in ${dueDate.humanize()}`
                 : 'Your reservation is ongoing'}
             </Text>
-            <Text style={{fontWeight: 'bold'}}>Location</Text>
+            <Text>Location</Text>
             <Text style={{fontWeight: 'bold'}}>
               {nextReservation?.location?.name}
             </Text>
-            <Text style={{fontWeight: 'bold'}}>Address</Text>
-
-            <Text style={{fontWeight: 'bold'}}>
+            <Text style={{marginTop: 20}}>Address</Text>
+            <Text style={{fontWeight: 'bold', color: theme.red}}>
               {nextReservation?.pub?.address}
             </Text>
-            <Text style={{fontWeight: 'bold'}}>Address</Text>
-
-            <Text style={{fontWeight: 'bold'}}>{distance}</Text>
+            <Text style={{marginTop: 20}}>Distance</Text>
+            <Text style={{fontWeight: 'bold'}}>{distance}m</Text>
+            <Text style={{marginTop: 20}}>Name</Text>
+            <Text style={{fontWeight: 'bold'}}>
+              {nextReservation?.pub.name}
+            </Text>
+            {nextReservation?.pub.latitude && nextReservation?.pub.longitude && (
+              <MapView
+                scrollEnabled={false}
+                pitchEnabled={false}
+                style={{
+                  height: 200,
+                  borderRadius: 20,
+                  overflow: 'hidden',
+                  marginTop: 10,
+                }}
+                initialRegion={{
+                  latitude: nextReservation?.pub?.latitude,
+                  longitude: nextReservation?.pub?.longitude,
+                  latitudeDelta: 0.122,
+                  longitudeDelta: 0.1421,
+                }}>
+                <Marker
+                  coordinate={{
+                    latitude: nextReservation?.pub.latitude,
+                    longitude: nextReservation?.pub.longitude,
+                  }}
+                />
+              </MapView>
+            )}
           </View>
         </View>
       </BottomSheet>

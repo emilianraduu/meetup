@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 import {Dimensions, FlatList, StatusBar, Text, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -13,6 +13,7 @@ import {lat, long, pubs, selectedDistance, user} from '../../helpers/variables';
 import {Loader} from '../Loader';
 import NextReservation from './NextReservation';
 import {getDistance} from 'geolib';
+import ReviewModal from '../reviews/ReviewModal';
 
 export const MainScreen = ({navigation}) => {
   const latitude = useReactiveVar(lat);
@@ -22,6 +23,18 @@ export const MainScreen = ({navigation}) => {
   const [pubQuery, {loading, data, error}] = useLazyQuery(PUBS_QUERY, {
     fetchPolicy: 'no-cache',
   });
+  const [showReview, setShowReview] = useState(undefined);
+  useEffect(() => {
+    const history = usr?.reservations?.filter((res) => res.finished);
+    history.map((item) => {
+      const findIndex = usr?.reviews?.findIndex(
+        (rev) => rev.pubId === item.pubId,
+      );
+      if (findIndex === -1) {
+        setShowReview(item);
+      }
+    });
+  }, [usr]);
   const maxDistance = useReactiveVar(selectedDistance);
 
   const pubList = useReactiveVar(pubs);
@@ -74,6 +87,7 @@ export const MainScreen = ({navigation}) => {
     }
   }, [maxDistance, latitude, longitude, pubQuery, usr]);
   const nextReservation = getNextUserReservation();
+
   const emptyList = () => {
     return (
       <View
@@ -162,8 +176,15 @@ export const MainScreen = ({navigation}) => {
             )}
           />
         )}
-        {nextReservation && (
+        {nextReservation && !nextReservation.finished && (
           <NextReservation nextReservation={nextReservation} />
+        )}
+        {showReview && (
+          <ReviewModal
+            review={showReview}
+            isVisible={showReview}
+            onDismiss={() => setShowReview(undefined)}
+          />
         )}
       </View>
     </View>

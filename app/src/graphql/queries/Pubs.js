@@ -32,6 +32,7 @@ export const PUBS_QUERY = gql`
         tables {
           id
           count
+          waiterId
           blocked
           reason
           position
@@ -41,6 +42,12 @@ export const PUBS_QUERY = gql`
             id
             date
             tableId
+            confirmed
+            finished
+            user {
+              email
+              photo
+            }
           }
         }
       }
@@ -80,6 +87,7 @@ export const MY_PUBS_QUERY = gql`
         tables {
           id
           locationId
+          waiterId
           count
           blocked
           reason
@@ -88,7 +96,13 @@ export const MY_PUBS_QUERY = gql`
           reservations {
             id
             date
+            confirmed
+            finished
             tableId
+            user {
+              email
+              photo
+            }
           }
         }
       }
@@ -121,6 +135,7 @@ export const PUB_QUERY = gql`
       reservations {
         id
         date
+        confirmed
         finished
         user {
           email
@@ -140,9 +155,14 @@ export const PUB_QUERY = gql`
           reason
           position
           name
+          waiterId
+          waiter {
+            email
+          }
           reservations {
             id
             date
+            confirmed
             finished
             user {
               email

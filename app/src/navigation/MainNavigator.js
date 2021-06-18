@@ -15,6 +15,7 @@ import {HistoryScreen} from './history/HistoryScreen';
 import {AuthStack} from '../auth/AuthStack';
 import {
   ExploreRoute,
+  FriendsRoute,
   GalleryRoute,
   HistoryRoute,
   MainRoute,
@@ -30,6 +31,7 @@ import AdminNavigator from './AdminNavigator';
 import WaiterNavigator from './WaiterNavigator';
 import SplashScreen from 'react-native-splash-screen';
 import OneSignal from 'react-native-onesignal';
+import FriendsScreen from './friends/FriendsScreen';
 
 const MainNavigator = ({setLoadedNav, loadedNav, loaded}) => {
   const [progress] = useState(0);
@@ -152,6 +154,22 @@ const TabNavigator = ({setLoadedNav}) => {
               return (
                 <Icon
                   name={'star'}
+                  style={{alignSelf: 'center'}}
+                  color={focused ? '#d10808' : GREY_COLOR}
+                  size={26}
+                />
+              );
+            },
+          }}
+        />
+        <Tab.Screen
+          name={FriendsRoute}
+          component={FriendsScreen}
+          options={{
+            tabBarIcon: ({focused}) => {
+              return (
+                <Icon
+                  name={'addusergroup'}
                   style={{alignSelf: 'center'}}
                   color={focused ? '#d10808' : GREY_COLOR}
                   size={26}
