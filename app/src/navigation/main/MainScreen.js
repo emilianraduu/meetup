@@ -26,7 +26,7 @@ export const MainScreen = ({navigation}) => {
   const [showReview, setShowReview] = useState(undefined);
   useEffect(() => {
     const history = usr?.reservations?.filter((res) => res.finished);
-    history.map((item) => {
+    history?.map((item) => {
       const findIndex = usr?.reviews?.findIndex(
         (rev) => rev.pubId === item.pubId,
       );

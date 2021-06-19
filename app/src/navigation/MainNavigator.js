@@ -66,6 +66,7 @@ const MainNavigator = ({setLoadedNav, loadedNav, loaded}) => {
       user(data.me);
     }
     if (error) {
+      console.log(JSON.stringify(error));
     }
   }, [data, error]);
   const renderNav = () => {

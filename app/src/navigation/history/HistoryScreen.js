@@ -40,7 +40,7 @@ export const HistoryScreen = () => {
           </View>
         ) : (
           <View style={{marginTop: 20}}>
-            {history.map((item, index) => (
+            {history?.map((item, index) => (
               <HistoryCard key={index} item={item} />
             ))}
           </View>

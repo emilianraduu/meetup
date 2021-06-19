@@ -145,12 +145,12 @@ const AdminModal = ({onClose, isVisible, table, render, setRender}) => {
                 <Text style={{fontWeight: 'bold', marginTop: 20}}>
                   Reservations
                 </Text>
-                {table.reservations.length === 0 && (
+                {table?.reservations?.length === 0 && (
                   <Text style={{fontWeight: 'bold', marginTop: 10}}>
                     No reservations yet
                   </Text>
                 )}
-                {table.reservations
+                {table?.reservations
                   ?.sort?.((a, b) => a.date < b.date)
                   .map((res, index) => (
                     <Reservation key={index} reservation={res} />

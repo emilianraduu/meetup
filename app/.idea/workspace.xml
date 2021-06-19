@@ -5,40 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="33e3479a-477f-4991-b415-f82aaa59210d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/assets/animations/friends.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/graphql/mutations/Reviews.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/navigation/friends/FriendsScreen.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/navigation/reviews/ReviewModal.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ios/meetup.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/meetup.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/auth/PasswordScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/auth/PasswordScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/mutations/Location.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/mutations/Location.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/mutations/Pub.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/mutations/Pub.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/mutations/Reservation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/mutations/Reservation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/mutations/Table.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/mutations/Table.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/mutations/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/mutations/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/queries/Pubs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/queries/Pubs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/queries/Tables.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/queries/Tables.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/queries/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/queries/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/variables.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/variables.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/meetup/GoogleService-Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/ios/meetup/GoogleService-Info.plist" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/navigation/MainNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/MainNavigator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/history/HistoryCard.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/navigation/history/HistoryScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/history/HistoryScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/navigation/main/AddTableItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/AddTableItem.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/navigation/main/MainScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/MainScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/NextReservation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/NextReservation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/PubMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/PubMenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/PubReviews.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/PubReviews.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/PubSchedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/PubSchedule.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/PubScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/PubScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/PubWaiters.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/PubWaiters.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/WaiterScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/WaiterScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/WaiterTableList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/WaiterTableList.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/navigation/main/table/AdminModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/table/AdminModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/table/Table.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/table/Table.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/table/TableScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/table/TableScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/main/table/TableTab.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/main/table/TableTab.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/reviews/ReviewScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/reviews/ReviewScreen.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +109,8 @@
       <workItem from="1623839991125" duration="9000" />
       <workItem from="1623869272385" duration="15447000" />
       <workItem from="1623934617456" duration="5323000" />
-      <workItem from="1623953440631" duration="27800000" />
+      <workItem from="1623953440631" duration="30617000" />
+      <workItem from="1624087448554" duration="253000" />
     </task>
     <servers />
   </component>

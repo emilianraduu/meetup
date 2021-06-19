@@ -102,7 +102,6 @@ const AddItemModal = ({isVisible, setIsVisible, pub, section}) => {
           shadowRadius: 5.0,
           overflow: 'hidden',
           elevation: 1,
-          flex: 1,
         }}>
         <TouchableOpacity
           onPress={onPhotoPress}
